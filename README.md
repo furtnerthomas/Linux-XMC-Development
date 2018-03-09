@@ -23,7 +23,7 @@ autoconf
 
 automake --add-missing
 
-configure.ac:10: installing './compile'
+configure.ac:10: installing './compile' \n
 configure.ac:7: installing './install-sh'
 configure.ac:7: installing './missing'
 Makefile.am: installing './INSTALL'
