@@ -1,9 +1,9 @@
 # Linux-XMC-Development
 GNU toolchain for XMC software development
 
+![GitHub Logo](doc/eclipse_screenshot.png)
 
-
-# Automake initialization of new XMC project
+## Automake initialization of new XMC project
 
 Most of the following explanations how to create a new automake project is perfectly explained on
 http://mij.oltrelinux.com/devel/autoconf-automake/
@@ -61,18 +61,33 @@ make
 ```
 
 
-# Install tools
+## Install tools
 In order to flash, debug and run the program on our XMC4500 µController we have to install eclipse and some addtitional packages.
  
 Download and Install Eclipse Oxygen from the eclipse.org website
 https://projects.eclipse.org/projects/tools.cdt
 
-Install CDT feature, if not already done
+Install CDT feature, if not done yet
 
-Install GNU-MCU features
+Install GNU-MCU features <br>
+https://gnu-mcu-eclipse.github.io/plugins/packs-manager/
+
+Download MCU settings from <br>
+http://www.keil.com/dd2/pack/
+
+Install arm gdb tool <br>
+```{r, engine='bash', count_lines}
+sudo apt install gdb-arm-none-eabi
+```
+The arm gdb debugger is used and selected in eclipse in the Debugger tab. The eclipse textbox shows <br>
+${cross_prefix}gdb${cross_suffix} <br>
+which is expanded to <br>
+arm-none-eabi-gdb
 
 
-# Create debug configuration
+
+
+## Create debug configuration
 
 Open project properties and select XMC4500-F100x1024 device
 
@@ -90,7 +105,7 @@ Create new GDB SEGGER J-Link Debugging configuration
 Make sure that Device name is XMC4500-1024
 
 
-# Makefile.am 
+## Makefile.am 
 
 ```{r, engine='bash', count_lines}
 INCLUDE_DIRS    = -Isrc/include
