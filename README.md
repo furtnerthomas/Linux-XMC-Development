@@ -3,6 +3,9 @@ GNU toolchain for XMC software development
 
 ![GitHub Logo](doc/eclipse_screenshot.png)
 
+![GitHub Logo](doc/image1.jpg)
+
+
 ## Automake initialization of new XMC project
 
 Most of the following explanations how to create a new automake project is perfectly explained on
