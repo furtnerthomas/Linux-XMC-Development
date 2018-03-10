@@ -142,9 +142,18 @@ main_bin_SOURCES =  src/Startup/system_XMC4500.c \
                     src/main.c
 ```
 
+Reference for symbols in Makefile.am file:
+https://www.gnu.org/software/automake/manual/html_node/Program-Variables.html
 
-
-
+- std=c99: C99 dialect of C http://en.cppreference.com/w/c/language
+- Wall: 
+- O0: no optimization
+- g: include debug symbols
+- DXMC4500_F100x1024: value needed during compilations
+- mthumb: ARM thumb 32 & 16 bit instruction set
+- march=armv7-m: armv7 architecture
+- specs=nosys.specs: needed because of error message (explained here: https://stackoverflow.com/questions/19419782/exit-c-text0x18-undefined-reference-to-exit-when-using-arm-none-eabi-gcc)
+- gc-sections: enable garbage collection (more information: https://sourceware.org/binutils/docs/ld/Options.html)
 
 
 
