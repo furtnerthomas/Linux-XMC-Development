@@ -87,6 +87,8 @@ ${cross_prefix}gdb${cross_suffix} <br>
 which is expanded to <br>
 arm-none-eabi-gdb
 
+Install SEGGER J-Link Driver <br>
+https://www.segger.com/downloads/jlink/#J-LinkSoftwareAndDocumentationPack
 
 
 
@@ -106,6 +108,12 @@ Create new GDB SEGGER J-Link Debugging configuration
 ![GitHub Logo](doc/debug_setup_2.png)
 
 Make sure that Device name is XMC4500-1024
+
+
+## Blinky application
+
+The blinky application code was originally shown in the following tutorial:
+https://embeddedplaygroup.wordpress.com/2012/12/12/its-relax-time-blinky-led/
 
 
 ## Makefile.am 
