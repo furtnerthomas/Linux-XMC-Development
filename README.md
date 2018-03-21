@@ -1,5 +1,5 @@
 # Linux-XMC-Development
-GNU toolchain for XMC software development
+GNU toolchain for Infineon XMC Microcontroller software development 
 
 ![GitHub Logo](doc/eclipse_screenshot.png)
 
