@@ -48,7 +48,7 @@ npm install --global xpm@latest
 xpm install --global @xpack-dev-tools/arm-none-eabi-gcc@latest
 ```
  
-- Download and Install Eclipse from the eclipse.org website
+- Download and Install [Eclipse](https://github.com/eclipse-embed-cdt/org.eclipse.epp.packages/releases/) 
 - Install CDT feature
 - Open pack manager in eclipse and refresh pack list
 - Install pack for XMC4500
