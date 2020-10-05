@@ -12,43 +12,19 @@ Most of the following explanations how to create a new automake project is perfe
 http://mij.oltrelinux.com/devel/autoconf-automake/
 
 ## Initialization
-To create a new automake project, only two files and the src directory are necessary:
+To create a new automake project, two config files and the src directory are necessary:
 - configure.ac
 - Makefile.am
 - src/
 
-## Command line tool sequence
+## Generate project
 Please execute the following commands in order to use automake to create a makefile
 
 ```{r, engine='bash', count_lines}
 > aclocal
 > autoconf
-> automake --add-missing
-configure.ac:10: installing './compile'
-configure.ac:7: installing './install-sh'
-configure.ac:7: installing './missing'
-Makefile.am: installing './INSTALL'
-Makefile.am: error: required file './NEWS' not found
-Makefile.am: error: required file './README' not found
-Makefile.am: error: required file './AUTHORS' not found
-Makefile.am: error: required file './ChangeLog' not found
-Makefile.am: installing './COPYING' using GNU General Public License v3 file
-Makefile.am:     Consider adding the COPYING file to the version control system 
-Makefile.am:     for your code, to avoid questions about which license your project uses
-Makefile.am: installing './depcomp' 
-Makefile.am:12: warning: 'CFLAGS' is a user variable, you should not override it; 
-Makefile.am:12: use 'AM_CFLAGS' instead
+> automake 
 ```
-
-To mitigate the four error messages, add a NEWS, README, AUTHORS and ChangeLog file to the project.
-```{r, engine='bash', count_lines}
-echo "" > NEWS
-echo "" > README
-echo "" > AUTHORS
-echo "" > ChangeLog
-```
-
-Executing automake --add-missing should work now.
 
 
 ## Compile and link
@@ -66,22 +42,17 @@ make
 
 ## Install tools
 In order to flash, debug and run the program on our XMC4500 µController we have to install eclipse and some addtitional packages.
- 
-Download and Install Eclipse Oxygen from the eclipse.org website
-https://projects.eclipse.org/projects/tools.cdt
 
-Install CDT feature, if not done yet
-
-Install GNU-MCU features <br>
-https://gnu-mcu-eclipse.github.io/plugins/packs-manager/
-
-Download MCU settings from <br>
-http://www.keil.com/dd2/pack/
-
-Install arm gdb tool <br>
-```{r, engine='bash', count_lines}
-sudo apt install gdb-arm-none-eabi
 ```
+npm install --global xpm@latest
+xpm install --global @xpack-dev-tools/arm-none-eabi-gcc@latest
+```
+ 
+- Download and Install Eclipse from the eclipse.org website
+- Install CDT feature
+- Open pack manager in eclipse and refresh pack list
+- Install pack for XMC4500
+
 The arm gdb debugger is used and selected in eclipse in the Debugger tab. The eclipse textbox shows <br>
 ${cross_prefix}gdb${cross_suffix} <br>
 which is expanded to <br>
