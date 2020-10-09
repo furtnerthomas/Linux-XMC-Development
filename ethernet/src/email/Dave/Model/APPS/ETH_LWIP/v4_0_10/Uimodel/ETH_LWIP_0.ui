@@ -1,0 +1,386 @@
+<p1:Tab  xmlns="http://www.eclipse.org/xwt/presentation" xmlns:x="http://www.eclipse.org/xwt" xmlns:p1="clr-namespace:com.ifx.davex.ui.controls.app" x:Class="e" layout="{x:Null}">
+	<p1:TabFolder bounds="5, 5, 600, 571">
+		<p1:GTab text="General Settings" visible="true" enabled="true" widgetName="gtab_general">
+			<p1:GTab.control>
+				<p1:Tab widgetName="composite_7">
+					<p1:Tab.layout>
+						<GridLayout numColumns="2"/>
+					</p1:Tab.layout>
+					<p1:GCheck text="Enable netif hostname" manifestObj="true" widgetName="gcheck_netif_name" toolTipText="Define a name for the host." description="Enables definition of a name for the host. "/>
+					<p1:GString x:Style="BORDER" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" widgetName="gstring_netif_name" value="lwip" description="Define a custom name for the host. This name can be used by DHCP to register client name with the DHCP server. ">
+						<p1:GString.layoutData>
+							<GridData grabExcessHorizontalSpace="true" horizontalAlignment="FILL"/>
+						</p1:GString.layoutData>
+					</p1:GString>
+					<p1:GCheck text="Enable callback to notify netif status changes" manifestObj="true" widgetName="gcheck_netif_status_cb" toolTipText="Enable callback function to execute on change of netif status." description="Enables a function callback when the network interface status changes."/>
+					<p1:GString x:Style="BORDER" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" widgetName="gstring_netif_status_cb" value="netif_status_cb" toolTipText="Enter callback function name &#13;&#10;prototype: void function(struct netif *)" description="Function to be executed when a change in status of the network interface is detected.&#13;&#10;In static IP configuration, the callback function will be executed when the IP address is configured and the physical link is setup.&lt;br&gt;&#13;&#10;In DHCP mode, IP address will be allocated at runtime by the DHCP server. This callback function will be executed after negotiation with DHCP server.&lt;br&gt;&#13;&#10;Similarly in AUTO_IP mode, this function will be executed when an IP address is bound to the host.&lt;br&gt;&#13;&#10;prototype: void function(struct netif *)">
+						<p1:GString.layoutData>
+							<GridData grabExcessHorizontalSpace="true" horizontalAlignment="FILL"/>
+						</p1:GString.layoutData>
+					</p1:GString>
+					<p1:GGroup text="RTOS Settings" manifestObj="true" widgetName="ggroup_1">
+						<p1:GGroup.layoutData>
+							<GridData grabExcessHorizontalSpace="true" horizontalAlignment="FILL" horizontalSpan="2"/>
+						</p1:GGroup.layoutData>
+						<p1:GGroup.layout>
+							<GridLayout/>
+						</p1:GGroup.layout>
+						<p1:GCheck text="Enable RTOS" manifestObj="true" widgetName="gcheck_rtos_en" toolTipText="Enable to use RTOS with the LWIP" description="Adds an instance of CMSIS_RTOS APP and configures the LWIP stack to work with RTOS.&lt;br&gt;&#13;&#10;The RTOS related configurations like, the number of threads, size of user provided stack, etc, should be configured directly in the RTOS APP.&lt;br&gt;&#13;&#10;The APP uses 4 threads with user provided stack,&lt;br&gt;&#13;&#10;&lt;ul&gt;&#13;&#10;&lt;li&gt;tcpip_thread - stack size = (as configured in the GUI)&lt;/li&gt;&#13;&#10;&lt;li&gt;ethernetif_input - stack size = 200 bytes &lt;/li&gt;&#13;&#10;&lt;li&gt;PHY link status manager thread - stack size = 200 bytes&lt;/li&gt;&#13;&#10;&lt;li&gt;initialization thread - stack size = 300 bytes&lt;/i&gt;&#13;&#10;&lt;/ul&gt;&#13;&#10;&#13;&#10;"/>
+						<p1:GGroup text="lwIP Initialization" manifestObj="true" widgetName="ggroup_rtos_init">
+							<p1:GGroup.layoutData>
+								<GridData widthHint="559"/>
+							</p1:GGroup.layoutData>
+							<p1:GGroup.layout>
+								<GridLayout numColumns="2"/>
+							</p1:GGroup.layout>
+							<p1:GLabel text="Initialization task priority:" visible="true" manifestObj="true" widgetName="glabel_init_task_priority"/>
+							<p1:GCombo mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" widgetName="gcombo_init_task_priority" options="Idle (lowest)&#13;&#10;Low&#13;&#10;Below Normal&#13;&#10;Normal&#13;&#10;Above Normal&#13;&#10;High&#13;&#10;Realtime (highest)" value="Normal" description="Priority of initialization thread.&lt;br&gt;&#13;&#10;It initializes ETH peripheral and initializes lwIP software stack. ">
+								<p1:GCombo.layoutData>
+									<GridData grabExcessHorizontalSpace="true"/>
+								</p1:GCombo.layoutData>
+							</p1:GCombo>
+							<p1:GLabel text="Initialization task stack size:" visible="true" manifestObj="true" widgetName="glabel_init_task_size"/>
+							<p1:GInteger x:Style="NONE" minValue="0" maxValue="1048576" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" manifestObj="true" widgetName="ginteger_init_task_size" value="300" description="User provided stack size for the initialization thread(bytes). This size of memory will be used as stack for the thread.">
+								<p1:GInteger.layoutData>
+									<GridData widthHint="128"/>
+								</p1:GInteger.layoutData>
+							</p1:GInteger>
+						</p1:GGroup>
+						<p1:GGroup text="TCP/IP" manifestObj="true" widgetName="ggroup_rtos_tcpip">
+							<p1:GGroup.layoutData>
+								<GridData widthHint="558"/>
+							</p1:GGroup.layoutData>
+							<p1:GGroup.layout>
+								<GridLayout numColumns="2"/>
+							</p1:GGroup.layout>
+							<p1:GLabel text="TCPIP task priority:" visible="true" manifestObj="true" widgetName="glabel_tcpip_task_priority"/>
+							<p1:GCombo mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" widgetName="gcombo_tcpip_task_priority" options="Idle (lowest)&#13;&#10;Low&#13;&#10;Below Normal&#13;&#10;Normal&#13;&#10;Above Normal&#13;&#10;High&#13;&#10;Realtime (highest)" value="Normal" toolTipText="Priority selection for TCPIP thread." description="Priority of TCP/IP thread.&lt;br&gt;&#13;&#10;tcpip_thread takes care of data transaction. It receives data from the ethernetif_input thread."/>
+							<p1:GLabel text="TCPIP task stack size:           " visible="true" manifestObj="true" widgetName="glabel_tcpip_stacksize"/>
+							<p1:GInteger x:Style="NONE" minValue="0" maxValue="1048576" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" manifestObj="true" widgetName="ginteger_tcpip_stacksize" value="1024" toolTipText="Stack size for TCPIP thread in bytes" description="User provided stack size for the tcpip_thread(bytes). This size of memory will be used as stack for the thread.">
+								<p1:GInteger.layoutData>
+									<GridData widthHint="127" horizontalAlignment="FILL"/>
+								</p1:GInteger.layoutData>
+							</p1:GInteger>
+						</p1:GGroup>
+						<p1:GGroup text="Ethernet" manifestObj="true" widgetName="ggroup_rtos_ethernet">
+							<p1:GGroup.layoutData>
+								<GridData widthHint="556"/>
+							</p1:GGroup.layoutData>
+							<p1:GGroup.layout>
+								<GridLayout numColumns="2"/>
+							</p1:GGroup.layout>
+							<p1:GLabel text="Ethernet task priority:" visible="true" manifestObj="true" widgetName="glabel_netif_task_priority"/>
+							<p1:GCombo mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" widgetName="gcombo_netif_task_priority" options="Idle (lowest)&#13;&#10;Low&#13;&#10;Below Normal&#13;&#10;Normal&#13;&#10;Above Normal&#13;&#10;High&#13;&#10;Realtime (highest)" value="Above Normal" toolTipText="Priority selection for ethernet thread." description="Priority of the ethernetif_input thread. This thread is responsible for passing data received on IRQ handler to upper layers of the model."/>
+							<p1:GLabel text="Ethernet task stack size:       " visible="true" manifestObj="true" widgetName="glabel_netif_task_stack_size"/>
+							<p1:GInteger x:Style="NONE" minValue="0" maxValue="1048576" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" manifestObj="true" widgetName="ginteger_netif_task_stack_size" value="300" description="User provided stack size for the ethernet_input thread(bytes). ">
+								<p1:GInteger.layoutData>
+									<GridData widthHint="127"/>
+								</p1:GInteger.layoutData>
+							</p1:GInteger>
+						</p1:GGroup>
+						<p1:GGroup text="PHY" manifestObj="true" widgetName="ggroup_rtos_phy_init">
+							<p1:GGroup.layoutData>
+								<GridData widthHint="558"/>
+							</p1:GGroup.layoutData>
+							<p1:GGroup.layout>
+								<GridLayout numColumns="2"/>
+							</p1:GGroup.layout>
+							<p1:GLabel text="PHY status task priority:" visible="true" manifestObj="true" widgetName="glabel_phy_init_priority"/>
+							<p1:GCombo mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" widgetName="gcombo_phy_init_priority" options="Idle (lowest)&#13;&#10;Low&#13;&#10;Below Normal&#13;&#10;Normal&#13;&#10;Above Normal&#13;&#10;High&#13;&#10;Realtime (highest)" value="Above Normal" description="Priority of PHY status management thread.&lt;br&gt;&#13;&#10;The thread calls relevant functions when it detects connection or disconnection of link.">
+								<p1:GCombo.layoutData>
+									<GridData grabExcessHorizontalSpace="true"/>
+								</p1:GCombo.layoutData>
+							</p1:GCombo>
+							<p1:GLabel text="PHY status task stack size:   " visible="true" manifestObj="true" widgetName="glabel_phy_task_stack_size"/>
+							<p1:GInteger x:Style="NONE" minValue="0" maxValue="1048576" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" manifestObj="true" widgetName="ginteger_phy_task_stack_size" value="300" description="User provided stack size for the PHY status monitoring thread(bytes). ">
+								<p1:GInteger.layoutData>
+									<GridData widthHint="127"/>
+								</p1:GInteger.layoutData>
+							</p1:GInteger>
+						</p1:GGroup>
+					</p1:GGroup>
+					<p1:GGroup text="Debugging Settings" manifestObj="true" widgetName="ggroup_2">
+						<p1:GGroup.layout>
+							<GridLayout numColumns="2"/>
+						</p1:GGroup.layout>
+						<p1:GGroup.layoutData>
+							<GridData horizontalSpan="2" horizontalAlignment="FILL"/>
+						</p1:GGroup.layoutData>
+						<p1:GCheck text="Enable debug messages" manifestObj="true" widgetName="gcheck_debug_en" toolTipText="Enable generation of debug messages using SEGGER RTT&#13;&#10;Install SEGGER_RTT APP separately from CONTRIBUTED APPs.&#13;&#10;Refer APP help documentation for more details." description="Enables logging of debug messages from LWIP software stack functions. It uses SEGGER_RTT APP for printing debug messages.">
+							<p1:GCheck.layoutData>
+								<GridData horizontalSpan="2"/>
+							</p1:GCheck.layoutData>
+						</p1:GCheck>
+						<p1:GCheck text="Enable assertions and error messages" manifestObj="true" widgetName="gcheck_assert_en" toolTipText="Enable generation of assert and error messages using SEGGER RTT&#13;&#10;Install SEGGER_RTT APP separately from CONTRIBUTED APPs.&#13;&#10;Refer APP help documentation for more details." description="Enables code for assertions and error logging. It uses SEGGER_RTT APP for printing the messages. The assert messages are prefixed with the string &quot;Assertion&quot;.">
+							<p1:GCheck.layoutData>
+								<GridData horizontalSpan="2"/>
+							</p1:GCheck.layoutData>
+						</p1:GCheck>
+						<p1:GCheck text="Enable statistics collection" manifestObj="true" widgetName="gcheck_statistics_en" toolTipText="Enable statistics collection and printing using SEGGER RTT&#13;&#10;Install SEGGER_RTT APP separately from CONTRIBUTED APPs.&#13;&#10;Refer APP help documentation for more details." description="Enables code for generating and displaying statistics of the communication parameters.&#13;&#10;Uses SEGGER_RTT APP for printing the statistics.">
+							<p1:GCheck.layoutData>
+								<GridData horizontalSpan="2"/>
+							</p1:GCheck.layoutData>
+						</p1:GCheck>
+					</p1:GGroup>
+				</p1:Tab>
+			</p1:GTab.control>
+		</p1:GTab>
+		<p1:GTab text="Network Interface" widgetName="tab_netif" visible="true" enabled="true">
+			<p1:GTab.control>
+				<p1:Tab>
+					<p1:Tab.layout>
+						<GridLayout numColumns="2"/>
+					</p1:Tab.layout>
+					<p1:GLabel text="MII interface mode:" visible="true" widgetName="glabel_mii_interface_mode" description="Selects Ethernet MAC interface to PHY"/>
+					<p1:GCombo manifestObj="true" widgetName="gcombo_mii_interface_mode" options="MII&#13;&#10;RMII" value="RMII" toolTipText="Media independent interface selection:&#13;&#10;-MII using 16 pins.&#13;&#10;-RMII using 8 pins&#13;&#10;Excluding MDC and MDIO" description="Allows selection of physical interface type.&lt;br&gt;&#13;&#10;&lt;ul&gt;&#13;&#10;&lt;li&gt;MII - Media independent interface. Uses 18 pins for data, clock and handshake.&lt;/li&gt;&#13;&#10;&lt;li&gt;RMII - Reduced media independent interface. Uses 10 pins for data, clock and handshake.&lt;/li&gt;&#13;&#10;&lt;/ul&gt;">
+						<p1:GCombo.layoutData>
+							<GridData grabExcessHorizontalSpace="true" widthHint="100"/>
+						</p1:GCombo.layoutData>
+					</p1:GCombo>
+					<p1:GLabel text="PHY device:" visible="true" widgetName="glabel_phy_device"/>
+					<p1:GCombo manifestObj="true" widgetName="gcombo_phy_device" options="KSZ8031RNL&#13;&#10;KSZ8081RNB&#13;&#10;DP83848C&#13;&#10;User Defined" value="KSZ8081RNB" toolTipText="PHY device used for physical layer. &#13;&#10;Select &quot;User Defined&quot; if you can&apos;t find your device and&#13;&#10;add PHY related API definitions.&#13;&#10;" description="Physical layer device selection.&lt;br&gt;&#13;&#10;The APP supports following PHY devices,&lt;br&gt;&#13;&#10;KSZ8031RNL(MICREL),&lt;br&gt;&#13;&#10;KSZ8081RNB(MICREL),&lt;br&gt;&#13;&#10;DP83848C(TI)&lt;br&gt;&#13;&#10;For using any other PHY device, choose &quot;User Defined&quot; and copy the file with PHY related APIs in the project.&#13;&#10;">
+						<p1:GCombo.layoutData>
+							<GridData grabExcessHorizontalSpace="true" widthHint="100"/>
+						</p1:GCombo.layoutData>
+					</p1:GCombo>
+					<p1:GLabel text="PHY address:" visible="true" widgetName="glabel_phy_address"/>
+					<p1:GInteger x:Style="NONE" minValue="0" maxValue="31" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" manifestObj="true" widgetName="ginteger_phy_address" value="0" toolTipText="PHY device identifier." description="Physical layer device ID.&#13;&#10;This ID is specified by the manufacturer.">
+						<p1:GInteger.layoutData>
+							<GridData widthHint="104"/>
+						</p1:GInteger.layoutData>
+					</p1:GInteger>
+					<p1:GCheck text="Enable autonegotation" manifestObj="true" widgetName="gcheck_autonegotiation_en" value="true" description="Enables autonegotiation of PHY speed and duplex mode. The hosts connected on the network negotiate and decide the speed and duplex mode.">
+						<p1:GCheck.layoutData>
+							<GridData horizontalSpan="2"/>
+						</p1:GCheck.layoutData>
+					</p1:GCheck>
+					<p1:GLabel text="Speed:" visible="true" widgetName="glabel_speed" manifestObj="true"/>
+					<p1:GCombo mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" widgetName="gcombo_speed" options="10Mbits/s&#13;&#10;100Mbit/s" value="100Mbit/s" toolTipText="PHY speed selection" description="If autonegotiation is not enabled, it configures physical layer device speed. This value will be configured to the selected PHY device in its initialization sequence. ">
+						<p1:GCombo.layoutData>
+							<GridData grabExcessHorizontalSpace="true" widthHint="100"/>
+						</p1:GCombo.layoutData>
+					</p1:GCombo>
+					<p1:GLabel text="Duplex mode:" visible="true" widgetName="glabel_duplex_mode" manifestObj="true"/>
+					<p1:GCombo mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" widgetName="gcombo_duplex_mode" options="Half Duplex&#13;&#10;Full Duplex" value="Full Duplex" description="If autonegotiation is disabled, it configures physical layer communication type as either half duplex or full duplex.">
+						<p1:GCombo.layoutData>
+							<GridData grabExcessHorizontalSpace="true" widthHint="100"/>
+						</p1:GCombo.layoutData>
+					</p1:GCombo>
+					<p1:GLabel text="MAC address:" visible="true" manifestObj="true" widgetName="glabel_mac_address"/>
+					<p1:GString x:Style="BORDER" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" widgetName="gstring_mac_address" value="00:03:19:45:00:00" toolTipText="MAC address for the device. Values are in hexadecimal format." description="Configures the hardware address of the ETH peripheral. &#13;&#10;Values should be in hexadecimal format.">
+						<p1:GString.layoutData>
+							<GridData grabExcessHorizontalSpace="true" widthHint="92"/>
+						</p1:GString.layoutData>
+					</p1:GString>
+					<p1:GLabel text="Number of receive buffers:" visible="true" manifestObj="true" widgetName="glabel_rx_buffers"/>
+					<p1:GInteger x:Style="NONE" minValue="1" maxValue="16" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" manifestObj="true" widgetName="ginteger_rx_buffers" value="4" toolTipText="Number of packet buffers for reception" description="Configures number of receive buffers. This value has direct relation with the number of receive DMA descriptors used. Each receive buffer is configured for maximum buffer size of 1518 bytes.">
+						<p1:GInteger.layoutData>
+							<GridData widthHint="104"/>
+						</p1:GInteger.layoutData>
+					</p1:GInteger>
+					<p1:GLabel text="Number of transmit buffers" visible="true" manifestObj="true" widgetName="glabel_tx_buffers"/>
+					<p1:GInteger x:Style="NONE" minValue="1" maxValue="16" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" manifestObj="true" widgetName="ginteger_tx_buffers" value="4" toolTipText="Number of packet buffers for transmission" description="Configures number of transmit buffers. This value has direct relation with the number of transmit DMA descriptors used. Each transmit buffer is configured for maximum buffer size of 1518 bytes.">
+						<p1:GInteger.layoutData>
+							<GridData widthHint="104"/>
+						</p1:GInteger.layoutData>
+					</p1:GInteger>
+					<p1:GCheck text="Enable promiscous mode" manifestObj="true" widgetName="gcheck_promiscuous_en" toolTipText="" description="Enables promiscuous mode in the ETH peripheral. When enabled, even the packets not addressed to the host are received.">
+						<p1:GCheck.layoutData>
+							<GridData horizontalSpan="2"/>
+						</p1:GCheck.layoutData>
+					</p1:GCheck>
+					<p1:GCheck text="Accept broadcast frames" manifestObj="true" widgetName="gcheck_broadcast_en" description="Enables reception of boadcast frames by configuring the ETH peripheral and also the LWIP netif flag NETIF_FLAG_BROADCAST.">
+						<p1:GCheck.layoutData>
+							<GridData horizontalSpan="2"/>
+						</p1:GCheck.layoutData>
+					</p1:GCheck>
+					<p1:GCheck text="Poll for received data" manifestObj="true" widgetName="gcheck_polling" toolTipText="Enable polling mode for packet reception. &#13;&#10;User needs to call periodically ETH_LWIP_Poll()" description="By default the APP uses receive interrupt to read the received data and propagate it along the software stack to the application. On selecting this option, the interrupt will not be used for reading received data. The API ETH_LWIP_Poll() has to be called frequently to allow propagation of received data along the software stack."/>
+					<Label/>
+					<p1:GInterruptPrio text="RX interrupt priority" x:Style="NONE" minPriority="0" maxPriority="63" minSubPriority="0" maxSubPriority="0" priorityValue="63" subPriorityValue="0" priorityMandatory="false" subPriorityMandatory="false" manifestObj="true" widgetName="ginterruptprio_rx_irq" toolTipText="Priority of frame receive interrupt" description="Ethernet frame reception interrupt priority.&lt;br&gt;&#13;&#10;Data is passed upwards in the model from this IRQ handler.">
+						<p1:GInterruptPrio.layoutData>
+							<GridData horizontalSpan="2" horizontalAlignment="FILL"/>
+						</p1:GInterruptPrio.layoutData>
+					</p1:GInterruptPrio>
+					<Label/>
+					<Label/>
+				</p1:Tab>
+			</p1:GTab.control>
+		</p1:GTab>
+		<p1:GTab text="IP Settings" visible="true" enabled="true" widgetName="gtab_ip">
+			<p1:GTab.control>
+				<p1:Tab widgetName="composite_350" layout="{x:Null}">
+					<p1:GString x:Style="BORDER" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" widgetName="gstring_ipv6_gateway" bounds="178, 93, 270, 21" value="0000:0000:0000:0000:0000:0000:0000:0000" description="Gateway address in IPv6 format.&lt;br&gt;&#13;&#10;IPv6 is currently disabled."/>
+					<p1:GString x:Style="BORDER" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" widgetName="gstring_ipv6_subnet" bounds="178, 62, 270, 21" value="65535:65535:65535:65535:65535:65535:65535:0000" description="Subnet mask in IPv6 format.&lt;br&gt;&#13;&#10;IPv6 is disabled in this version."/>
+					<p1:GString x:Style="BORDER" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" widgetName="gstring_ipv6_address" bounds="178, 29, 270, 23" value="0000:0000:0000:0000:0000:0000:0000:0000" description="IP address in IPv6 format.&lt;br&gt;&#13;&#10;IPv6 is disabled in this version."/>
+                    <p1:GCheck text="Use DHCP" manifestObj="true" widgetName="gcheck_enable_dhcp" bounds="5, 5, 75, 16" toolTipText="Use dynamic IP assignment " description="Enables or disables dynamic host configuration protocol. When selected, static IP configuration will be disalbed. In this mode, the LWIP requests the DHCP server for IP address allocation. "/>
+                    <p1:GLabel text="IP address:" visible="true" manifestObj="true" widgetName="glabel_ip_address" bounds="5, 33, 56, 15"/>
+                    <p1:GString x:Style="BORDER" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" widgetName="gstring_ip_address" value="192.168.0.10" bounds="178, 29, 270, 23" toolTipText="Static IP in IPv4 format" description="Static IPv4 address for the host."/>
+                    <p1:GLabel text="Subnet mask:" visible="true" manifestObj="true" widgetName="glabel_subnet_mask" bounds="5, 65, 71, 15"/>
+                    <p1:GString x:Style="BORDER" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" widgetName="gstring_subnet_mask" value="255.255.255.0" bounds="178, 62, 270, 21" toolTipText="Subment mask in IPv4 format" description="Subnet mask for the static IPv4 address of the host."/>
+                    <p1:GLabel text="Gateway address:" visible="true" manifestObj="true" widgetName="glabel_gateway_address" bounds="5, 96, 91, 15"/>
+                    <p1:GString x:Style="BORDER" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" widgetName="gstring_gateway_address" value="192.168.0.10" bounds="178, 93, 270, 21" toolTipText="Gateway address in IPv4 format" description="Default gateway IPv4 address. A gateway is a device that can forward packets to other networks. For example a router connected to another network is a gateway."/>
+                    <p1:GCheck text="Enable IPv6 support" manifestObj="true" widgetName="gcheck_enable_ipv6" bounds="5, 124, 125, 16" enabled="false" description="IPv6 is not supported in this version of the APP."/>
+                    <p1:GCheck text="Enable IP options" manifestObj="true" widgetName="gcheck_ip_opts_en" description="Allows to enable or disable, additional options field in the IP datagram.&#13;&#10;" bounds="5, 150, 112, 16"/>
+                    <p1:GCheck text="Enable IP fragmentation" manifestObj="true" widgetName="gcheck_ip_frgment_en" bounds="5, 176, 148, 16" toolTipText="Enable frame fragmentation" description="Enables or disables IP fragmentation.&lt;br&gt;&#13;&#10;When fragmentation is enabled, data of size larger than maximum transfer unit can be transmitted by fragmenting it into number of units."/>
+                    <p1:GCheck text="Enable IP reassembly" manifestObj="true" widgetName="gcheck_ip_reassmbly_en" bounds="5, 202, 131, 16" toolTipText="Enable reassembly of fragmented frames" description="Enables or disables reassembly of fragmented received data packets.&lt;br&gt;&#13;&#10;When reassembly is enabled, larger frames with size more than the maximum transfer unit can be assembled using multiple received fragments."/>
+                    <p1:GLabel text="Max. transmission unit (MTU):" visible="true" manifestObj="true" widgetName="glabel_mtu" bounds="5, 231, 159, 15"/>
+                    <p1:GInteger x:Style="NONE" minValue="1" maxValue="2048" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" manifestObj="true" widgetName="ginteger_mtu" value="1500" bounds="178, 228, 36, 23" toolTipText="Maximum data in one frame" description="Defines the maximum number of bytes that can be transmitted or received continuously. This defines the maximum size of IP datagram. IP fragmentation will be used for any size higher than this value. &lt;br&gt;"/>
+                    <p1:GLabel text="Default time to live (TTL):" visible="true" manifestObj="true" widgetName="glabel_ttl" bounds="5, 262, 147, 15"/>
+                    <p1:GInteger x:Style="NONE" minValue="1" maxValue="255" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" manifestObj="true" widgetName="ginteger_ttl" value="255" bounds="178, 259, 36, 23" toolTipText="Default value of TTL count for each transmission frame" description="Defines the default value of time to live used in IP header."/>
+				</p1:Tab>
+			</p1:GTab.control>
+		</p1:GTab>
+		<p1:GTab text="Protocol Settings" visible="true" enabled="true" widgetName="gtab_protocol">
+            <p1:GTab.control>
+                <p1:Tab widgetName="composite_15">
+                    <p1:Tab.layout>
+                        <GridLayout numColumns="2"/>
+                    </p1:Tab.layout>
+                    <p1:GLabel text="ARP table size:" visible="true" manifestObj="true" widgetName="glabel_arp_tablesize"/>
+                    <p1:GInteger x:Style="NONE" minValue="1" maxValue="127" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" manifestObj="true" widgetName="ginteger_arp_tablesize" value="10" toolTipText="Size of ARP lookup table" description="Defines the number of entries in the table mapping MAC address to IP address.&lt;br&gt;&#13;&#10;This table will be populated at runtime by ARP.">
+                    	<p1:GInteger.layoutData>
+                    		<GridData widthHint="40"/>
+                    	</p1:GInteger.layoutData>
+                    </p1:GInteger>
+                    <p1:GCheck text="Enable AUTOIP" manifestObj="true" widgetName="gcheck_auto_ip_en" toolTipText="Enable AutoIP" description="Enables or disables automatic IP assignment without DHCP server. When AUTOIP is enabled, the initialization sequence of the APP starts probing for unused IP address and binds the host to an AUTOIP unused IP address. netif status change callback will be optionally executed when the IP address is bound to the host."/>
+                    <Label/>
+                    <p1:GCheck text="Enable ICMP" manifestObj="true" widgetName="gcheck_icmp_en" value="true" description="Enables or disables internet control message protocol(ICMP) implementation. ICMP is responsible for responding to ping requests. "/>
+                    <Label/>
+                    <p1:GCheck text="Enable IGMP" manifestObj="true" widgetName="gcheck_igmp_en" description="Enables or disables internet group management( IGMP) protocol. It is used for multicast group management.&#13;&#10;"/>
+                    <Label/>
+                    <p1:GCheck text="Enable DNS" manifestObj="true" widgetName="gcheck_dns_en" description="Enables or disables domain name service(DNS) server configuration."/>
+                    <Label/>
+                    <p1:GLabel text="DNS server:" visible="true" manifestObj="true" widgetName="glabel_dns_server"/>
+                    <p1:GString x:Style="BORDER" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" widgetName="gstring_dns_server" value="208.67.222.222" toolTipText="DNS server address" description="Provides DNS server IP address used for domain name translation to IP address.">
+                    	<p1:GString.layoutData>
+                    		<GridData grabExcessHorizontalSpace="true" widthHint="100"/>
+                    	</p1:GString.layoutData>
+                    </p1:GString>
+                    <p1:GCheck text="Enable SNMP" manifestObj="true" widgetName="gcheck_snmp_en" description="Enables or disables simple network management protocol(SNMP)."/>
+                    <Label/>
+                    <p1:GCheck text="Enable TCP" manifestObj="true" widgetName="gcheck_enable_tcp" value="true" description="Enables or disables transmission control protocol(TCP). This option is enabled by default."/>
+                    <Label/>
+                    <p1:GLabel text="Maximum segment size (TCP_MSS):" visible="true" widgetName="glabel_max_segment_size"/>
+                    <p1:GInteger x:Style="NONE" minValue="1" maxValue="1460" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" manifestObj="true" widgetName="ginteger_max_segment_size" value="536" description="Defines the payload size of each TCP segment. If the packet size exceeds maximum transfer unit, the IP datagrams of the TCP segment will be fragmented." toolTipText="TCP Maximum segment size. (default is 536, a conservative default, you might want to increase this.)">
+                    	<p1:GInteger.layoutData>
+                    		<GridData widthHint="40"/>
+                    	</p1:GInteger.layoutData>
+                    </p1:GInteger>
+                    <p1:GLabel text="Window size (TCP_WND):" visible="true" widgetName="glabel_window_size"/>
+                    <p1:GInteger x:Style="NONE" minValue="1" maxValue="16000" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" manifestObj="true" widgetName="ginteger_window_size" value="2144" description="Defines the maximum value of TCP window. For receiving huge data, the maximum window size should be limited to 4 times the maximum transfer unit(MTU) since there are only 4 receive buffers available in the ETH receive DMA descriptors." toolTipText="The size of a TCP window.  This must be at least  (2 * TCP_MSS) for things to work well.">
+                    	<p1:GInteger.layoutData>
+                    		<GridData widthHint="40"/>
+                    	</p1:GInteger.layoutData>
+                    </p1:GInteger>
+                    <p1:GLabel text="TCP sender buffer space [bytes] (TCP_SND_BUF):" visible="true" widgetName="glabel_tcp_snd_buf"/>
+                    <p1:GInteger x:Style="NONE" minValue="1" maxValue="16000" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" manifestObj="true" widgetName="ginteger_tcp_snd_buf" value="1072" toolTipText="TCP sender buffer space (bytes). To achieve good performance, this should be at least 2 * TCP_MSS." description="TCP sender buffer space (bytes). To achieve good performance, this should be at least 2 * TCP_MSS.">
+                    	<p1:GInteger.layoutData>
+                    		<GridData widthHint="40"/>
+                    	</p1:GInteger.layoutData>
+                    </p1:GInteger>
+                    <p1:GLabel text="TCP sender buffer space [pbufs] (TCP_SND_QUEUELEN):" visible="true" widgetName="glabel_tcp_snd_queuelen"/>
+                    <p1:GInteger x:Style="NONE" minValue="1" maxValue="10000" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" manifestObj="true" widgetName="ginteger_tcp_snd_queuelen" value="8" toolTipText="TCP sender buffer space (pbufs). This must be at least as much as &#13;&#10;(2 *  SND_BUF/TCP_MSS) for things to work. It should be less than or equal to&#13;&#10;number of simultaneously queued TCP segments(MEMP_NUM_TCP_SEG)&#13;&#10;as configured in the Memory Settings tab." description="TCP sender buffer space (pbufs). This must be at least as much as (2 *  SND_BUF/TCP_MSS) for things to work. It should be less than or equal to number of simultaneously queued TCP segments(MEMP_NUM_TCP_SEG), as configured in the Memory Settings tab.">
+                    	<p1:GInteger.layoutData>
+                    		<GridData widthHint="41"/>
+                    	</p1:GInteger.layoutData>
+                    </p1:GInteger>
+                    <p1:GCheck text="Enable UDP" manifestObj="true" widgetName="gcheck_enable_udp" value="true" description="Enables or disables user datagram protocol(UDP). It is used in many higher level protocols. Care must be taken before disabling it."/>
+                    <Label/>
+                </p1:Tab>
+            </p1:GTab.control>
+        </p1:GTab>
+		<p1:GTab text="Memory Settings" visible="true" enabled="true" widgetName="gtab_memory">
+			<p1:GTab.control>
+				<p1:Tab widgetName="composite_1">
+					<p1:Tab.layout>
+						<GridLayout numColumns="2"/>
+					</p1:Tab.layout>
+					<p1:GLabel text="Heap size (MEM_SIZE):" visible="true" manifestObj="true" widgetName="glabel_heap"/>
+					<p1:GInteger x:Style="NONE" minValue="1" maxValue="32000" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" manifestObj="true" widgetName="ginteger_heap" value="1600" description="Defines the size of memory used for memory allocation during data transmission and reception.&lt;br&gt;&#13;&#10;This is the size of memory reserved for mem_malloc function of the LWIP software stack. This memory is used for any packet buffer allocation from RAM. This size should have direct relation to the size of data to be received or transmitted concurrently." toolTipText="The size of the heap memory. If the application will send a lot of data concurrently, this value should be set high.">
+						<p1:GInteger.layoutData>
+							<GridData widthHint="40"/>
+						</p1:GInteger.layoutData>
+					</p1:GInteger>
+					<p1:GLabel text="Packet buffer pool size (PBUF_POOL_SIZE):" visible="true" manifestObj="true" widgetName="glabel_pbuf_pool"/>
+					<p1:GInteger x:Style="NONE" minValue="1" maxValue="32" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" manifestObj="true" widgetName="ginteger_pbuf_pool" value="16" description="Defines the number of packet buffers(pbuf) required in the application. Each pbuf payload size is 1536 bytes. A pool of packet buffers will be created with count defined in this field. This memory is mainly used for receving data. " toolTipText="Maximum number of received frames waiting to be processed.">
+						<p1:GInteger.layoutData>
+							<GridData widthHint="40"/>
+						</p1:GInteger.layoutData>
+					</p1:GInteger>
+					<p1:GLabel text="Number of memp struct pbufs (MEMP_NUM_PBUF):" visible="true" manifestObj="true" widgetName="glabel_pbuf_memp" description=""/>
+					<p1:GInteger x:Style="NONE" minValue="1" maxValue="2500" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" manifestObj="true" widgetName="ginteger_pbuf_memp" value="16" toolTipText="The number of memp struct pbufs (used for PBUF_ROM and PBUF_REF). If the application sends a lot of data out of ROM (or other static memory), this should be set high." description="Defines the number of memp struct pbufs. Based on this the number of concurrent pbuf structures will be limited.">
+						<p1:GInteger.layoutData>
+							<GridData widthHint="40"/>
+						</p1:GInteger.layoutData>
+					</p1:GInteger>
+					<p1:GLabel text="Number of raw connection PCBs (MEMP_NUM_RAW_PCB):" visible="true" widgetName="glabel_34"/>
+					<p1:GInteger x:Style="NONE" minValue="1" maxValue="16000" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" manifestObj="true" widgetName="ginteger_memp_num_raw_pcb" value="4" toolTipText="Number of raw connection PCBs. Requires the LWIP_RAW option">
+						<p1:GInteger.layoutData>
+							<GridData horizontalAlignment="FILL"/>
+						</p1:GInteger.layoutData>
+					</p1:GInteger>
+					<p1:GLabel text="Simulatenously active UDP connections (MEMP_NUM_UDP_PCB):" visible="true" manifestObj="true" widgetName="glabel_udp_connections" description="(LWIP_MEMP_NUM_UDP_PCB) This option defines the number of UDP protocol control blocks that may be used simultaneously. One is required for each active UDP connection"/>
+					<p1:GInteger x:Style="NONE" minValue="0" maxValue="16000" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" manifestObj="true" widgetName="ginteger_udp_connections" value="4" description="Defines the maximum number of concurrent UDP connections." toolTipText="The number of UDP protocol control blocks. One per active UDP &quot;connection&quot;. Requires the LWIP_UDP option.">
+						<p1:GInteger.layoutData>
+							<GridData widthHint="40"/>
+						</p1:GInteger.layoutData>
+					</p1:GInteger>
+					<p1:GLabel text="Simulatenously active TCP connections (MEMP_NUM_TCP_PCB):" visible="true" manifestObj="true" widgetName="glabel_tcp_connections"/>
+					<p1:GInteger x:Style="NONE" minValue="0" maxValue="16000" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" manifestObj="true" widgetName="ginteger_tcp_connections" value="5" description="Defines the maximum number of concurrent TCP connections." toolTipText="The number of simulatenously active TCP connections. Requires the LWIP_TCP option.">
+						<p1:GInteger.layoutData>
+							<GridData widthHint="40"/>
+						</p1:GInteger.layoutData>
+					</p1:GInteger>
+					<p1:GLabel text="Listening TCP connections (MEMP_NUM_TCP_PCB_LISTEN):" visible="true" manifestObj="true" widgetName="glabel_tcp_listeners"/>
+					<p1:GInteger x:Style="NONE" minValue="0" maxValue="16000" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" manifestObj="true" widgetName="ginteger_tcp_listeners" value="5" description="Defines the maximum number of listening TCP connections." toolTipText="The number of listening TCP connections. (Requires the LWIP_TCP option)">
+						<p1:GInteger.layoutData>
+							<GridData widthHint="40"/>
+						</p1:GInteger.layoutData>
+					</p1:GInteger>
+					<p1:GLabel text="Simultaneously queued TCP segments (MEMP_NUM_TCP_SEG):" visible="true" manifestObj="true" widgetName="glabel_tcp_queued_segs"/>
+					<p1:GInteger x:Style="NONE" minValue="0" maxValue="16000" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" manifestObj="true" widgetName="ginteger_tcp_queued_segs" value="8" description="Defines the maximum number of TCP segments in the queue." toolTipText="The number of simultaneously queued TCP segments. Requires the LWIP_TCP option.">
+						<p1:GInteger.layoutData>
+							<GridData widthHint="40"/>
+						</p1:GInteger.layoutData>
+					</p1:GInteger>
+					<p1:GLabel text="Simultaneously IP packets queued for reassembly (MEMP_NUM_REASSDATA):" visible="true" manifestObj="true" widgetName="glabel_tcp_queued_reassembly"/>
+					<p1:GInteger x:Style="NONE" minValue="0" maxValue="16000" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" manifestObj="true" widgetName="ginteger_tcp_queued_reassembly" value="5" description="Defines the maximum number of IP packets queued for reassembly." toolTipText="MEMP_NUM_REASSDATA: the number of IP packets simultaneously queued for reassembly (whole packets, not fragments!)">
+						<p1:GInteger.layoutData>
+							<GridData widthHint="40"/>
+						</p1:GInteger.layoutData>
+					</p1:GInteger>
+					<p1:GLabel text="Simultaneously queued pbufs waiting for ARP response (MEMP_NUM_ARP_QUEUE):" visible="true" manifestObj="true" widgetName="glabel_arp_queued"/>
+					<p1:GInteger x:Style="NONE" minValue="0" maxValue="16000" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" manifestObj="true" widgetName="ginteger_arp_queued" value="30" description="Defines the maximum number of pbufs in the queue, waiting for ARP query." toolTipText="The number of simulateously queued outgoing packets (pbufs) that are waiting for an ARP request (to resolve their destination address) to finish. Requires the ARP_QUEUEING option.">
+						<p1:GInteger.layoutData>
+							<GridData widthHint="40"/>
+						</p1:GInteger.layoutData>
+					</p1:GInteger>
+					<p1:GLabel text="Number of struct netbufs (MEMP_NUM_NETBUF):" visible="true" manifestObj="true" widgetName="glabel_netbufs"/>
+					<p1:GInteger x:Style="NONE" minValue="0" maxValue="16000" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" manifestObj="true" widgetName="ginteger_netbufs" value="2" description="It defines the number of concurrent data packets to be transmitted or received using UDP or RAW type of packet.&#13;&#10;Only needed while using RTOS." toolTipText="In RTOS mode, maximum number of concurrent transmissions or receptions&#13;&#10;of packets with protocol type UDP or RAW.">
+						<p1:GInteger.layoutData>
+							<GridData widthHint="40"/>
+						</p1:GInteger.layoutData>
+					</p1:GInteger>
+					<p1:GLabel text="Number of struct netconns (MEMP_NUM_NETCONN):" visible="true" manifestObj="true" widgetName="glabel_netcons"/>
+					<p1:GInteger x:Style="NONE" minValue="0" maxValue="16000" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" manifestObj="true" widgetName="ginteger_netcons" value="4" description="Used to define number of concurrent socket connections. Needed if using RTOS." toolTipText="In RTOS mode, maximum number of socket connections">
+						<p1:GInteger.layoutData>
+							<GridData widthHint="40"/>
+						</p1:GInteger.layoutData>
+					</p1:GInteger>
+					<p1:GLabel text="Number of struct tcpip_msg for callback/timeout (MEMP_NUM_TCPIP_MSG_API):" visible="true" manifestObj="true" widgetName="glabel_tcp_msg_cbs"/>
+					<p1:GInteger x:Style="NONE" minValue="0" maxValue="16000" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" manifestObj="true" widgetName="ginteger_tcp_msg_cbs" value="8" description="Mail boxes are used in RTOS mode to execute functions in TCP/IP thread context. The value configured in this widget, defines the number of concurrent message objects that can be posted to the mail box, which is polled by the TCP/IP thread." toolTipText="Number of concurrent executable functions to be posted on mailbox&#13;&#10;of TCP/IP thread">
+						<p1:GInteger.layoutData>
+							<GridData widthHint="40"/>
+						</p1:GInteger.layoutData>
+					</p1:GInteger>
+					<p1:GLabel text="Number of struct tcpip_msg for incomming packets (MEMP_NUM_TCPIP_MSG_INPKT):" visible="true" manifestObj="true" widgetName="glabel_tcp_msg_ins"/>
+					<p1:GInteger x:Style="NONE" minValue="0" maxValue="16000" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" manifestObj="true" widgetName="ginteger_tcp_msg_ins" value="8" description="In RTOS mode, received data is passed to the TCP/IP thread for processing and propagating to the higher protocol layers. Received data is passed using mail box. This widget defines the concurrent number of messages related to input data that can be posted to the mail box." toolTipText="Number of concurrent data packets to be posted on mail box&#13;&#10;of TCP/IP thread">
+						<p1:GInteger.layoutData>
+							<GridData widthHint="40"/>
+						</p1:GInteger.layoutData>
+					</p1:GInteger>
+				</p1:Tab>
+			</p1:GTab.control>
+		</p1:GTab>
+	</p1:TabFolder>
+</p1:Tab>

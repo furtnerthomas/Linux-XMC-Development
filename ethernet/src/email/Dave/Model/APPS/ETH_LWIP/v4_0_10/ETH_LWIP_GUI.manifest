@@ -1,0 +1,236 @@
+package Model.APPS.ETH_LWIP.v4_0_10;
+
+// Import statements
+import ifx.davex.app.manifest.*
+
+abstract class ETH_LWIP_GUI extends AppManifest {
+
+    /* IMPORTANT NOTE: This is an auto generated file, please do not edit manually. */
+    /* User modifications in the GUI editor will be updated here automatically.     */
+    /* Manually editing the contents of this file will corrupt the APP SDK project. */
+
+	/* Begin : UI variable section */
+	 public GInteger ginteger_init_task_size;
+	 public GInteger ginteger_tcpip_stacksize;
+	 public GInteger ginteger_netif_task_stack_size;
+	 public GInteger ginteger_phy_task_stack_size;
+	 public GInteger ginteger_phy_address;
+	 public GInteger ginteger_rx_buffers;
+	 public GInteger ginteger_tx_buffers;
+	 public GInteger ginteger_mtu;
+	 public GInteger ginteger_ttl;
+	 public GInteger ginteger_arp_tablesize;
+	 public GInteger ginteger_max_segment_size;
+	 public GInteger ginteger_window_size;
+	 public GInteger ginteger_tcp_snd_buf;
+	 public GInteger ginteger_tcp_snd_queuelen;
+	 public GInteger ginteger_heap;
+	 public GInteger ginteger_pbuf_pool;
+	 public GInteger ginteger_pbuf_memp;
+	 public GInteger ginteger_memp_num_raw_pcb;
+	 public GInteger ginteger_udp_connections;
+	 public GInteger ginteger_tcp_connections;
+	 public GInteger ginteger_tcp_listeners;
+	 public GInteger ginteger_tcp_queued_segs;
+	 public GInteger ginteger_tcp_queued_reassembly;
+	 public GInteger ginteger_arp_queued;
+	 public GInteger ginteger_netbufs;
+	 public GInteger ginteger_netcons;
+	 public GInteger ginteger_tcp_msg_cbs;
+	 public GInteger ginteger_tcp_msg_ins;
+	 public GCombo gcombo_init_task_priority;
+	 public GCombo gcombo_tcpip_task_priority;
+	 public GCombo gcombo_netif_task_priority;
+	 public GCombo gcombo_phy_init_priority;
+	 public GCombo gcombo_mii_interface_mode;
+	 public GCombo gcombo_phy_device;
+	 public GCombo gcombo_speed;
+	 public GCombo gcombo_duplex_mode;
+	 public GString gstring_netif_name;
+	 public GString gstring_netif_status_cb;
+	 public GString gstring_mac_address;
+	 public GString gstring_ipv6_gateway;
+	 public GString gstring_ipv6_subnet;
+	 public GString gstring_ipv6_address;
+	 public GString gstring_ip_address;
+	 public GString gstring_subnet_mask;
+	 public GString gstring_gateway_address;
+	 public GString gstring_dns_server;
+	 public GCheck gcheck_netif_name;
+	 public GCheck gcheck_netif_status_cb;
+	 public GCheck gcheck_rtos_en;
+	 public GCheck gcheck_debug_en;
+	 public GCheck gcheck_assert_en;
+	 public GCheck gcheck_statistics_en;
+	 public GCheck gcheck_autonegotiation_en;
+	 public GCheck gcheck_promiscuous_en;
+	 public GCheck gcheck_broadcast_en;
+	 public GCheck gcheck_polling;
+	 public GCheck gcheck_enable_dhcp;
+	 public GCheck gcheck_enable_ipv6;
+	 public GCheck gcheck_ip_opts_en;
+	 public GCheck gcheck_ip_frgment_en;
+	 public GCheck gcheck_ip_reassmbly_en;
+	 public GCheck gcheck_auto_ip_en;
+	 public GCheck gcheck_icmp_en;
+	 public GCheck gcheck_igmp_en;
+	 public GCheck gcheck_dns_en;
+	 public GCheck gcheck_snmp_en;
+	 public GCheck gcheck_enable_tcp;
+	 public GCheck gcheck_enable_udp;
+	 public GLabel glabel_init_task_priority;
+	 public GLabel glabel_init_task_size;
+	 public GLabel glabel_tcpip_task_priority;
+	 public GLabel glabel_tcpip_stacksize;
+	 public GLabel glabel_netif_task_priority;
+	 public GLabel glabel_netif_task_stack_size;
+	 public GLabel glabel_phy_init_priority;
+	 public GLabel glabel_phy_task_stack_size;
+	 public GLabel glabel_speed;
+	 public GLabel glabel_duplex_mode;
+	 public GLabel glabel_mac_address;
+	 public GLabel glabel_rx_buffers;
+	 public GLabel glabel_tx_buffers;
+	 public GLabel glabel_ip_address;
+	 public GLabel glabel_subnet_mask;
+	 public GLabel glabel_gateway_address;
+	 public GLabel glabel_mtu;
+	 public GLabel glabel_ttl;
+	 public GLabel glabel_arp_tablesize;
+	 public GLabel glabel_dns_server;
+	 public GLabel glabel_heap;
+	 public GLabel glabel_pbuf_pool;
+	 public GLabel glabel_pbuf_memp;
+	 public GLabel glabel_udp_connections;
+	 public GLabel glabel_tcp_connections;
+	 public GLabel glabel_tcp_listeners;
+	 public GLabel glabel_tcp_queued_segs;
+	 public GLabel glabel_tcp_queued_reassembly;
+	 public GLabel glabel_arp_queued;
+	 public GLabel glabel_netbufs;
+	 public GLabel glabel_netcons;
+	 public GLabel glabel_tcp_msg_cbs;
+	 public GLabel glabel_tcp_msg_ins;
+	 public GGroup ggroup_1;
+	 public GGroup ggroup_rtos_init;
+	 public GGroup ggroup_rtos_tcpip;
+	 public GGroup ggroup_rtos_ethernet;
+	 public GGroup ggroup_rtos_phy_init;
+	 public GGroup ggroup_2;
+	 public GInterruptPrio ginterruptprio_rx_irq;
+
+	 public ETH_LWIP_GUI(DaveEnv daveEnv){
+
+	 ginteger_init_task_size = GInteger(widgetName:"ginteger_init_task_size", value:300, minValue:0, maxValue:1048576, enabled:true, visible:true, isMandatoryValue:false)
+	 ginteger_tcpip_stacksize = GInteger(widgetName:"ginteger_tcpip_stacksize", value:1024, minValue:0, maxValue:1048576, enabled:true, visible:true, isMandatoryValue:false)
+	 ginteger_netif_task_stack_size = GInteger(widgetName:"ginteger_netif_task_stack_size", value:300, minValue:0, maxValue:1048576, enabled:true, visible:true, isMandatoryValue:false)
+	 ginteger_phy_task_stack_size = GInteger(widgetName:"ginteger_phy_task_stack_size", value:300, minValue:0, maxValue:1048576, enabled:true, visible:true, isMandatoryValue:false)
+	 ginteger_phy_address = GInteger(widgetName:"ginteger_phy_address", value:0, minValue:0, maxValue:31, enabled:true, visible:true, isMandatoryValue:false)
+	 ginteger_rx_buffers = GInteger(widgetName:"ginteger_rx_buffers", value:4, minValue:1, maxValue:16, enabled:true, visible:true, isMandatoryValue:false)
+	 ginteger_tx_buffers = GInteger(widgetName:"ginteger_tx_buffers", value:4, minValue:1, maxValue:16, enabled:true, visible:true, isMandatoryValue:false)
+	 ginteger_mtu = GInteger(widgetName:"ginteger_mtu", value:1500, minValue:1, maxValue:2048, enabled:true, visible:true, isMandatoryValue:false)
+	 ginteger_ttl = GInteger(widgetName:"ginteger_ttl", value:255, minValue:1, maxValue:255, enabled:true, visible:true, isMandatoryValue:false)
+	 ginteger_arp_tablesize = GInteger(widgetName:"ginteger_arp_tablesize", value:10, minValue:1, maxValue:127, enabled:true, visible:true, isMandatoryValue:false)
+	 ginteger_max_segment_size = GInteger(widgetName:"ginteger_max_segment_size", value:536, minValue:1, maxValue:1460, enabled:true, visible:true, isMandatoryValue:false)
+	 ginteger_window_size = GInteger(widgetName:"ginteger_window_size", value:2144, minValue:1, maxValue:16000, enabled:true, visible:true, isMandatoryValue:false)
+	 ginteger_tcp_snd_buf = GInteger(widgetName:"ginteger_tcp_snd_buf", value:1072, minValue:1, maxValue:16000, enabled:true, visible:true, isMandatoryValue:false)
+	 ginteger_tcp_snd_queuelen = GInteger(widgetName:"ginteger_tcp_snd_queuelen", value:8, minValue:1, maxValue:10000, enabled:true, visible:true, isMandatoryValue:false)
+	 ginteger_heap = GInteger(widgetName:"ginteger_heap", value:1600, minValue:1, maxValue:32000, enabled:true, visible:true, isMandatoryValue:false)
+	 ginteger_pbuf_pool = GInteger(widgetName:"ginteger_pbuf_pool", value:16, minValue:1, maxValue:32, enabled:true, visible:true, isMandatoryValue:false)
+	 ginteger_pbuf_memp = GInteger(widgetName:"ginteger_pbuf_memp", value:16, minValue:1, maxValue:2500, enabled:true, visible:true, isMandatoryValue:false)
+	 ginteger_memp_num_raw_pcb = GInteger(widgetName:"ginteger_memp_num_raw_pcb", value:4, minValue:1, maxValue:16000, enabled:true, visible:true, isMandatoryValue:false)
+	 ginteger_udp_connections = GInteger(widgetName:"ginteger_udp_connections", value:4, minValue:0, maxValue:16000, enabled:true, visible:true, isMandatoryValue:false)
+	 ginteger_tcp_connections = GInteger(widgetName:"ginteger_tcp_connections", value:5, minValue:0, maxValue:16000, enabled:true, visible:true, isMandatoryValue:false)
+	 ginteger_tcp_listeners = GInteger(widgetName:"ginteger_tcp_listeners", value:5, minValue:0, maxValue:16000, enabled:true, visible:true, isMandatoryValue:false)
+	 ginteger_tcp_queued_segs = GInteger(widgetName:"ginteger_tcp_queued_segs", value:8, minValue:0, maxValue:16000, enabled:true, visible:true, isMandatoryValue:false)
+	 ginteger_tcp_queued_reassembly = GInteger(widgetName:"ginteger_tcp_queued_reassembly", value:5, minValue:0, maxValue:16000, enabled:true, visible:true, isMandatoryValue:false)
+	 ginteger_arp_queued = GInteger(widgetName:"ginteger_arp_queued", value:30, minValue:0, maxValue:16000, enabled:true, visible:true, isMandatoryValue:false)
+	 ginteger_netbufs = GInteger(widgetName:"ginteger_netbufs", value:2, minValue:0, maxValue:16000, enabled:true, visible:true, isMandatoryValue:false)
+	 ginteger_netcons = GInteger(widgetName:"ginteger_netcons", value:4, minValue:0, maxValue:16000, enabled:true, visible:true, isMandatoryValue:false)
+	 ginteger_tcp_msg_cbs = GInteger(widgetName:"ginteger_tcp_msg_cbs", value:8, minValue:0, maxValue:16000, enabled:true, visible:true, isMandatoryValue:false)
+	 ginteger_tcp_msg_ins = GInteger(widgetName:"ginteger_tcp_msg_ins", value:8, minValue:0, maxValue:16000, enabled:true, visible:true, isMandatoryValue:false)
+	 gcombo_init_task_priority = GCombo(widgetName:"gcombo_init_task_priority", options:["Idle (lowest)","Low","Below Normal","Normal","Above Normal","High","Realtime (highest)"], value:"Normal", enabled:true, visible:true, isMandatoryValue:false)
+	 gcombo_tcpip_task_priority = GCombo(widgetName:"gcombo_tcpip_task_priority", options:["Idle (lowest)","Low","Below Normal","Normal","Above Normal","High","Realtime (highest)"], value:"Normal", enabled:true, visible:true, isMandatoryValue:false)
+	 gcombo_netif_task_priority = GCombo(widgetName:"gcombo_netif_task_priority", options:["Idle (lowest)","Low","Below Normal","Normal","Above Normal","High","Realtime (highest)"], value:"Above Normal", enabled:true, visible:true, isMandatoryValue:false)
+	 gcombo_phy_init_priority = GCombo(widgetName:"gcombo_phy_init_priority", options:["Idle (lowest)","Low","Below Normal","Normal","Above Normal","High","Realtime (highest)"], value:"Above Normal", enabled:true, visible:true, isMandatoryValue:false)
+	 gcombo_mii_interface_mode = GCombo(widgetName:"gcombo_mii_interface_mode", options:["MII","RMII"], value:"RMII", enabled:true, visible:true, isMandatoryValue:false)
+	 gcombo_phy_device = GCombo(widgetName:"gcombo_phy_device", options:["KSZ8031RNL","KSZ8081RNB","DP83848C","User Defined"], value:"KSZ8081RNB", enabled:true, visible:true, isMandatoryValue:false)
+	 gcombo_speed = GCombo(widgetName:"gcombo_speed", options:["10Mbits/s","100Mbit/s"], value:"100Mbit/s", enabled:true, visible:true, isMandatoryValue:false)
+	 gcombo_duplex_mode = GCombo(widgetName:"gcombo_duplex_mode", options:["Half Duplex","Full Duplex"], value:"Full Duplex", enabled:true, visible:true, isMandatoryValue:false)
+	 gstring_netif_name = GString(widgetName:"gstring_netif_name", value:"lwip", enabled:true, visible:true, isMandatoryValue:false)
+	 gstring_netif_status_cb = GString(widgetName:"gstring_netif_status_cb", value:"netif_status_cb", enabled:true, visible:true, isMandatoryValue:false)
+	 gstring_mac_address = GString(widgetName:"gstring_mac_address", value:"00:03:19:45:00:00", enabled:true, visible:true, isMandatoryValue:false)
+	 gstring_ipv6_gateway = GString(widgetName:"gstring_ipv6_gateway", value:"0000:0000:0000:0000:0000:0000:0000:0000", enabled:true, visible:true, isMandatoryValue:false)
+	 gstring_ipv6_subnet = GString(widgetName:"gstring_ipv6_subnet", value:"65535:65535:65535:65535:65535:65535:65535:0000", enabled:true, visible:true, isMandatoryValue:false)
+	 gstring_ipv6_address = GString(widgetName:"gstring_ipv6_address", value:"0000:0000:0000:0000:0000:0000:0000:0000", enabled:true, visible:true, isMandatoryValue:false)
+	 gstring_ip_address = GString(widgetName:"gstring_ip_address", value:"192.168.0.10", enabled:true, visible:true, isMandatoryValue:false)
+	 gstring_subnet_mask = GString(widgetName:"gstring_subnet_mask", value:"255.255.255.0", enabled:true, visible:true, isMandatoryValue:false)
+	 gstring_gateway_address = GString(widgetName:"gstring_gateway_address", value:"192.168.0.10", enabled:true, visible:true, isMandatoryValue:false)
+	 gstring_dns_server = GString(widgetName:"gstring_dns_server", value:"208.67.222.222", enabled:true, visible:true, isMandatoryValue:false)
+	 gcheck_netif_name = GCheck(widgetName:"gcheck_netif_name", value:false, enabled:true, visible:true)
+	 gcheck_netif_status_cb = GCheck(widgetName:"gcheck_netif_status_cb", value:false, enabled:true, visible:true)
+	 gcheck_rtos_en = GCheck(widgetName:"gcheck_rtos_en", value:false, enabled:true, visible:true)
+	 gcheck_debug_en = GCheck(widgetName:"gcheck_debug_en", value:false, enabled:true, visible:true)
+	 gcheck_assert_en = GCheck(widgetName:"gcheck_assert_en", value:false, enabled:true, visible:true)
+	 gcheck_statistics_en = GCheck(widgetName:"gcheck_statistics_en", value:false, enabled:true, visible:true)
+	 gcheck_autonegotiation_en = GCheck(widgetName:"gcheck_autonegotiation_en", value:true, enabled:true, visible:true)
+	 gcheck_promiscuous_en = GCheck(widgetName:"gcheck_promiscuous_en", value:false, enabled:true, visible:true)
+	 gcheck_broadcast_en = GCheck(widgetName:"gcheck_broadcast_en", value:false, enabled:true, visible:true)
+	 gcheck_polling = GCheck(widgetName:"gcheck_polling", value:false, enabled:true, visible:true)
+	 gcheck_enable_dhcp = GCheck(widgetName:"gcheck_enable_dhcp", value:false, enabled:true, visible:true)
+	 gcheck_enable_ipv6 = GCheck(widgetName:"gcheck_enable_ipv6", value:false, enabled:false, visible:true)
+	 gcheck_ip_opts_en = GCheck(widgetName:"gcheck_ip_opts_en", value:false, enabled:true, visible:true)
+	 gcheck_ip_frgment_en = GCheck(widgetName:"gcheck_ip_frgment_en", value:false, enabled:true, visible:true)
+	 gcheck_ip_reassmbly_en = GCheck(widgetName:"gcheck_ip_reassmbly_en", value:false, enabled:true, visible:true)
+	 gcheck_auto_ip_en = GCheck(widgetName:"gcheck_auto_ip_en", value:false, enabled:true, visible:true)
+	 gcheck_icmp_en = GCheck(widgetName:"gcheck_icmp_en", value:true, enabled:true, visible:true)
+	 gcheck_igmp_en = GCheck(widgetName:"gcheck_igmp_en", value:false, enabled:true, visible:true)
+	 gcheck_dns_en = GCheck(widgetName:"gcheck_dns_en", value:false, enabled:true, visible:true)
+	 gcheck_snmp_en = GCheck(widgetName:"gcheck_snmp_en", value:false, enabled:true, visible:true)
+	 gcheck_enable_tcp = GCheck(widgetName:"gcheck_enable_tcp", value:true, enabled:true, visible:true)
+	 gcheck_enable_udp = GCheck(widgetName:"gcheck_enable_udp", value:true, enabled:true, visible:true)
+	 glabel_init_task_priority = GLabel(widgetName:"glabel_init_task_priority", text:"Initialization task priority:", enabled:true, visible:true)
+	 glabel_init_task_size = GLabel(widgetName:"glabel_init_task_size", text:"Initialization task stack size:", enabled:true, visible:true)
+	 glabel_tcpip_task_priority = GLabel(widgetName:"glabel_tcpip_task_priority", text:"TCPIP task priority:", enabled:true, visible:true)
+	 glabel_tcpip_stacksize = GLabel(widgetName:"glabel_tcpip_stacksize", text:"TCPIP task stack size:           ", enabled:true, visible:true)
+	 glabel_netif_task_priority = GLabel(widgetName:"glabel_netif_task_priority", text:"Ethernet task priority:", enabled:true, visible:true)
+	 glabel_netif_task_stack_size = GLabel(widgetName:"glabel_netif_task_stack_size", text:"Ethernet task stack size:       ", enabled:true, visible:true)
+	 glabel_phy_init_priority = GLabel(widgetName:"glabel_phy_init_priority", text:"PHY status task priority:", enabled:true, visible:true)
+	 glabel_phy_task_stack_size = GLabel(widgetName:"glabel_phy_task_stack_size", text:"PHY status task stack size:   ", enabled:true, visible:true)
+	 glabel_speed = GLabel(widgetName:"glabel_speed", text:"Speed:", enabled:true, visible:true)
+	 glabel_duplex_mode = GLabel(widgetName:"glabel_duplex_mode", text:"Duplex mode:", enabled:true, visible:true)
+	 glabel_mac_address = GLabel(widgetName:"glabel_mac_address", text:"MAC address:", enabled:true, visible:true)
+	 glabel_rx_buffers = GLabel(widgetName:"glabel_rx_buffers", text:"Number of receive buffers:", enabled:true, visible:true)
+	 glabel_tx_buffers = GLabel(widgetName:"glabel_tx_buffers", text:"Number of transmit buffers", enabled:true, visible:true)
+	 glabel_ip_address = GLabel(widgetName:"glabel_ip_address", text:"IP address:", enabled:true, visible:true)
+	 glabel_subnet_mask = GLabel(widgetName:"glabel_subnet_mask", text:"Subnet mask:", enabled:true, visible:true)
+	 glabel_gateway_address = GLabel(widgetName:"glabel_gateway_address", text:"Gateway address:", enabled:true, visible:true)
+	 glabel_mtu = GLabel(widgetName:"glabel_mtu", text:"Max. transmission unit (MTU):", enabled:true, visible:true)
+	 glabel_ttl = GLabel(widgetName:"glabel_ttl", text:"Default time to live (TTL):", enabled:true, visible:true)
+	 glabel_arp_tablesize = GLabel(widgetName:"glabel_arp_tablesize", text:"ARP table size:", enabled:true, visible:true)
+	 glabel_dns_server = GLabel(widgetName:"glabel_dns_server", text:"DNS server:", enabled:true, visible:true)
+	 glabel_heap = GLabel(widgetName:"glabel_heap", text:"Heap size (MEM_SIZE):", enabled:true, visible:true)
+	 glabel_pbuf_pool = GLabel(widgetName:"glabel_pbuf_pool", text:"Packet buffer pool size (PBUF_POOL_SIZE):", enabled:true, visible:true)
+	 glabel_pbuf_memp = GLabel(widgetName:"glabel_pbuf_memp", text:"Number of memp struct pbufs (MEMP_NUM_PBUF):", enabled:true, visible:true)
+	 glabel_udp_connections = GLabel(widgetName:"glabel_udp_connections", text:"Simulatenously active UDP connections (MEMP_NUM_UDP_PCB):", enabled:true, visible:true)
+	 glabel_tcp_connections = GLabel(widgetName:"glabel_tcp_connections", text:"Simulatenously active TCP connections (MEMP_NUM_TCP_PCB):", enabled:true, visible:true)
+	 glabel_tcp_listeners = GLabel(widgetName:"glabel_tcp_listeners", text:"Listening TCP connections (MEMP_NUM_TCP_PCB_LISTEN):", enabled:true, visible:true)
+	 glabel_tcp_queued_segs = GLabel(widgetName:"glabel_tcp_queued_segs", text:"Simultaneously queued TCP segments (MEMP_NUM_TCP_SEG):", enabled:true, visible:true)
+	 glabel_tcp_queued_reassembly = GLabel(widgetName:"glabel_tcp_queued_reassembly", text:"Simultaneously IP packets queued for reassembly (MEMP_NUM_REASSDATA):", enabled:true, visible:true)
+	 glabel_arp_queued = GLabel(widgetName:"glabel_arp_queued", text:"Simultaneously queued pbufs waiting for ARP response (MEMP_NUM_ARP_QUEUE):", enabled:true, visible:true)
+	 glabel_netbufs = GLabel(widgetName:"glabel_netbufs", text:"Number of struct netbufs (MEMP_NUM_NETBUF):", enabled:true, visible:true)
+	 glabel_netcons = GLabel(widgetName:"glabel_netcons", text:"Number of struct netconns (MEMP_NUM_NETCONN):", enabled:true, visible:true)
+	 glabel_tcp_msg_cbs = GLabel(widgetName:"glabel_tcp_msg_cbs", text:"Number of struct tcpip_msg for callback/timeout (MEMP_NUM_TCPIP_MSG_API):", enabled:true, visible:true)
+	 glabel_tcp_msg_ins = GLabel(widgetName:"glabel_tcp_msg_ins", text:"Number of struct tcpip_msg for incomming packets (MEMP_NUM_TCPIP_MSG_INPKT):", enabled:true, visible:true)
+	 ggroup_1 = GGroup(widgetName:"ggroup_1", text:"RTOS Settings", enabled:true, visible:true)
+	 ggroup_rtos_init = GGroup(widgetName:"ggroup_rtos_init", text:"lwIP Initialization", enabled:true, visible:true)
+	 ggroup_rtos_tcpip = GGroup(widgetName:"ggroup_rtos_tcpip", text:"TCP/IP", enabled:true, visible:true)
+	 ggroup_rtos_ethernet = GGroup(widgetName:"ggroup_rtos_ethernet", text:"Ethernet", enabled:true, visible:true)
+	 ggroup_rtos_phy_init = GGroup(widgetName:"ggroup_rtos_phy_init", text:"PHY", enabled:true, visible:true)
+	 ggroup_2 = GGroup(widgetName:"ggroup_2", text:"Debugging Settings", enabled:true, visible:true)
+	 ginterruptprio_rx_irq = GInterruptPrio(widgetName:"ginterruptprio_rx_irq", priorityValue:63, minPriority:0, maxPriority:63, subPriorityValue:0, minSubPriority:0, maxSubPriority:0, subPriorityVisible:true, enabled:true, visible:true)
+
+
+	 }
+	/* End : UI variable section */
+}

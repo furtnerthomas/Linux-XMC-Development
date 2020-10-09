@@ -1,0 +1,434 @@
+package Model.APPS.ETH_LWIP.v4_0_10;
+
+/*
+ Copyright (c) 2015-2016, Infineon Technologies AG
+ All rights reserved.
+					  
+ Redistribution and use in source and binary forms, with or without modification, are permitted provided that the
+ following conditions are met:
+									   
+ Redistributions of source code must retain the above copyright notice, this list of conditions and the following
+ disclaimer.
+  
+ Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following
+ disclaimer in the documentation and/or other materials provided with the distribution.
+  
+ Neither the name of the copyright holders nor the names of its contributors may be used to endorse or promote
+ products derived from this software without specific prior written permission.
+									   
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+ INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE  FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ WHETHER IN CONTRACT, STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+									   
+ To improve the quality of the software, users are encouraged to share modifications, enhancements or bug fixes with
+ Infineon Technologies AG: dave@infineon.com. */
+/*************** Revision History **********************************************
+ Version        Date          Description
+ 
+   4.0.0       14-Jan-2016   Initial version for DAVEv4<br>
+   4.0.1       20-Jan-2016   Code generation syntax corrected for new Dave.<br>
+                             Initialization sequence changed to avoid blocking initialization of PHY<br>
+   4.0.3       05-Feb-2016   RTOS specific widgets enabled only when RTOS is used<br>
+   4.0.4       10-Feb-2016   APP version changed from beta to productive.<br>
+   4.0.6       08-Mar-2016   Corrected semaphore creation wrapper to initialize the object.<br>
+   4.0.8       25-Jun-2016   Added UI fields to configure tasks in RTOS mode.<br>
+                             New check box added in Interface Settings tab to use polling.<br>
+                             Excess memory copies removed between user buffer and DMA buffer.<br>
+   4.0.10      29-Jul-2016   Corrected default gpio output level configuration to low.<br>
+ *******************************************************************************/
+// Import statements
+import ifx.davex.app.manifest.*
+
+class  ETH_LWIP extends ETH_LWIP_GUI {
+
+	 /* Note  : Following APP properties are mandatory and important */
+	 
+	 /* Begin : APP property section */
+	
+	/**
+	 * APP version
+	 * Format: a string with three digit separated by a dot.
+	 */
+	def version            = '4.0.10'
+	
+	/**
+	 * APP categories declaration. 
+	 * It is list of strings. Subcategories are separated by slash.
+	 * No limits on number of categories and subcategories depth.
+	 */
+	def categoriesDescription = ["Communication/Ethernet"] 
+
+	/** 
+	 * Minimum DAVE version required for this APP.
+	 * 
+	 * It is string with three digit separated by a dot.
+	 */
+	def minDaveVersion           = '4.1.2'
+	
+	/** 
+	 * Keywords used by search feature in APPs selection view
+	 * 
+	 * It is a list of string.
+	 */
+	def keywords      = ['ETH', 'LWIP', 'ARP', 'IP', 'TCP', 'UDP', 'DNS', 'SNMP', 'DHCP', 'ICMP', 'IGMP', 'ALL']
+	
+	/** 
+	 * softwareIDs is used to declare which devices are compatible with this APP.
+	 * It is a map with key a string containing a pattern that shall match the SW id of
+	 * the device and as value the minimal version of the APP.
+	 */
+	def softwareIDs       = [
+		"XMC4.8.*.(E196|F144|F100).*":"1.0.0",
+		"XMC4.7.*.(E196|F144|F100).*":"1.0.0",
+		"XMC4.5.00.(E144|F144|F100).*":"1.0.0",
+		"XMC4.4.00.(F100|F64).*":"1.0.0",
+		"XMC4.3.00.F100.*":"1.0.0",]
+	
+	/**
+	 * Singleton property:
+	 * When it is true the APP can be instantiated only once. 
+	 */
+	def singleton     = true
+
+
+	/**
+	 * initProvider property
+	 * It shall be true to add a call to <AppName>_Init() 
+	 */
+	def initProvider  = true
+	
+	/**
+	 * Deprecated APP
+	 * Set it to true to indicate that the APP shall be not used for new projects.
+	 */
+	def deprecated    = false
+	
+	/**
+	 * Sharable property.
+	 * It shall be true to allows multiple APPs to require the same instance of this APP.
+	 */
+	def sharable      = true
+
+	/**
+	 *  APP function description.
+	 */
+	def description = """lwIP (lightweight IP) is an open source TCP/IP stack designed for embedded systems.
+lwIP stack supports the IP, TCP, UDP, ICMP, IGMP, ARP, DHCP, AutoIP, DNS and SNMP protocols.
+lwIP is provided under BSD style license and maintained at http://savannah.nongnu.org/projects/lwip."""
+	
+	/* End   : APP property section */
+	
+	/* Begin : User APP property section */
+
+	/*hardware resources*/
+	MVirtualResourceGroup hwres_eth_mac				/*ETH peripheral resource*/
+	MVirtualResourceGroup hwres_eth_port_crs		/*Carrier sense(CRS)/ carrier sense-data valid(CRS_DV) pin*/
+	MVirtualResourceGroup hwres_eth_port_cd			/*Collision detection pin*/
+	MVirtualResourceGroup hwres_eth_port_rdv		/*Receive data valid*/
+	MVirtualResourceGroup hwres_eth_port_rxer		/*Receive error*/
+	MVirtualResourceGroup hwres_eth_port_rxd0		/*Receive data pin0 for MII or RMII */
+	MVirtualResourceGroup hwres_eth_port_rxd1		/*Receive data pin1 for MII or RMII */
+	MVirtualResourceGroup hwres_eth_port_rxd2		/*Receive data pin2 for MII */
+	MVirtualResourceGroup hwres_eth_port_rxd3		/*Receive data pin3 for MII */
+	MVirtualResourceGroup hwres_eth_port_txen		/*Transmit enable for MII or RMII*/
+	MVirtualResourceGroup hwres_eth_port_txer		/*Transmit error for MII*/
+	MVirtualResourceGroup hwres_eth_port_txd0		/*Transmit data pin0 for MII or RMII*/
+	MVirtualResourceGroup hwres_eth_port_txd1		/*Transmit data pin1 for MII or RMII*/
+	MVirtualResourceGroup hwres_eth_port_txd2		/*Transmit data pin2 for MII*/
+	MVirtualResourceGroup hwres_eth_port_txd3		/*Transmit data pin3 for MII*/
+	MVirtualResourceGroup hwres_eth_port_tx_clk		/*Transmit clock*/
+	MVirtualResourceGroup hwres_eth_port_rx_clk		/*Receive clock or RMII clock*/
+	MVirtualResourceGroup hwres_eth_port_mdc		/*Station management clock pin*/
+	MVirtualResourceGroup hwres_eth_port_mdio		/*Station management data pin*/
+	MVirtualResourceGroup hwres_nvic_node			/*NVIC node corresponding to ethernet interrupt*/
+	
+	
+	MVirtualSignal vs_eth_int
+	MVirtualSignal vs_eth_crs, vs_port_crs
+	MVirtualSignal vs_eth_cd, vs_port_cd
+	MVirtualSignal vs_eth_rdv, vs_port_rdv
+	MVirtualSignal vs_eth_rxer, vs_port_rxer
+	MVirtualSignal vs_eth_rxd0, vs_port_rxd0
+	MVirtualSignal vs_eth_rxd1, vs_port_rxd1
+	MVirtualSignal vs_eth_rxd2, vs_port_rxd2
+	MVirtualSignal vs_eth_rxd3, vs_port_rxd3
+	MVirtualSignal vs_eth_txen, vs_port_txen
+	MVirtualSignal vs_eth_txer, vs_port_txer
+	MVirtualSignal vs_eth_txd0, vs_port_txd0
+	MVirtualSignal vs_eth_txd1, vs_port_txd1
+	MVirtualSignal vs_eth_txd2, vs_port_txd2
+	MVirtualSignal vs_eth_txd3, vs_port_txd3
+	MVirtualSignal vs_eth_tx_clk, vs_port_tx_clk
+	MVirtualSignal vs_eth_rx_clk, vs_port_rx_clk
+	MVirtualSignal vs_eth_mdc, vs_port_mdc
+	MVirtualSignal vs_eth_mdio, vs_eth_mdo, vs_port_mdio, vs_port_mdio_hw_o
+	MVirtualSignal vs_eth_interrupt, vs_nvic_node
+		
+	MRequiredApp appres_cpu
+	MRequiredApp appres_rtos
+	MRequiredApp appres_rtt
+	MRequiredApp appres_systimer
+	
+	
+	/* End   : User APP property section */
+
+	/* APP Constructor */
+	public ETH_LWIP(DaveEnv daveEnv) {
+		
+		/*MF functions to represent UI changes*/
+		MF MF_mii_interface = MF({gcombo_mii_interface_mode.value},String)
+		MF MF_is_interface_RMII = MF({gcombo_mii_interface_mode.value == "RMII"},Boolean)
+		MF MF_is_interface_MII = MF({gcombo_mii_interface_mode.value == "MII"},Boolean)
+		/*MF to check if PHY autonegotiation is disabled*/
+		MF MF_isnt_autonegot_enabled = MF({gcheck_autonegotiation_en.value == false},Boolean)
+		
+		
+		hwres_eth_mac =  MVirtualResourceGroup("ETH", ["peripheral", "eth", "*", "eth"])
+		/*Pad resources*/
+		hwres_eth_port_crs = MVirtualResourceGroup("CRS",["port","p","*","pad","*"], MF_is_interface_MII)
+		hwres_eth_port_cd = MVirtualResourceGroup("CD",["port","p","*","pad","*"], MF_is_interface_MII)
+		hwres_eth_port_rdv = MVirtualResourceGroup(MF({if(gcombo_mii_interface_mode.value == "RMII") "CRS_DV" else "RDV"},String),["port","p","*","pad","*"])
+		hwres_eth_port_rxer = MVirtualResourceGroup("RXER",["port","p","*","pad","*"])
+		hwres_eth_port_rxd0 = MVirtualResourceGroup("RXD0",["port","p","*","pad","*"])
+		hwres_eth_port_rxd1 = MVirtualResourceGroup("RXD1",["port","p","*","pad","*"])
+		hwres_eth_port_rxd2 = MVirtualResourceGroup("RXD2",["port","p","*","pad","*"], MF_is_interface_MII)
+		hwres_eth_port_rxd3 = MVirtualResourceGroup("RXD3",["port","p","*","pad","*"], MF_is_interface_MII)
+		hwres_eth_port_txen = MVirtualResourceGroup("TXEN",["port","p","*","pad","*"])
+		hwres_eth_port_txer = MVirtualResourceGroup("TXER",["port","p","*","pad","*"], MF_is_interface_MII)
+		hwres_eth_port_txd0 = MVirtualResourceGroup("TXD0",["port","p","*","pad","*"])
+		hwres_eth_port_txd1 = MVirtualResourceGroup("TXD1",["port","p","*","pad","*"])
+		hwres_eth_port_txd2 = MVirtualResourceGroup("TXD2",["port","p","*","pad","*"], MF_is_interface_MII)
+		hwres_eth_port_txd3 = MVirtualResourceGroup("TXD3",["port","p","*","pad","*"], MF_is_interface_MII)
+		hwres_eth_port_tx_clk = MVirtualResourceGroup("TX_CLK",["port","p","*","pad","*"], MF_is_interface_MII)
+		hwres_eth_port_rx_clk = MVirtualResourceGroup(MF({if(gcombo_mii_interface_mode.value == "RMII") "RMII_CLK" else "RX_CLK"},String),["port","p","*","pad","*"])
+		hwres_eth_port_mdc = MVirtualResourceGroup("MDC",["port","p","*","pad","*"])
+		hwres_eth_port_mdio = MVirtualResourceGroup("MDIO",["port","p","*","pad","*"])
+		hwres_nvic_node = MVirtualResourceGroup("NVIC node", ["peripheral", "cpu", "0", "nvic", "interrupt", "*"])
+		
+		if(daveEnv.project.selectedDevice.deviceId.family == 'XMC4')
+		{
+			appres_cpu = MRequiredApp("CPU_CTRL_XMC4", "CPU APP", RSHARABLE, "4.0.2")
+		}
+		else
+		{
+			appres_cpu = MRequiredApp("CPU_CTRL_XMC1", "CPU APP", RSHARABLE, "4.0.2")
+		}
+		
+		/*Signal definition*/
+		/*Port signals*/
+		@AddPin
+		vs_port_crs = MVirtualSignal(hwres_eth_port_crs, "crs pin", "pad", MF_is_interface_MII, false)
+		@AddPin
+		vs_port_cd = MVirtualSignal( hwres_eth_port_cd, "collision_detect","pad", MF_is_interface_MII, false)
+		@AddPin
+		vs_port_rdv = MVirtualSignal( hwres_eth_port_rdv, MF({if(gcombo_mii_interface_mode.value == "RMII") "crs_dv" else "rx_data_valid"},String), "pad", true, false)
+		@AddPin
+		vs_port_rxer = MVirtualSignal( hwres_eth_port_rxer, "rx_error","pad", true, false)
+		@AddPin
+		vs_port_rxd0 = MVirtualSignal( hwres_eth_port_rxd0, "rx_data0","pad", true, false)
+		@AddPin
+		vs_port_rxd1 = MVirtualSignal( hwres_eth_port_rxd1, "rx_data1","pad", true, false)
+		@AddPin
+		vs_port_rxd2 = MVirtualSignal( hwres_eth_port_rxd2, "rx_data2","pad", MF_is_interface_MII, false)
+		@AddPin
+		vs_port_rxd3 = MVirtualSignal( hwres_eth_port_rxd3, "rx_data3","pad", MF_is_interface_MII, false)
+		@AddPin
+		vs_port_txen = MVirtualSignal( hwres_eth_port_txen, "tx_enable","pad", true, false)
+		@AddPin
+		vs_port_txer = MVirtualSignal( hwres_eth_port_txer, "tx_error","pad", MF_is_interface_MII, false)
+		@AddPin
+		vs_port_txd0 = MVirtualSignal( hwres_eth_port_txd0, "tx_data0","pad", true, false)
+		@AddPin
+		vs_port_txd1 = MVirtualSignal( hwres_eth_port_txd1, "tx_data1","pad", true, false)
+		@AddPin
+		vs_port_txd2 = MVirtualSignal( hwres_eth_port_txd2, "tx_data2","pad", MF_is_interface_MII, false)
+		@AddPin
+		vs_port_txd3 = MVirtualSignal( hwres_eth_port_txd3, "tx_data3","pad", MF_is_interface_MII, false)
+		@AddPin
+		vs_port_tx_clk = MVirtualSignal( hwres_eth_port_tx_clk, "tx_clock","pad", MF_is_interface_MII, false)
+		@AddPin
+		vs_port_rx_clk = MVirtualSignal( hwres_eth_port_rx_clk, MF({if(gcombo_mii_interface_mode.value == "RMII") "rmii_clock" else "rx_clock"},String),"pad", true, false)
+		@AddPin
+		vs_port_mdc = MVirtualSignal( hwres_eth_port_mdc, "mdc","pad", true, false)/*Output*/
+		@AddPin
+		vs_port_mdio = MVirtualSignal( hwres_eth_port_mdio, "mdio","pad", true, false)/*input/ouput*/
+		
+		vs_port_mdio_hw_o = MVirtualSignal( hwres_eth_port_mdio,"mdio_hw_o", "hw_o",true,false)
+		
+		/*Ethernet signals*/
+		vs_eth_int = MVirtualSignal( hwres_eth_mac, "interrupt","intr", true, false)
+		vs_eth_crs = MVirtualSignal( hwres_eth_mac, "carrier_sense","crs", MF_is_interface_MII, false)
+		vs_eth_cd = MVirtualSignal( hwres_eth_mac, "collision_detect","col", MF_is_interface_MII, false)
+		vs_eth_rdv = MVirtualSignal( hwres_eth_mac, MF({if(gcombo_mii_interface_mode.value == "RMII") "crs_dv" else "rx_data_valid"},String),"crs_dv", true, false)
+		vs_eth_rxer = MVirtualSignal( hwres_eth_mac, "rx_error","rxer", true, false)
+		vs_eth_rxd0 = MVirtualSignal( hwres_eth_mac, "rx_data0","rxd0", true, false)
+		vs_eth_rxd1 = MVirtualSignal( hwres_eth_mac, "rx_data1","rxd1", true, false)
+		vs_eth_rxd2 = MVirtualSignal( hwres_eth_mac, "rx_data2","rxd2", MF_is_interface_MII, false)
+		vs_eth_rxd3 = MVirtualSignal( hwres_eth_mac, "rx_data3","rxd3", MF_is_interface_MII, false)
+		vs_eth_txen = MVirtualSignal( hwres_eth_mac, "tx_enable","tx_en", true, false)
+		vs_eth_txer = MVirtualSignal( hwres_eth_mac, "tx_error","txer", MF_is_interface_MII, false)
+		vs_eth_txd0 = MVirtualSignal( hwres_eth_mac, "tx_data0","txd0", true, false)
+		vs_eth_txd1 = MVirtualSignal( hwres_eth_mac, "tx_data1","txd1", true, false)
+		vs_eth_txd2 = MVirtualSignal( hwres_eth_mac, "tx_data2","txd2", MF_is_interface_MII, false)
+		vs_eth_txd3 = MVirtualSignal( hwres_eth_mac, "tx_data3","txd3", MF_is_interface_MII, false)
+		vs_eth_tx_clk = MVirtualSignal( hwres_eth_mac, "tx_clock","clk_tx", MF_is_interface_MII, false)
+		vs_eth_rx_clk = MVirtualSignal( hwres_eth_mac, MF({if(gcombo_mii_interface_mode.value == "MII") return "rx_clock" else return "rmii_clock"},String),"clk_rmii", true, false)
+		vs_eth_mdc = MVirtualSignal( hwres_eth_mac, "mdc","mdc", true, false)/*Output*/
+		vs_eth_mdio = MVirtualSignal( hwres_eth_mac, "mdio","mdi", true, false)/*input/ouput*/
+		vs_eth_mdo = MVirtualSignal( hwres_eth_mac, "mdio","mdo", true, false)/*input/ouput*/
+		vs_eth_interrupt = MVirtualSignal(hwres_eth_mac, "eth interrupt", "intr", true, false)
+		
+		/*NVIC signal*/
+		vs_nvic_node     =  MVirtualSignal( hwres_nvic_node, "sr_protocol_events", "signal_in", true, false)
+		
+		/*Connections*/
+		addConnectionConstraint( vs_port_crs, vs_eth_crs, MF_is_interface_MII)
+		addConnectionConstraint( vs_port_cd, vs_eth_cd, MF_is_interface_MII)
+		addConnectionConstraint( vs_port_rdv, vs_eth_rdv)
+		addConnectionConstraint( vs_port_rxer, vs_eth_rxer)
+		addConnectionConstraint( vs_port_rxd0, vs_eth_rxd0)
+		addConnectionConstraint( vs_port_rxd1, vs_eth_rxd1)
+		addConnectionConstraint( vs_port_rxd2, vs_eth_rxd2, MF_is_interface_MII)
+		addConnectionConstraint( vs_port_rxd3, vs_eth_rxd3, MF_is_interface_MII)
+		addConnectionConstraint( vs_eth_txen, vs_port_txen)
+		addConnectionConstraint( vs_eth_txer, vs_port_txer, MF_is_interface_MII)
+		addConnectionConstraint( vs_eth_txd0, vs_port_txd0)
+		addConnectionConstraint( vs_eth_txd1, vs_port_txd1)
+		addConnectionConstraint( vs_eth_txd2, vs_port_txd2, MF_is_interface_MII)
+		addConnectionConstraint( vs_eth_txd3, vs_port_txd3, MF_is_interface_MII)
+		addConnectionConstraint( vs_port_tx_clk, vs_eth_tx_clk, MF_is_interface_MII)
+		addConnectionConstraint( vs_port_rx_clk, vs_eth_rx_clk)
+		addConnectionConstraint( vs_eth_mdc, vs_port_mdc)
+		addConnectionConstraint( vs_port_mdio, vs_eth_mdio)
+		addConnectionConstraint( vs_eth_mdo, vs_port_mdio_hw_o)
+		addConnectionConstraint( vs_eth_interrupt, vs_nvic_node)
+		
+		/*Update UI properties*/
+		MF MF_max_subpriority = MF({
+			appres_cpu.getVal(["gint_maxInterruptSubPriority", "value"])
+		  }, Integer)
+		MF MF_max_priority = MF({
+			  return appres_cpu.getVal(["gint_maxInterruptPreemptPriority", "value"])
+		  }, Integer)
+		
+		ginterruptprio_rx_irq.maxSubPriority = MF_max_subpriority
+		ginterruptprio_rx_irq.maxPriority = MF_max_priority
+    
+    ginterruptprio_rx_irq.enabled = MF({return (!gcheck_polling.value)},Boolean)
+		
+		ginteger_max_segment_size.maxValue = MF({ginteger_mtu.value},Integer)
+		ginteger_window_size.minValue = MF({ginteger_max_segment_size.value * 2},Integer)
+		ginteger_window_size.maxValue = MF({ginteger_mtu.value * ginteger_pbuf_pool.value},Integer)
+		ginteger_tcp_snd_buf.minValue = MF({return (ginteger_max_segment_size.value * 2)}, Integer)
+		ginteger_tcp_snd_queuelen.minValue = MF({
+			Integer ret_val = (2 * ginteger_tcp_snd_buf.value)/ginteger_max_segment_size.value
+			return ret_val
+			}, Integer)
+		ginteger_tcp_snd_queuelen.maxValue = MF({ginteger_tcp_queued_segs.value},Integer)
+		
+		MF MF_rtos_en = MF({gcheck_rtos_en.value},Boolean)
+		appres_rtos = MRequiredApp("CMSIS_RTOS", "RTOS APP", RSHARABLE, "4.0.2", MF_rtos_en)
+		glabel_tcpip_task_priority.enabled = MF_rtos_en
+		gcombo_tcpip_task_priority.enabled = MF_rtos_en
+		glabel_tcpip_stacksize.enabled = MF_rtos_en
+		ginteger_tcpip_stacksize.enabled = MF_rtos_en
+		glabel_netif_task_priority.enabled = MF_rtos_en
+		gcombo_netif_task_priority.enabled = MF_rtos_en
+    ggroup_rtos_init.enabled = MF_rtos_en
+    ggroup_rtos_tcpip.enabled = MF_rtos_en
+    ggroup_rtos_ethernet.enabled = MF_rtos_en
+    ggroup_rtos_phy_init.enabled = MF_rtos_en
+		
+		appres_systimer = MRequiredApp("SYSTIMER", "Systick APP", RSHARABLE, "4.0.2", MF({gcheck_rtos_en.value == false},Boolean))
+		
+		MF MF_log_enabled = MF({gcheck_debug_en.value || gcheck_assert_en.value || gcheck_statistics_en.value},Boolean)
+		appres_rtt = MRequiredApp("SEGGER_RTT", "LOG APP", RSHARABLE, "4.0.2", MF_log_enabled)
+		
+		gstring_netif_name.enabled = MF({gcheck_netif_name.value},Boolean)
+		gstring_netif_status_cb.enabled = MF({gcheck_netif_status_cb.value},Boolean)
+		
+		MF MF_is_not_dhcp = MF({gcheck_enable_dhcp.value == false},Boolean)
+		MF MF_is_ipv6 = MF({gcheck_enable_ipv6.value},Boolean)
+		MF MF_is_ipv4 = MF({gcheck_enable_ipv6.value == false},Boolean)
+		gstring_ip_address.enabled = MF_is_not_dhcp
+		gstring_ipv6_address.enabled = MF_is_not_dhcp
+		gstring_ip_address.visible = MF_is_ipv4
+		gstring_ipv6_address.visible = MF_is_ipv6
+		gstring_subnet_mask.enabled = MF_is_not_dhcp
+		gstring_ipv6_subnet.enabled = MF_is_not_dhcp
+		gstring_subnet_mask.visible = MF_is_ipv4
+		gstring_ipv6_subnet.visible = MF_is_ipv6
+		gstring_gateway_address.enabled = MF_is_not_dhcp
+		gstring_ipv6_gateway.enabled = MF_is_not_dhcp
+		gstring_gateway_address.visible = MF_is_ipv4
+		gstring_ipv6_gateway.visible = MF_is_ipv6
+		
+		glabel_speed.enabled = MF_isnt_autonegot_enabled
+		gcombo_speed.enabled = MF_isnt_autonegot_enabled
+		glabel_duplex_mode.enabled = MF_isnt_autonegot_enabled
+		gcombo_duplex_mode.enabled = MF_isnt_autonegot_enabled
+		
+		MF MF_is_dns_en = MF({gcheck_dns_en.value && gcheck_enable_udp.value},Boolean)
+		glabel_dns_server.enabled = MF_is_dns_en
+		gstring_dns_server.enabled = MF_is_dns_en
+		
+		MF MF_is_udp_en = MF({gcheck_enable_udp.value},Boolean)
+		glabel_udp_connections.enabled = MF_is_udp_en
+		ginteger_udp_connections.enabled = MF_is_udp_en
+		gcheck_dns_en.enabled = MF_is_udp_en
+		gcheck_igmp_en.enabled = MF_is_udp_en
+		gcheck_enable_dhcp.enabled = MF_is_udp_en
+		gcheck_snmp_en.enabled = MF_is_udp_en
+		
+		MF MF_is_tcp_en = MF({gcheck_enable_tcp.value},Boolean)
+		MF MF_is_tcp_reass_en = MF({gcheck_enable_tcp.value && gcheck_ip_reassmbly_en.value},Boolean)
+		glabel_tcp_connections.enabled = MF_is_tcp_en
+		ginteger_tcp_connections.enabled = MF_is_tcp_en
+		glabel_tcp_listeners.enabled = MF_is_tcp_en
+		ginteger_tcp_listeners.enabled = MF_is_tcp_en
+		ginteger_tcp_listeners.maxValue = MF({ginteger_tcp_connections.value},Integer)
+		glabel_tcp_queued_segs.enabled = MF_is_tcp_en
+		ginteger_tcp_queued_segs.enabled = MF_is_tcp_en
+		glabel_tcp_queued_reassembly.enabled = MF_is_tcp_reass_en
+		ginteger_tcp_queued_reassembly.enabled = MF_is_tcp_reass_en
+		ginteger_tcp_snd_buf.enabled = MF_is_tcp_en
+		ginteger_tcp_snd_queuelen.enabled = MF_is_tcp_en
+				
+		/*Memory settings valid when RTOS is used*/
+		ginteger_netbufs.enabled = MF_rtos_en
+		glabel_netbufs.enabled = MF_rtos_en
+		ginteger_netcons.enabled = MF_rtos_en
+		glabel_netcons.enabled = MF_rtos_en
+		ginteger_tcp_msg_cbs.enabled = MF_rtos_en
+		glabel_tcp_msg_cbs.enabled = MF_rtos_en
+		ginteger_tcp_msg_ins.enabled = MF_rtos_en
+		glabel_tcp_msg_ins.enabled = MF_rtos_en
+		
+	}
+	
+	// File Generation
+	def generateFiles(){
+		copy("lwip", "lwip")
+		copy("eth_lwip.c", "eth_lwip.c")
+		copy("eth_lwip.h", "eth_lwip.h")
+		copy("xmc_eth_phy_ksz8031rnl.c", "xmc_eth_phy_ksz8031rnl.c")
+		copy("xmc_eth_phy_ksz8081rnl.c", "xmc_eth_phy_ksz8081rnl.c")
+		copy("xmc_eth_phy_dp83848.c", "xmc_eth_phy_dp83848.c")
+		generate("eth_lwip_confc.tmpl", "eth_lwip_conf.c")
+		generate("eth_lwip_confh.tmpl", "eth_lwip_conf.h")
+		generate("eth_lwip_externh.tmpl", "eth_lwip_extern.h")
+		generate("cch.tmpl", "lwip/port/include/arch/cc.h")
+		generate("sys_archh.tmpl", "lwip/port/include/arch/sys_arch.h")
+		generate("lwipoptsh.tmpl", "lwip/port/include/lwipopts.h")
+		generate("ethernetifc.tmpl", "lwip/port/netif/ethernetif.c")
+		generate("sys_archc.tmpl", "lwip/port/sys_arch.c")
+	}
+	
+	/**
+	 * Add main code here
+	 */
+}

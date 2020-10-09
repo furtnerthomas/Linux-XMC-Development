@@ -1,0 +1,24 @@
+package Model.APPS.SYSTIMER.v4_1_14;
+
+/* Import statements */
+import ifx.davex.app.manifest.*
+
+abstract class SYSTIMER_GUI extends AppManifest 
+{
+  /* Begin : UI variable section */
+	 public GTab gtab_interrupt_settings;
+	 public GInteger ginteger_systickinterval;
+	 public GInteger ginteger_swtimers;
+	 public GInterruptPrio ginterruptprio_systimer;
+
+	 public SYSTIMER_GUI(DaveEnv daveEnv){
+
+	 gtab_interrupt_settings = GTab(widgetName:"gtab_interrupt_settings", text:"Interrupt Settings", enabled:true, visible:true)
+	 ginteger_systickinterval = GInteger(widgetName:"ginteger_systickinterval", value:1000, minValue:1, maxValue:Long.MAX_VALUE, enabled:true, visible:true, isMandatoryValue:false)
+	 ginteger_swtimers = GInteger(widgetName:"ginteger_swtimers", value:8, minValue:1, maxValue:16, enabled:true, visible:true, isMandatoryValue:false)
+	 ginterruptprio_systimer = GInterruptPrio(widgetName:"ginterruptprio_systimer", priorityValue:63, minPriority:0, maxPriority:Long.MAX_VALUE, subPriorityValue:0, minSubPriority:0, maxSubPriority:Long.MAX_VALUE, subPriorityVisible:true, enabled:true, visible:true)
+
+
+	 }
+	/* End : UI variable section */
+}

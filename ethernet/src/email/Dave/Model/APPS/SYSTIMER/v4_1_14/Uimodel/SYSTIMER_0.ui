@@ -1,0 +1,47 @@
+<p1:Tab  xmlns="http://www.eclipse.org/xwt/presentation" xmlns:x="http://www.eclipse.org/xwt" xmlns:p1="clr-namespace:com.ifx.davex.ui.controls.app" x:Class="e" layout="{x:Null}">
+	<p1:TabFolder bounds="5, 5, 503, 600">
+		<p1:GTab text="General Settings" widgetName="gtab_systimercfg" visible="true" enabled="true" toolTipText="">
+			<p1:GTab.control>
+				<p1:Tab>
+					<p1:Tab.layout>
+						<GridLayout numColumns="2"/>
+					</p1:Tab.layout>
+					<p1:GLabel text="SysTick timer period [us]:" toolTipText="" visible="true" widgetName="glabel_systickinterval">
+						<p1:GLabel.layoutData>
+							<GridData widthHint="167"/>
+						</p1:GLabel.layoutData>
+					</p1:GLabel>
+					<p1:GInteger format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" maxValue="MAX_VALUE" minValue="1" toolTipText="Configures SysTick hardware timer period and defines the resolution of the software timers. " value="1000" widgetName="ginteger_systickinterval" description="Defines the resolution of the software timers, given in microseconds. MAX_VALUE is calculated based on configured CPU clock in CLOCK_XMC1/4 APP using following formula pow(2,24) *(1/fCPU) * 1E6, where fCPU is in hertz. ">
+						<p1:GInteger.layoutData>
+							<GridData widthHint="62"/>
+						</p1:GInteger.layoutData>
+					</p1:GInteger>
+					<p1:GLabel text="Number of software timers:" toolTipText="" visible="true" widgetName="glabel_swtimers">
+						<p1:GLabel.layoutData>
+							<GridData widthHint="147"/>
+						</p1:GLabel.layoutData>
+					</p1:GLabel>
+					<p1:GInteger format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" manifestObj="true" maxValue="16" minValue="1" toolTipText="Set maximum number of software timers." value="8" widgetName="ginteger_swtimers" description="Set maximum number of software timers.">
+						<p1:GInteger.layoutData>
+							<GridData widthHint="62"/>
+						</p1:GInteger.layoutData>
+					</p1:GInteger>
+				</p1:Tab>
+			</p1:GTab.control>
+		</p1:GTab>
+		<p1:GTab text="Interrupt Settings" visible="true" enabled="true" manifestObj="true" widgetName="gtab_interrupt_settings">
+			<p1:GTab.control>
+				<p1:Tab widgetName="composite_1">
+					<p1:Tab.layout>
+						<GridLayout/>
+					</p1:Tab.layout>
+					<p1:GInterruptPrio description="This configures interrupt preemption priority for Systick Exception. The MAX_VALUE value for preemption priority and sub-priority indicated in the range field is dynamically calculated based on the number of bits configured in the CPU_CTRL_XMC1/4 APP. " manifestObj="true" maxPriority="MAX_VALUE" maxSubPriority="MAX_VALUE" minPriority="0" minSubPriority="0" priorityMandatory="false" priorityValue="63" subPriorityValue="0" text="SysTick Interrupt Settings" toolTipText="This configures interrupt preemption priority and &#13;&#10;subpriority for SysTick exception." widgetName="ginterruptprio_systimer">
+						<p1:GInterruptPrio.layoutData>
+							<GridData grabExcessHorizontalSpace="true" horizontalAlignment="FILL"/>
+						</p1:GInterruptPrio.layoutData>
+					</p1:GInterruptPrio>
+				</p1:Tab>
+			</p1:GTab.control>
+		</p1:GTab>
+	</p1:TabFolder>
+</p1:Tab>

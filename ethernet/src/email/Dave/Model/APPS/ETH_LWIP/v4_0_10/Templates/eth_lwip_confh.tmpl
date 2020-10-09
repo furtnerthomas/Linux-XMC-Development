@@ -1,0 +1,250 @@
+package Model.APPS.ETH_LWIP.v4_0_10.Templates;
+
+import Model.APPS.ETH_LWIP.v4_0_10.ETH_LWIP
+
+out.print("""
+/**
+ * @cond
+ ***********************************************************************************************************************
+ *
+ * Copyright (c) 2015, Infineon Technologies AG
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without modification,are permitted provided that the
+ * following conditions are met:
+ *
+ *   Redistributions of source code must retain the above copyright notice, this list of conditions and the  following
+ *   disclaimer.
+ *
+ *   Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the
+ *   following disclaimer in the documentation and/or other materials provided with the distribution.
+ *
+ *   Neither the name of the copyright holders nor the names of its contributors may be used to endorse or promote
+ *   products derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE  FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT  OF THE
+ * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * To improve the quality of the software, users are encouraged to share modifications, enhancements or bug fixes
+ * with Infineon Technologies AG (dave@infineon.com).
+ ***********************************************************************************************************************
+ *
+ * Change History
+ * --------------
+ *
+ * 2016-01-14:
+ *     - Initial version for DAVEv4.
+ *
+ * @endcond
+ *
+ */
+#ifndef ETH_LWIP_CONF_H
+#define ETH_LWIP_CONF_H
+/***********************************************************************************************************************
+ * HEADER FILES
+ **********************************************************************************************************************/
+
+""")
+out.print("""
+#define ETH_LWIP_MAJOR_VERSION (${(ETH_LWIP.version).findAll( /\d+/ )*.toInteger()[0]}U)
+#define ETH_LWIP_MINOR_VERSION (${(ETH_LWIP.version).findAll( /\d+/ )*.toInteger()[1]}U)
+#define ETH_LWIP_PATCH_VERSION (${(ETH_LWIP.version).findAll( /\d+/ )*.toInteger()[2]}U)
+
+/*PHY identifiers*/
+#define PHY_USER_DEFINED (0U)
+#define PHY_KSZ8081RNB	 (1U)
+#define PHY_KSZ8031RNL   (2U)
+#define PHY_DP83848C  	 (3U)
+""")
+List OS_priority_list =
+["osPriorityIdle",
+"osPriorityLow",
+"osPriorityBelowNormal",
+"osPriorityNormal",
+"osPriorityAboveNormal",
+"osPriorityHigh",
+"osPriorityRealtime"]
+for(ETH_LWIP eth_lwip_inst : appInstancesList)
+{
+	out.print("""
+#include "lwip/include/lwip/opt.h"
+""")
+	if(eth_lwip_inst.gcheck_enable_dhcp.value == true)
+	{
+		out.print("""
+#include "lwip/include/lwip/dhcp.h" """)
+	}
+	if(eth_lwip_inst.gcheck_auto_ip_en.value == true)
+	{
+		out.print("""
+#include "lwip/include/ipv4/lwip/autoip.h"
+""")
+	}
+	if(eth_lwip_inst.gcheck_rtos_en.value == false)
+	{
+		out.print("""
+#include "SYSTIMER/systimer.h"
+#include "lwip/include/lwip/timers.h"
+#include "lwip/include/lwip/init.h"
+""")
+	}
+	else
+	{
+		out.print("""
+#include "CMSIS_RTOS/cmsis_rtos.h"
+#include "lwip/include/lwip/tcpip.h"
+""")
+	}
+	out.print("""
+#ifndef PHY_DEVICE_NAME
+""")
+	if(eth_lwip_inst.gcombo_phy_device.value != "User Defined")
+	{
+	out.print("""
+#define PHY_DEVICE_NAME  PHY_${eth_lwip_inst.gcombo_phy_device.value} """)
+	}
+	else
+	{
+		out.print("""
+#define PHY_DEVICE_NAME  PHY_USER_DEFINED """)
+	}
+	out.print("""
+#endif
+""")
+
+	/*IP configuration*/
+	if(eth_lwip_inst.gcheck_enable_dhcp.value == false)
+	{
+		/*Parse the IP address string*/
+		if(eth_lwip_inst.gcheck_enable_ipv6.value == false)
+		{
+			/*IPv4*/
+			out.print("""
+/*IPv4 address*/""")
+		print_ipv4_string(eth_lwip_inst.gstring_ip_address.value, "IP_ADDR")
+		out.print("""
+/*IPv4 subnet mask*/""")
+			print_ipv4_string(eth_lwip_inst.gstring_subnet_mask.value, "NETMASK_ADDR")
+			out.print("""
+/*IPv4 gateway address*/""")
+		print_ipv4_string(eth_lwip_inst.gstring_gateway_address.value, "GW_ADDR")
+	}
+	else
+	{
+		/*IPv6*/
+		out.print("""
+/*IPv6 address*/""")
+			print_ipv6_string(eth_lwip_inst.gstring_ipv6_address.value, "IP_ADDR")
+			out.print("""
+/*IPv6 subnet mask*/""")
+		print_ipv6_string(eth_lwip_inst.gstring_ipv6_subnet.value, "NETMASK_ADDR")
+		out.print("""
+/*IPv6 gateway address*/""")
+			print_ipv6_string(eth_lwip_inst.gstring_ipv6_gateway.value, "GW_ADDR")
+		}
+	}
+	
+	/*Define the name of dependent APP instances*/
+	if(eth_lwip_inst.gcheck_rtos_en.value == true)
+	{
+		out.print("""
+#define ETH_RTOS_NAME  ${eth_lwip_inst.appres_rtos.getInstanceLabel()}
+""")
+	}
+	else
+	{
+		out.print("""
+#define ETH_SYSTIMER_NAME  ${eth_lwip_inst.appres_systimer.getInstanceLabel()}
+""")
+	}
+	
+	/*Macro to check if broadcast is enabled*/
+	if(eth_lwip_inst.gcheck_broadcast_en.value)
+	{
+		out.print("""
+#define ETH_BROADCAST_EN  1""")
+	}
+	
+	/*Macros for callback function names*/
+	if(eth_lwip_inst.gcheck_netif_status_cb.value)
+	{
+		out.print("""
+#define ETH_NETIF_STATUS_CB_FUNCTION  ${eth_lwip_inst.gstring_netif_status_cb.value}""")
+	}
+	if(eth_lwip_inst.gcheck_rtos_en.value == false)
+	{
+		out.print("""
+#define ETH_TIME_250ms_COUNT  (250U * 1000U)
+""")
+	}
+	else
+	{
+		out.print("""
+#define ETH_LWIP_INIT_THREAD_PRIORITY    ${OS_priority_list[eth_lwip_inst.gcombo_init_task_priority.options.indexOf(eth_lwip_inst.gcombo_init_task_priority.value)]}
+#define ETH_LWIP_INIT_THREAD_STACK_SIZE  ${eth_lwip_inst.ginteger_init_task_size.value}U
+""")
+	}
+}
+
+out.print("""
+#endif""")
+
+Integer print_ipv4_string(String text, String display_name)
+{
+	String ip_text = text
+	String IP_ADDR4 = ip_text.substring(ip_text.lastIndexOf(".")+1, ip_text.length())
+	ip_text = ip_text.substring(0, ip_text.lastIndexOf("."))
+	String IP_ADDR3 = ip_text.substring(ip_text.lastIndexOf(".")+1, ip_text.length())
+	ip_text = ip_text.substring(0, ip_text.lastIndexOf("."))
+	String IP_ADDR2 = ip_text.substring(ip_text.lastIndexOf(".")+1, ip_text.length())
+	ip_text = ip_text.substring(0, ip_text.lastIndexOf("."))
+	String IP_ADDR1 = ip_text.substring(ip_text.lastIndexOf(".")+1, ip_text.length())
+	out.print("""
+/*Static IPv4 address*/
+#define ${display_name}0 (${IP_ADDR1}U)
+#define ${display_name}1 (${IP_ADDR2}U)
+#define ${display_name}2 (${IP_ADDR3}U)
+#define ${display_name}3 (${IP_ADDR4}U)
+""")
+	return 0
+}
+
+Integer print_ipv6_string(String text, String display_name)
+{
+	/*IPv6*/
+	String ip_text = text
+	String IP_ADDR8 = ip_text.substring(ip_text.lastIndexOf(":")+1, ip_text.length())
+	ip_text = ip_text.substring(0, ip_text.lastIndexOf(":"))
+	String IP_ADDR7 = ip_text.substring(ip_text.lastIndexOf(":")+1, ip_text.length())
+	ip_text = ip_text.substring(0, ip_text.lastIndexOf(":"))
+	String IP_ADDR6 = ip_text.substring(ip_text.lastIndexOf(":")+1, ip_text.length())
+	ip_text = ip_text.substring(0, ip_text.lastIndexOf(":"))
+	String IP_ADDR5 = ip_text.substring(ip_text.lastIndexOf(":")+1, ip_text.length())
+	ip_text = ip_text.substring(0, ip_text.lastIndexOf(":"))
+	String IP_ADDR4 = ip_text.substring(ip_text.lastIndexOf(":")+1, ip_text.length())
+	ip_text = ip_text.substring(0, ip_text.lastIndexOf(":"))
+	String IP_ADDR3 = ip_text.substring(ip_text.lastIndexOf(":")+1, ip_text.length())
+	ip_text = ip_text.substring(0, ip_text.lastIndexOf(":"))
+	String IP_ADDR2 = ip_text.substring(ip_text.lastIndexOf(":")+1, ip_text.length())
+	ip_text = ip_text.substring(0, ip_text.lastIndexOf(":"))
+	String IP_ADDR1 = ip_text.substring(ip_text.lastIndexOf(":")+1, ip_text.length())
+	
+	out.print("""
+#define ${display_name}0 (${IP_ADDR1}U)
+#define ${display_name}1 (${IP_ADDR2}U)
+#define ${display_name}2 (${IP_ADDR3}U)
+#define ${display_name}3 (${IP_ADDR4}U)
+#define ${display_name}4 (${IP_ADDR5}U)
+#define ${display_name}5 (${IP_ADDR6}U)
+#define ${display_name}6 (${IP_ADDR7}U)
+#define ${display_name}7 (${IP_ADDR8}U)
+""")
+	return 0
+}
+	
+	

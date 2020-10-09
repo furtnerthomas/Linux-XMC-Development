@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="ASCII"?>
+<ResourceModel:Peripheral xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ResourceModel="http://www.infineon.com/Davex/Resource.ecore" URI="http://resources/48.0.0/peripheral/eth/0" description="Ethernet Unit 0" baseAddress="0x5000C000">
+  <provided xsi:type="ResourceModel:ResourceGroup" name="eth" URI="http://resources/48.0.0/peripheral/eth/0/eth">
+    <upwardMapList xsi:type="ResourceModel:HWResource" href="../../APPS/ETH_LWIP/v4_0_10/ETH_LWIP_0.app#//@hwResources.0"/>
+    <resourcesList name="bus_mode" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/bus_mode"/>
+    <resourcesList name="con_rmii" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/con_eth0_con/clk_rmii"/>
+    <resourcesList name="con_clk_tx" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/con_eth0_con/clk_tx"/>
+    <resourcesList name="con_col" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/con_eth0_con/col"/>
+    <resourcesList name="con_crs" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/con_eth0_con/crs"/>
+    <resourcesList name="con_crs_dv" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/con_eth0_con/crs_dv"/>
+    <resourcesList name="con_mdio" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/con_eth0_con/mdio"/>
+    <resourcesList name="con_rxd0" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/con_eth0_con/rxd0"/>
+    <resourcesList name="con_rxd1" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/con_eth0_con/rxd1"/>
+    <resourcesList name="con_rxd2" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/con_eth0_con/rxd2"/>
+    <resourcesList name="con_rxd3" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/con_eth0_con/rxd3"/>
+    <resourcesList name="con_rxer" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/con_eth0_con/rxer"/>
+    <resourcesList name="con_infsel" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/con_eth0_con/infsel"/>
+    <resourcesList name="current_host_receive_buffer_address" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/current_host_receive_buffer_address"/>
+    <resourcesList name="current_host_receive_descriptor" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/current_host_receive_descriptor"/>
+    <resourcesList name="current_host_transmit_buffer_address" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/current_host_transmit_buffer_address"/>
+    <resourcesList name="current_host_transmit_descriptor" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/current_host_transmit_descriptor"/>
+    <resourcesList name="debug" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/debug"/>
+    <resourcesList name="flow_control" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/flow_control"/>
+    <resourcesList name="gmii_address" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/gmii_address"/>
+    <resourcesList name="gmii_data" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/gmii_data"/>
+    <resourcesList name="hash_table_high" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/hash_table_high"/>
+    <resourcesList name="hash_table_low" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/hash_table_low"/>
+    <resourcesList name="hw_feature" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/hw_feature"/>
+    <resourcesList name="interrupt_enable" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/interrupt_enable"/>
+    <resourcesList name="interrupt_mask" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/interrupt_mask"/>
+    <resourcesList name="interrupt_status" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/interrupt_status"/>
+    <resourcesList name="mac_address0_high" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/mac_address0_high"/>
+    <resourcesList name="mac_address0_low" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/mac_address0_low"/>
+    <resourcesList name="mac_address1_high" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/mac_address1_high"/>
+    <resourcesList name="mac_address1_low" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/mac_address1_low"/>
+    <resourcesList name="mac_address2_high" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/mac_address2_high"/>
+    <resourcesList name="mac_address2_low" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/mac_address2_low"/>
+    <resourcesList name="mac_address3_high" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/mac_address3_high"/>
+    <resourcesList name="mac_address3_low" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/mac_address3_low"/>
+    <resourcesList name="mac_configuration" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/mac_configuration"/>
+    <resourcesList name="mac_frame_filter" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/mac_frame_filter"/>
+    <resourcesList name="missed_frame_and_buffer_overflow_counter" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/missed_frame_and_buffer_overflow_counter"/>
+    <resourcesList name="mmc_control" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/mmc_control"/>
+    <resourcesList name="mmc_ipc_receive_interrupt" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/mmc_ipc_receive_interrupt"/>
+    <resourcesList name="mmc_ipc_receive_interrupt_mask" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/mmc_ipc_receive_interrupt_mask"/>
+    <resourcesList name="mmc_receive_interrupt" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/mmc_receive_interrupt"/>
+    <resourcesList name="mmc_receive_interrupt_mask" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/mmc_receive_interrupt_mask"/>
+    <resourcesList name="mmc_transmit_interrupt" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/mmc_transmit_interrupt"/>
+    <resourcesList name="mmc_transmit_interrupt_mask" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/mmc_transmit_interrupt_mask"/>
+    <resourcesList name="operation_mode" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/operation_mode"/>
+    <resourcesList name="pmt_control_status" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/pmt_control_status"/>
+    <resourcesList name="receive_descriptor_list_address" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/receive_descriptor_list_address"/>
+    <resourcesList name="receive_interrupt_watchdog_timer" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/receive_interrupt_watchdog_timer"/>
+    <resourcesList name="receive_poll_demand" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/receive_poll_demand"/>
+    <resourcesList name="remote_wake_up_frame_filter" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/remote_wake_up_frame_filter"/>
+    <resourcesList name="rxicmp_error_frames" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rxicmp_error_frames"/>
+    <resourcesList name="rxicmp_error_octets" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rxicmp_error_octets"/>
+    <resourcesList name="rxicmp_good_frames" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rxicmp_good_frames"/>
+    <resourcesList name="rxicmp_good_octets" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rxicmp_good_octets"/>
+    <resourcesList name="rxipv4_fragmented_frames" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rxipv4_fragmented_frames"/>
+    <resourcesList name="rxipv4_fragmented_octets" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rxipv4_fragmented_octets"/>
+    <resourcesList name="rxipv4_good_frames" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rxipv4_good_frames"/>
+    <resourcesList name="rxipv4_good_octets" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rxipv4_good_octets"/>
+    <resourcesList name="rxipv4_header_error_frames" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rxipv4_header_error_frames"/>
+    <resourcesList name="rxipv4_header_error_octets" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rxipv4_header_error_octets"/>
+    <resourcesList name="rxipv4_no_payload_frames" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rxipv4_no_payload_frames"/>
+    <resourcesList name="rxipv4_no_payload_octets" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rxipv4_no_payload_octets"/>
+    <resourcesList name="rxipv4_udp_checksum_disabled_frames" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rxipv4_udp_checksum_disabled_frames"/>
+    <resourcesList name="rxipv4_udp_checksum_disable_octets" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rxipv4_udp_checksum_disable_octets"/>
+    <resourcesList name="rxipv6_good_frames" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rxipv6_good_frames"/>
+    <resourcesList name="rxipv6_good_octets" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rxipv6_good_octets"/>
+    <resourcesList name="rxipv6_header_error_frames" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rxipv6_header_error_frames"/>
+    <resourcesList name="rxipv6_header_error_octets" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rxipv6_header_error_octets"/>
+    <resourcesList name="rxipv6_no_payload_frames" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rxipv6_no_payload_frames"/>
+    <resourcesList name="rxipv6_no_payload_octets" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rxipv6_no_payload_octets"/>
+    <resourcesList name="rxtcp_error_frames" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rxtcp_error_frames"/>
+    <resourcesList name="rxtcp_error_octets" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rxtcp_error_octets"/>
+    <resourcesList name="rxtcp_good_frames" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rxtcp_good_frames"/>
+    <resourcesList name="rxtcp_good_octets" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rxtcp_good_octets"/>
+    <resourcesList name="rxudp_error_frames" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rxudp_error_frames"/>
+    <resourcesList name="rxudp_error_octets" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rxudp_error_octets"/>
+    <resourcesList name="rxudp_good_frames" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rxudp_good_frames"/>
+    <resourcesList name="rxudp_good_octets" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rxudp_good_octets"/>
+    <resourcesList name="rx_64octets_frames_good_bad" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rx_64octets_frames_good_bad"/>
+    <resourcesList name="rx_65to127octets_frames_good_bad" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rx_65to127octets_frames_good_bad"/>
+    <resourcesList name="rx_128to255octets_frames_good_bad" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rx_128to255octets_frames_good_bad"/>
+    <resourcesList name="rx_256to511octets_frames_good_bad" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rx_256to511octets_frames_good_bad"/>
+    <resourcesList name="rx_512to1023octets_frames_good_bad" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rx_512to1023octets_frames_good_bad"/>
+    <resourcesList name="rx_1024tomaxoctets_frames_good_bad" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rx_1024tomaxoctets_frames_good_bad"/>
+    <resourcesList name="rx_alignment_error_frames" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rx_alignment_error_frames"/>
+    <resourcesList name="rx_broadcast_frames_good" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rx_broadcast_frames_good"/>
+    <resourcesList name="rx_control_frames_good" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rx_control_frames_good"/>
+    <resourcesList name="rx_crc_error_frames" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rx_crc_error_frames"/>
+    <resourcesList name="rx_fifo_overflow_frames" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rx_fifo_overflow_frames"/>
+    <resourcesList name="rx_frames_count_good_bad" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rx_frames_count_good_bad"/>
+    <resourcesList name="rx_jabber_error_frames" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rx_jabber_error_frames"/>
+    <resourcesList name="rx_length_error_frames" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rx_length_error_frames"/>
+    <resourcesList name="rx_multicast_frames_good" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rx_multicast_frames_good"/>
+    <resourcesList name="rx_octet_count_good" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rx_octet_count_good"/>
+    <resourcesList name="rx_octet_count_good_bad" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rx_octet_count_good_bad"/>
+    <resourcesList name="rx_out_of_range_type_frames" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rx_out_of_range_type_frames"/>
+    <resourcesList name="rx_oversize_frames_good" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rx_oversize_frames_good"/>
+    <resourcesList name="rx_pause_frames" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rx_pause_frames"/>
+    <resourcesList name="rx_receive_error_frames" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rx_receive_error_frames"/>
+    <resourcesList name="rx_runt_error_frames" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rx_runt_error_frames"/>
+    <resourcesList name="rx_undersize_frames_good" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rx_undersize_frames_good"/>
+    <resourcesList name="rx_unicast_frames_good" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rx_unicast_frames_good"/>
+    <resourcesList name="rx_vlan_frames_good_bad" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rx_vlan_frames_good_bad"/>
+    <resourcesList name="rx_watchdog_error_frames" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/rx_watchdog_error_frames"/>
+    <resourcesList name="status" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/status"/>
+    <resourcesList name="sub_second_increment" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/sub_second_increment"/>
+    <resourcesList name="system_time_higher_word_seconds" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/system_time_higher_word_seconds"/>
+    <resourcesList name="system_time_nanoseconds" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/system_time_nanoseconds"/>
+    <resourcesList name="system_time_nanoseconds_update" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/system_time_nanoseconds_update"/>
+    <resourcesList name="system_time_seconds" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/system_time_seconds"/>
+    <resourcesList name="system_time_seconds_update" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/system_time_seconds_update"/>
+    <resourcesList name="target_time_nanoseconds" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/target_time_nanoseconds"/>
+    <resourcesList name="target_time_seconds" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/target_time_seconds"/>
+    <resourcesList name="timestamp_addend" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/timestamp_addend"/>
+    <resourcesList name="timestamp_control" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/timestamp_control"/>
+    <resourcesList name="timestamp_status" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/timestamp_status"/>
+    <resourcesList name="transmit_descriptor_list_address" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/transmit_descriptor_list_address"/>
+    <resourcesList name="transmit_poll_demand" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/transmit_poll_demand"/>
+    <resourcesList name="tx_64octets_frames_good_bad" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/tx_64octets_frames_good_bad"/>
+    <resourcesList name="tx_65to127octets_frames_good_bad" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/tx_65to127octets_frames_good_bad"/>
+    <resourcesList name="tx_128to255octets_frames_good_bad" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/tx_128to255octets_frames_good_bad"/>
+    <resourcesList name="tx_256to511octets_frames_good_bad" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/tx_256to511octets_frames_good_bad"/>
+    <resourcesList name="tx_512to1023octets_frames_good_bad" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/tx_512to1023octets_frames_good_bad"/>
+    <resourcesList name="tx_1024tomaxoctets_frames_good_bad" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/tx_1024tomaxoctets_frames_good_bad"/>
+    <resourcesList name="tx_broadcast_frames_good" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/tx_broadcast_frames_good"/>
+    <resourcesList name="tx_broadcast_frames_good_bad" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/tx_broadcast_frames_good_bad"/>
+    <resourcesList name="tx_carrier_error_frames" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/tx_carrier_error_frames"/>
+    <resourcesList name="tx_deferred_frames" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/tx_deferred_frames"/>
+    <resourcesList name="tx_excessive_collision_frames" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/tx_excessive_collision_frames"/>
+    <resourcesList name="tx_excessive_deferral_error" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/tx_excessive_deferral_error"/>
+    <resourcesList name="tx_frame_count_good" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/tx_frame_count_good"/>
+    <resourcesList name="tx_frame_count_good_bad" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/tx_frame_count_good_bad"/>
+    <resourcesList name="tx_late_collision_frames" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/tx_late_collision_frames"/>
+    <resourcesList name="tx_multicast_frames_good" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/tx_multicast_frames_good"/>
+    <resourcesList name="tx_multicast_frames_good_bad" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/tx_multicast_frames_good_bad"/>
+    <resourcesList name="tx_multiple_collision_good_frames" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/tx_multiple_collision_good_frames"/>
+    <resourcesList name="tx_octet_count_good" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/tx_octet_count_good"/>
+    <resourcesList name="tx_octet_count_good_bad" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/tx_octet_count_good_bad"/>
+    <resourcesList name="tx_osize_frames_good" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/tx_osize_frames_good"/>
+    <resourcesList name="tx_pause_frames" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/tx_pause_frames"/>
+    <resourcesList name="tx_single_collision_good_frames" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/tx_single_collision_good_frames"/>
+    <resourcesList name="tx_underflow_error_frames" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/tx_underflow_error_frames"/>
+    <resourcesList name="tx_unicast_frames_good_bad" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/tx_unicast_frames_good_bad"/>
+    <resourcesList name="tx_vlan_frames_good" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/tx_vlan_frames_good"/>
+    <resourcesList name="version" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/version"/>
+    <resourcesList name="vlan_tag" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/vlan_tag"/>
+    <resourcesList name="mdi" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/eth_mdi"/>
+    <resourcesList name="clk_rmii" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/eth_clk_rmii"/>
+    <resourcesList name="rxd1" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/eth_rxd1"/>
+    <resourcesList name="crs" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/eth_crs"/>
+    <resourcesList name="clk_tx" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/eth_clk_tx"/>
+    <resourcesList name="col" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/eth_col"/>
+    <resourcesList name="crs_dv" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/eth_crs_dv"/>
+    <resourcesList name="rxd0" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/eth_rxd0"/>
+    <resourcesList name="rxd2" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/eth_rxd2"/>
+    <resourcesList name="rxd3" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/eth_rxd3"/>
+    <resourcesList name="rxer" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/eth_rxer"/>
+    <resourcesList name="mdc" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/eth_mdc"/>
+    <resourcesList name="txd0" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/eth_txd0"/>
+    <resourcesList name="txd1" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/eth_txd1"/>
+    <resourcesList name="txd2" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/eth_txd2"/>
+    <resourcesList name="txd3" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/eth_txd3"/>
+    <resourcesList name="txer" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/eth_txer"/>
+    <resourcesList name="tx_en" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/eth_tx_en"/>
+    <resourcesList name="intr" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/eth_intr"/>
+    <resourcesList name="mdo" requiredResourceUri="http://resources/48.0.0/peripheral/eth/0/eth_mdo"/>
+  </provided>
+  <provided xsi:type="ResourceModel:RegisterParameter" name="CON_ETH0_CON" URI="http://resources/48.0.0/peripheral/eth/0/con_eth0_con" value="0x00000000" toolTipHelpDescription="Ethernet 0 Port Control Register" defaultValue="0x00000000" addressOffset="0xffff8040" resetValue="0x00000000" resetMask="0xFFFFFFFF">
+    <bitFields name="RXD0" URI="http://resources/48.0.0/peripheral/eth/0/con_eth0_con/rxd0" value="0x00000000" toolTipHelpDescription="MAC Receive Input 0" defaultValue="0x00000000" startPos="0" stopPos="1" accessPermission="rw" maxValue="3" minValue="0">
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#00" description="Data input RXD0A is selected"/>
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#01" description="Data input RXD0B is selected"/>
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#10" description="Data input RXD0C is selected"/>
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#11" description="Data input RXD0D is selected"/>
+    </bitFields>
+    <bitFields name="RXD1" URI="http://resources/48.0.0/peripheral/eth/0/con_eth0_con/rxd1" value="0x00000000" toolTipHelpDescription="MAC Receive Input 1" defaultValue="0x00000000" startPos="2" stopPos="3" accessPermission="rw" maxValue="3" minValue="0">
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#00" description="Data input RXD1A is selected"/>
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#01" description="Data input RXD1B is selected"/>
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#10" description="Data input RXD1C is selected"/>
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#11" description="Data input RXD1D is selected"/>
+    </bitFields>
+    <bitFields name="RXD2" URI="http://resources/48.0.0/peripheral/eth/0/con_eth0_con/rxd2" value="0x00000000" toolTipHelpDescription="MAC Receive Input 2" defaultValue="0x00000000" startPos="4" stopPos="5" accessPermission="rw" maxValue="3" minValue="0">
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#00" description="Data input RXD2A is selected"/>
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#01" description="Data input RXD2B is selected"/>
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#10" description="Data input RXD2C is selected"/>
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#11" description="Data input RXD2D is selected"/>
+    </bitFields>
+    <bitFields name="RXD3" URI="http://resources/48.0.0/peripheral/eth/0/con_eth0_con/rxd3" value="0x00000000" toolTipHelpDescription="MAC Receive Input 3" defaultValue="0x00000000" startPos="6" stopPos="7" accessPermission="rw" maxValue="3" minValue="0">
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#00" description="Data input RXD3A is selected"/>
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#01" description="Data input RXD3B is selected"/>
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#10" description="Data input RXD3C is selected"/>
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#11" description="Data input RXD3D is selected"/>
+    </bitFields>
+    <bitFields name="CLK_RMII" URI="http://resources/48.0.0/peripheral/eth/0/con_eth0_con/clk_rmii" value="0x00000000" toolTipHelpDescription="RMII clock input" defaultValue="0x00000000" startPos="8" stopPos="9" accessPermission="rw" maxValue="3" minValue="0">
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#00" description="Data input RMIIA is selected"/>
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#01" description="Data input RMIIB is selected"/>
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#10" description="Data input RMIIC is selected"/>
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#11" description="Data input RMIID is selected"/>
+    </bitFields>
+    <bitFields name="CRS_DV" URI="http://resources/48.0.0/peripheral/eth/0/con_eth0_con/crs_dv" value="0x00000000" toolTipHelpDescription="CRS_DV input" defaultValue="0x00000000" startPos="10" stopPos="11" accessPermission="rw" maxValue="3" minValue="0">
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#00" description="Data input CRS_DVA is selected"/>
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#01" description="Data input CRS_DVB is selected"/>
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#10" description="Data input CRS_DVC is selected"/>
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#11" description="Data input CRS_DVD is selected"/>
+    </bitFields>
+    <bitFields name="CRS" URI="http://resources/48.0.0/peripheral/eth/0/con_eth0_con/crs" value="0x00000000" toolTipHelpDescription="CRS input" defaultValue="0x00000000" startPos="12" stopPos="13" accessPermission="rw" maxValue="3" minValue="0">
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#00" description="Data input CRSA"/>
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#01" description="Data input CRSB"/>
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#10" description="Data input CRSC"/>
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#11" description="Data input CRSD"/>
+    </bitFields>
+    <bitFields name="RXER" URI="http://resources/48.0.0/peripheral/eth/0/con_eth0_con/rxer" value="0x00000000" toolTipHelpDescription="RXER Input" defaultValue="0x00000000" startPos="14" stopPos="15" accessPermission="rw" maxValue="3" minValue="0">
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#00" description="Data input RXERA is selected"/>
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#01" description="Data input RXERB is selected"/>
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#10" description="Data input RXERC is selected"/>
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#11" description="Data input RXERD is selected"/>
+    </bitFields>
+    <bitFields name="COL" URI="http://resources/48.0.0/peripheral/eth/0/con_eth0_con/col" value="0x00000000" toolTipHelpDescription="COL input" defaultValue="0x00000000" startPos="16" stopPos="17" accessPermission="rw" maxValue="3" minValue="0">
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#00" description="Data input COLA is selected"/>
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#01" description="Data input COLB is selected"/>
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#10" description="Data input COLC is selected"/>
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#11" description="Data input COLD is selected"/>
+    </bitFields>
+    <bitFields name="CLK_TX" URI="http://resources/48.0.0/peripheral/eth/0/con_eth0_con/clk_tx" value="0x00000000" toolTipHelpDescription="CLK_TX input" defaultValue="0x00000000" startPos="18" stopPos="19" accessPermission="rw" maxValue="3" minValue="0">
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#00" description="Data input CLK_TXA is selected"/>
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#01" description="Data input CLK_TXB is selected"/>
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#10" description="Data input CLK_TXC is selected"/>
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#11" description="Data input CLK_TXD is selected"/>
+    </bitFields>
+    <bitFields name="MDIO" URI="http://resources/48.0.0/peripheral/eth/0/con_eth0_con/mdio" value="0x00000000" toolTipHelpDescription="MDIO Input Select" defaultValue="0x00000000" startPos="22" stopPos="23" accessPermission="rw" maxValue="3" minValue="0">
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#00" description="Data input MDIA is selected"/>
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#01" description="Data input MDIB is selected"/>
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#10" description="Data input MDIC is selected"/>
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#11" description="Data input MDID is selected"/>
+    </bitFields>
+    <bitFields name="INFSEL" URI="http://resources/48.0.0/peripheral/eth/0/con_eth0_con/infsel" value="0x00000000" toolTipHelpDescription="Ethernet MAC Interface Selection" defaultValue="0x00000000" startPos="26" stopPos="26" accessPermission="rw" maxValue="1" minValue="0">
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#0" description="MII"/>
+      <enumValues xsi:type="ResourceModel:RegEnumValue" value="#1" description="RMII"/>
+    </bitFields>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="COL" URI="http://resources/48.0.0/peripheral/eth/0/con_eth0_con/col" value="0x00000000" toolTipHelpDescription="COL input" defaultValue="0x00000000" startPos="16" stopPos="17" accessPermission="rw" maxValue="3" minValue="0">
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#00" description="Data input COLA is selected"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#01" description="Data input COLB is selected"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#10" description="Data input COLC is selected"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#11" description="Data input COLD is selected"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="CLK_RMII" URI="http://resources/48.0.0/peripheral/eth/0/con_eth0_con/clk_rmii" value="0x00000000" toolTipHelpDescription="RMII clock input" defaultValue="0x00000000" startPos="8" stopPos="9" accessPermission="rw" maxValue="3" minValue="0">
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#00" description="Data input RMIIA is selected"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#01" description="Data input RMIIB is selected"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#10" description="Data input RMIIC is selected"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#11" description="Data input RMIID is selected"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="CRS" URI="http://resources/48.0.0/peripheral/eth/0/con_eth0_con/crs" value="0x00000000" toolTipHelpDescription="CRS input" defaultValue="0x00000000" startPos="12" stopPos="13" accessPermission="rw" maxValue="3" minValue="0">
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#00" description="Data input CRSA"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#01" description="Data input CRSB"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#10" description="Data input CRSC"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#11" description="Data input CRSD"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="MDIO" URI="http://resources/48.0.0/peripheral/eth/0/con_eth0_con/mdio" value="0x00000000" toolTipHelpDescription="MDIO Input Select" defaultValue="0x00000000" startPos="22" stopPos="23" accessPermission="rw" maxValue="3" minValue="0">
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#00" description="Data input MDIA is selected"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#01" description="Data input MDIB is selected"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#10" description="Data input MDIC is selected"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#11" description="Data input MDID is selected"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="RXD0" URI="http://resources/48.0.0/peripheral/eth/0/con_eth0_con/rxd0" value="0x00000000" toolTipHelpDescription="MAC Receive Input 0" defaultValue="0x00000000" startPos="0" stopPos="1" accessPermission="rw" maxValue="3" minValue="0">
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#00" description="Data input RXD0A is selected"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#01" description="Data input RXD0B is selected"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#10" description="Data input RXD0C is selected"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#11" description="Data input RXD0D is selected"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="CLK_TX" URI="http://resources/48.0.0/peripheral/eth/0/con_eth0_con/clk_tx" value="0x00000000" toolTipHelpDescription="CLK_TX input" defaultValue="0x00000000" startPos="18" stopPos="19" accessPermission="rw" maxValue="3" minValue="0">
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#00" description="Data input CLK_TXA is selected"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#01" description="Data input CLK_TXB is selected"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#10" description="Data input CLK_TXC is selected"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#11" description="Data input CLK_TXD is selected"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="RXD1" URI="http://resources/48.0.0/peripheral/eth/0/con_eth0_con/rxd1" value="0x00000000" toolTipHelpDescription="MAC Receive Input 1" defaultValue="0x00000000" startPos="2" stopPos="3" accessPermission="rw" maxValue="3" minValue="0">
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#00" description="Data input RXD1A is selected"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#01" description="Data input RXD1B is selected"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#10" description="Data input RXD1C is selected"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#11" description="Data input RXD1D is selected"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="RXER" URI="http://resources/48.0.0/peripheral/eth/0/con_eth0_con/rxer" value="0x00000000" toolTipHelpDescription="RXER Input" defaultValue="0x00000000" startPos="14" stopPos="15" accessPermission="rw" maxValue="3" minValue="0">
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#00" description="Data input RXERA is selected"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#01" description="Data input RXERB is selected"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#10" description="Data input RXERC is selected"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#11" description="Data input RXERD is selected"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="RXD2" URI="http://resources/48.0.0/peripheral/eth/0/con_eth0_con/rxd2" value="0x00000000" toolTipHelpDescription="MAC Receive Input 2" defaultValue="0x00000000" startPos="4" stopPos="5" accessPermission="rw" maxValue="3" minValue="0">
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#00" description="Data input RXD2A is selected"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#01" description="Data input RXD2B is selected"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#10" description="Data input RXD2C is selected"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#11" description="Data input RXD2D is selected"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="RXD3" URI="http://resources/48.0.0/peripheral/eth/0/con_eth0_con/rxd3" value="0x00000000" toolTipHelpDescription="MAC Receive Input 3" defaultValue="0x00000000" startPos="6" stopPos="7" accessPermission="rw" maxValue="3" minValue="0">
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#00" description="Data input RXD3A is selected"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#01" description="Data input RXD3B is selected"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#10" description="Data input RXD3C is selected"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#11" description="Data input RXD3D is selected"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="CRS_DV" URI="http://resources/48.0.0/peripheral/eth/0/con_eth0_con/crs_dv" value="0x00000000" toolTipHelpDescription="CRS_DV input" defaultValue="0x00000000" startPos="10" stopPos="11" accessPermission="rw" maxValue="3" minValue="0">
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#00" description="Data input CRS_DVA is selected"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#01" description="Data input CRS_DVB is selected"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#10" description="Data input CRS_DVC is selected"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="#11" description="Data input CRS_DVD is selected"/>
+  </provided>
+  <addressBlock offset="0x0" size="0x4000" usage="registers"/>
+</ResourceModel:Peripheral>

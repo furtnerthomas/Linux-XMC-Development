@@ -1,0 +1,399 @@
+package Model.APPS.ETH_LWIP.v4_0_10.Templates;
+
+import Model.APPS.ETH_LWIP.v4_0_10.ETH_LWIP
+
+out.print("""
+#ifndef __LWIPOPTS_H__
+#define __LWIPOPTS_H__
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+""")
+List OS_priority_list = [-3,-2,-1,0,1,2,3]
+for(ETH_LWIP eth_lwip_inst : appInstancesList)
+{
+out.print("""
+#define NO_SYS                     """)
+if(eth_lwip_inst.gcheck_rtos_en.value == true)
+{
+	out.print("""0""")
+}
+else
+{
+	out.print("""1""")
+}
+out.print("""
+#define LWIP_SOCKET                """)
+if(eth_lwip_inst.gcheck_rtos_en.value == true)
+{
+	out.print("""1""")
+	if(eth_lwip_inst.gcheck_debug_en.value == true)
+	{
+		out.print("""
+#define SOCKETS_DEBUG              LWIP_DBG_ON""")
+	}
+}
+else
+{
+	out.print("""0""")
+}
+out.print("""
+#define LWIP_NETCONN               """)
+if(eth_lwip_inst.gcheck_rtos_en.value == true)
+{
+	out.print("""1
+#define MEMP_NUM_NETCONN  ${eth_lwip_inst.ginteger_netcons.value}
+""")
+	
+}
+else
+{
+	out.print("""0""")
+}
+if(eth_lwip_inst.gcheck_rtos_en.value == true)
+{
+	out.print("""
+#define SYS_LIGHTWEIGHT_PROT        1
+#define SO_REUSE                    1""")
+}
+else
+{
+	out.print("""
+#define SYS_LIGHTWEIGHT_PROT        0
+#define SO_REUSE                    0""")
+}
+out.print("""
+#define MEM_ALIGNMENT               4
+""")
+
+if(eth_lwip_inst.gcheck_netif_name.value)
+{
+	out.print("""
+#define LWIP_NETIF_HOSTNAME         1""")
+}
+else
+{
+	out.print("""
+#define LWIP_NETIF_HOSTNAME         0""")
+}
+
+if(eth_lwip_inst.gcheck_netif_status_cb.value)
+{
+	out.print("""
+#define LWIP_NETIF_STATUS_CALLBACK  1""")
+}
+else
+{
+	out.print("""
+#define LWIP_NETIF_STATUS_CALLBACK  0""")
+}
+
+	out.print("""
+#define LWIP_NETIF_LINK_CALLBACK    1""")
+
+if(eth_lwip_inst.gcheck_rtos_en.value == true)
+{
+	out.print("""
+#define TCPIP_MBOX_SIZE           4
+#define TCPIP_THREAD_STACKSIZE    ${eth_lwip_inst.ginteger_tcpip_stacksize.value}
+#define TCPIP_THREAD_PRIO         ${OS_priority_list[eth_lwip_inst.gcombo_tcpip_task_priority.options.indexOf(eth_lwip_inst.gcombo_tcpip_task_priority.value)]}
+#define DEFAULT_THREAD_STACKSIZE  1024
+
+#define MEMP_NUM_TCPIP_MSG_API    ${eth_lwip_inst.ginteger_tcp_msg_cbs.value}
+#define MEMP_NUM_TCPIP_MSG_INPKT  ${eth_lwip_inst.ginteger_tcp_msg_ins.value}
+#define MEMP_NUM_NETBUF           ${eth_lwip_inst.ginteger_netbufs.value}
+
+""")
+}
+
+out.print("""
+#define ETH_PAD_SIZE              2
+#define TCP_LISTEN_BACKLOG        1
+#define LWIP_SO_RCVTIMEO          1""")
+	
+out.print("""
+#define MEM_SIZE                ${eth_lwip_inst.ginteger_heap.value}""")
+
+
+
+out.print("""
+#define PBUF_POOL_SIZE          ${eth_lwip_inst.ginteger_pbuf_pool.value}
+#define PBUF_POOL_BUFSIZE       1536
+
+#define MEMP_NUM_PBUF           ${eth_lwip_inst.ginteger_pbuf_memp.value}
+
+#define MEMP_NUM_RAW_PCB        ${eth_lwip_inst.ginteger_memp_num_raw_pcb.value}
+
+""")
+if(eth_lwip_inst.gcheck_enable_udp.value == true)
+{
+	out.print("""
+#define LWIP_UDP                1
+#define MEMP_NUM_UDP_PCB        ${eth_lwip_inst.ginteger_udp_connections.value}
+""")
+	if(eth_lwip_inst.gcheck_debug_en.value == true)
+	{
+		out.print("""
+#define UDP_DEBUG               LWIP_DBG_ON""")
+	}
+}
+else
+{
+	out.print("""
+#define LWIP_UDP                0""")
+}
+if(eth_lwip_inst.gcheck_enable_tcp.value == true)
+{
+	out.print("""
+#define LWIP_TCP                1
+#define MEMP_NUM_TCP_PCB        ${eth_lwip_inst.ginteger_tcp_connections.value}
+#define MEMP_NUM_TCP_PCB_LISTEN  ${eth_lwip_inst.ginteger_tcp_listeners.value}
+#define TCP_MSS                 ${eth_lwip_inst.ginteger_max_segment_size.value}
+#define TCP_WND                 ${eth_lwip_inst.ginteger_window_size.value}
+#define TCP_SND_BUF             ${eth_lwip_inst.ginteger_tcp_snd_buf.value}
+#define TCP_SND_QUEUELEN        ${eth_lwip_inst.ginteger_tcp_snd_queuelen.value}
+""")
+	if(eth_lwip_inst.gcheck_debug_en.value == true)
+	{
+		out.print("""
+#define TCP_DEBUG               LWIP_DBG_ON""")
+	}
+}
+else
+{
+	out.print("""
+#define LWIP_TCP                0""")
+}
+
+if((eth_lwip_inst.gcheck_enable_dhcp.value == true) && (eth_lwip_inst.gcheck_enable_udp.value == true))
+{
+	out.print("""
+#define LWIP_DHCP               1
+""")
+	if(eth_lwip_inst.gcheck_debug_en.value == true)
+	{
+		out.print("""
+#define DHCP_DEBUG              LWIP_DBG_ON""")
+	}
+}
+else
+{
+	out.print("""
+#define LWIP_DHCP               0
+""")
+}
+
+
+	out.print("""
+#define LWIP_ARP                1
+#define ARP_TABLE_SIZE          ${eth_lwip_inst.ginteger_arp_tablesize.value}
+#define MEMP_NUM_ARP_QUEUE      ${eth_lwip_inst.ginteger_arp_queued.value}
+""")
+	if(eth_lwip_inst.gcheck_debug_en.value == true)
+	{
+		out.print("""
+#define ETHARP_DEBUG            LWIP_DBG_ON""")
+	}
+
+
+if(eth_lwip_inst.gcheck_auto_ip_en.value == true)
+{
+	out.print("""
+#define LWIP_AUTOIP             1
+""")
+	if(eth_lwip_inst.gcheck_debug_en.value == true)
+	{
+		out.print("""
+#define AUTOIP_DEBUG            LWIP_DBG_ON""")
+	}
+}
+else
+{
+	out.print("""
+#define LWIP_AUTOIP             0
+""")
+}
+if(eth_lwip_inst.gcheck_icmp_en.value == true)
+{
+	out.print("""
+#define LWIP_ICMP               1
+""")
+	if(eth_lwip_inst.gcheck_debug_en.value == true)
+	{
+		out.print("""
+#define ICMP_DEBUG              LWIP_DBG_ON""")
+	}
+}
+else
+{
+	out.print("""
+#define LWIP_ICMP               0
+""")
+}
+if((eth_lwip_inst.gcheck_igmp_en.value == true) && (eth_lwip_inst.gcheck_enable_udp.value == true))
+{
+	out.print("""
+#define LWIP_IGMP               1
+""")
+	if(eth_lwip_inst.gcheck_debug_en.value == true)
+	{
+		out.print("""
+#define IGMP_DEBUG              LWIP_DBG_ON""")
+	}
+}
+else
+{
+	out.print("""
+#define LWIP_IGMP               0
+""")
+}
+if((eth_lwip_inst.gcheck_dns_en.value == true) && (eth_lwip_inst.gcheck_enable_udp.value == true))
+{
+	out.print("""
+#define LWIP_DNS                1
+#define DNS_MAX_SERVERS         1
+#define DNS_SERVER_ADDRESS(ipaddr)        (ip4_addr_set_u32(ipaddr, ipaddr_addr("${eth_lwip_inst.gstring_dns_server.value}")))
+""")
+	if(eth_lwip_inst.gcheck_debug_en.value == true)
+	{
+		out.print("""
+#define DNS_DEBUG               LWIP_DBG_ON""")
+	}
+}
+else
+{
+	out.print("""
+#define LWIP_DNS                0
+""")
+}
+if((eth_lwip_inst.gcheck_snmp_en.value == true) && (eth_lwip_inst.gcheck_enable_udp.value == true))
+{
+	out.print("""
+#define LWIP_SNMP               1
+""")
+	if(eth_lwip_inst.gcheck_debug_en.value == true)
+	{
+		out.print("""
+#define SNMP_MSG_DEBUG          LWIP_DBG_ON
+#define SNMP_MIB_DEBUG          LWIP_DBG_ON""")
+	}
+}
+else
+{
+	out.print("""
+#define LWIP_SNMP               0
+""")
+}
+
+if(eth_lwip_inst.gcheck_ip_opts_en.value == true)
+{
+	out.print("""
+#define IP_OPTIONS_ALLOWED      1
+""")
+}
+else
+{
+	out.print("""
+#define IP_OPTIONS_ALLOWED      0
+""")
+}
+
+if(eth_lwip_inst.gcheck_ip_frgment_en.value == true)
+{
+	out.print("""
+#define IP_FRAG                 1
+""")
+	if(eth_lwip_inst.gcheck_debug_en.value == true)
+	{
+		out.print("""
+#define IP_REASS_DEBUG          LWIP_DBG_ON""")
+	}
+}
+else
+{
+	out.print("""
+#define IP_FRAG                 0
+""")
+}
+
+if(eth_lwip_inst.gcheck_ip_reassmbly_en.value == true)
+{
+	out.print("""
+#define IP_REASSEMBLY           1
+""")
+	if(eth_lwip_inst.gcheck_debug_en.value == true)
+	{
+		out.print("""
+#define IP_REASS_DEBUG          LWIP_DBG_ON""")
+	}
+}
+else
+{
+	out.print("""
+#define IP_REASSEMBLY           0
+""")
+}
+
+if(eth_lwip_inst.gcheck_debug_en.value == true)
+{
+	out.print("""
+#define LWIP_DEBUG              1
+""")
+}
+
+if(eth_lwip_inst.gcheck_assert_en.value == false)
+{
+	out.print("""
+#define LWIP_NOASSERT           1
+""")
+}
+
+if(eth_lwip_inst.gcheck_statistics_en.value == true)
+{
+	out.print("""
+#define LWIP_STATS              1
+#define LWIP_STATS_DISPLAY      1
+""")
+}
+else
+{
+	out.print("""
+#define LWIP_STATS              0
+#define LWIP_STATS_DISPLAY      0
+""")
+}
+
+
+out.print("""
+#define MEMP_NUM_TCP_SEG        ${eth_lwip_inst.ginteger_tcp_queued_segs.value}
+#define MEMP_NUM_REASSDATA      ${eth_lwip_inst.ginteger_tcp_queued_reassembly.value}
+#define IP_DEFAULT_TTL          ${eth_lwip_inst.ginteger_ttl.value}
+
+
+#define CHECKSUM_GEN_IP         0
+#define CHECKSUM_GEN_UDP        0
+#define CHECKSUM_GEN_TCP        0
+#define CHECKSUM_GEN_ICMP       0
+#define CHECKSUM_CHECK_IP       0
+#define CHECKSUM_CHECK_UDP      0
+#define CHECKSUM_CHECK_TCP      0
+
+#define LWIP_RAW                1
+#define MEMP_NUM_SYS_TIMEOUT    (LWIP_TCP + IP_REASSEMBLY + LWIP_ARP + (2*LWIP_DHCP) + LWIP_AUTOIP + LWIP_IGMP + LWIP_DNS + PPP_SUPPORT + 5)
+
+#if defined(__GNUC__)
+#define MEMCPY(dst,src,len)     thumb2_memcpy(dst,src,len)
+#define SMEMCPY(dst,src,len)    thumb2_memcpy(dst,src,len)
+#else
+#define MEMCPY(dst,src,len)     memcpy(dst,src,len)
+#define SMEMCPY(dst,src,len)    memcpy(dst,src,len)
+#endif
+""")
+}
+out.print("""
+#ifdef __cplusplus
+}
+#endif
+#endif /* __LWIPOPTS_H__ */
+""");

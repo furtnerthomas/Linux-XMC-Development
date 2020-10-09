@@ -1,0 +1,84 @@
+<html>
+
+<head>
+<title>XMC4500 RelaxKit Web Server Hands-On Session</title>
+<!-- Prevent scaling -->
+ <meta name = "viewport" content = "user-scalable=no, width=device-width" />
+
+ <!-- Eliminate url and button bars if added to home screen -->
+ <meta name="apple-mobile-web-app-capable" content="yes" />
+
+
+ <style>
+<!--
+ /* Font Definitions */
+
+h1
+	{mso-style-link:"Heading 1 Char";
+	font-size:14.0pt;
+	font-family:"Cambria","serif";
+	color:#365F91;}
+h3
+	{mso-style-link:"Heading 1 Char";
+	font-size:10.0pt;
+	font-family:"Cambria","serif";
+	color:#365F91;}
+	
+@page WordSection1
+	{size:595.3pt 841.9pt;
+	margin:70.85pt 70.85pt 2.0cm 70.85pt;}
+div.WordSection1
+	{page:WordSection1;}
+ .auto-style1 {
+	 text-align: left;
+ }
+-->
+</style>
+
+</head>
+
+<body>
+
+<script>
+
+function change1(){ 
+
+top.frames.ifr.location.href="./led1.html?LED1=OnOff"; 
+
+} 
+
+function change2(){ 
+
+top.frames.ifr.location.href="./led2.html?LED2=OnOff"; 
+
+} 
+
+</script>
+
+<div class=WordSection1>
+
+<h1 align=center style='text-align:center'><img id="Picture 0" src="img_sics.gif" alt=scrollbg.jpg></h1>
+
+<h1 align=center style='text-align:center'><span lang=EN-US>XMC4</span>5<span lang=EN-US>00 RelxKit Web Server Demo</span></h1>
+
+<p class=WordSection1><span lang=EN-US>&nbsp;</span></p>
+
+<p class=WordSection1><span lang=EN-US><h3 align=center style='text-align:center'>Press button to toggle LEDs</h3></span></p>
+
+
+
+</div>
+
+<h1> </h1>
+<div align=center>
+<button type="button" onclick="change1()">Switch LED1 </button>
+<button type="button" onclick="change2()">Switch LED2 </button>
+<iframe id="ifr" name="ifr" frameborder="0" scrolling="no" width="0" height="0"></iframe> 
+</div>
+
+<p>&nbsp;</p>
+<p class="auto-style1">&nbsp;</p>
+
+</body>
+
+</html>

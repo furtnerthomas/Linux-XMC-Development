@@ -1,0 +1,141 @@
+package Model.APPS.SYSTIMER.v4_1_14.Templates;
+
+import Model.APPS.SYSTIMER.v4_1_14.SYSTIMER
+
+out.print("""
+/**
+ * @cond
+ ***********************************************************************************************************************
+ *
+ * Copyright (c) 2015-2016, Infineon Technologies AG
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without modification,are permitted provided that the
+ * following conditions are met:
+ *
+ *   Redistributions of source code must retain the above copyright notice, this list of conditions and the  following
+ *   disclaimer.
+ *
+ *   Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the
+ *   following disclaimer in the documentation and/or other materials provided with the distribution.
+ *
+ *   Neither the name of the copyright holders nor the names of its contributors may be used to endorse or promote
+ *   products derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE  FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT  OF THE
+ * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * To improve the quality of the software, users are encouraged to share modifications, enhancements or bug fixes
+ * with Infineon Technologies AG (dave@infineon.com).
+ ***********************************************************************************************************************
+ *
+ * Change History
+ * --------------
+ *
+ * 2015-02-16:
+ *     - Initial version.<br>
+
+ * 2015-05-19:
+ *     - SYSTIMER_SYSTICK_CLOCK, SYSTIMER_TICK_PERIOD, SYSTIMER_PRIORITY and SYSTIMER_SUBPRIORITY macros are addd.<br>
+
+ * 2015-05-29:
+ *     - SYSTIMER_TICK_PERIOD_US macro is added for calculation purpose in SYSTIMER_CreateTimer and 
+ *       SYSTIMER_RestartTimer APIs.<br>
+ *
+ * @endcond
+ *
+ */
+/***********************************************************************************************************************
+ * HEADER FILES
+ **********************************************************************************************************************/
+
+#ifndef SYSTIMER_CONF_H
+#define SYSTIMER_CONF_H
+
+""");
+out.print("""
+/**********************************************************************************************************************
+ * MACROS
+ **********************************************************************************************************************/
+
+#define SYSTIMER_MAJOR_VERSION (${(SYSTIMER.version).findAll( /\d+/ )*.toInteger()[0]}U)
+#define SYSTIMER_MINOR_VERSION (${(SYSTIMER.version).findAll( /\d+/ )*.toInteger()[1]}U)
+#define SYSTIMER_PATCH_VERSION (${(SYSTIMER.version).findAll( /\d+/ )*.toInteger()[2]}U)
+
+/**
+ * @ingroup SYSTIMER_constants
+ * @{
+ */ """);
+/**< To hold APP instance number */
+def appInst = null;
+/**< To hold Time between two systick interrupt in usec */
+int SYSTIMER_Systick=0;
+/**< Flag for XMC1xxx device */
+int Target_1x = 0;
+/**< Flag for XMC4xxx device */
+int Target_4x = 1;
+/**< To hold clock value */
+double tempclock = 0.0;
+/**< for loop  for multiple instance */
+for (SYSTIMER SysTimerInstance : appInstancesList ) {
+ appInst   = SysTimerInstance.getInstanceLabel()
+/**< get Flag value for XMC1xxx device from manifest */
+Target_1x= SysTimerInstance.target_1x.value;
+/**< get Flag value for XMC4xxx device from manifest */
+Target_4x= SysTimerInstance.target_4x.value;
+out.print("""
+/* System Core clock frequency in Hz multiplied by 1000000 
+*  changes done to avoid Float operation
+*/ """);
+tempclock = SysTimerInstance.gclock.value *  1000000;
+/**< fetch clock frequency value for XMC4xxx device from manifest */
+out.print("""
+#define SYSTIMER_SYSTICK_CLOCK   (${Math.round(tempclock)}U)
+ """);
+/**< fetch system tick interval value from manifest */
+out.print("""
+/**< SysTick interval in seconds */ """);
+SYSTIMER_Systick = SysTimerInstance.ginteger_systickinterval.value
+if(SYSTIMER_Systick > 0) { out.print("""
+#define SYSTIMER_TICK_PERIOD  (${SYSTIMER_Systick/1000000}F)
+ """);
+}else { out.print("""
+#define SYSTIMER_TICK_PERIOD (0.001F)
+ """);}
+out.print("""
+/**< SysTick interval in microseconds */ """);
+if(SYSTIMER_Systick > 0) { out.print("""
+#define SYSTIMER_TICK_PERIOD_US  (${SYSTIMER_Systick}U)
+ """);
+	}else { out.print("""
+#define SYSTIMER_TICK_PERIOD_US (1000U)
+ """);}
+/**< fetch number of software timer value from manifest */
+out.print("""
+/**< Maximum No of timer */
+#define SYSTIMER_CFG_MAX_TMR  (${SysTimerInstance.ginteger_swtimers.value}U)
+""");
+/**< fetch priority and subpriority values from manifest */
+if(Target_1x!=1 && Target_4x!=0) { out.print("""
+#define SYSTIMER_PRIORITY  (${SysTimerInstance.ginterruptprio_systimer.priorityValue}U)
+#define SYSTIMER_SUBPRIORITY  (${SysTimerInstance.ginterruptprio_systimer.subPriorityValue}U)
+ """);
+}else { out.print("""
+#define SYSTIMER_PRIORITY  (${SysTimerInstance.ginterruptprio_systimer.priorityValue}U)
+ """);}
+}
+out.print("""
+/**
+ * @}
+ */
+""");
+out.print("""
+
+#endif /**< SYSTIMER_CONF_H */
+
+""");

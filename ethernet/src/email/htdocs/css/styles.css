@@ -1,0 +1,68 @@
+#header{
+clear:both;
+width:100px;
+margin: 0px auto;
+font-family: Ubuntu;
+font-size:16px;
+}
+
+#header img{
+width:100%;
+}
+
+#main {
+font-family: Ubuntu;
+	position:relative;
+clear:both;
+width:160px;
+margin: 0px auto;		
+}
+
+.device1{
+	position:relative;
+	width:20px;	
+}
+
+.LOGBOOK{
+font-family: Ubuntu;
+	position:relative;
+	width:600px;	
+	margin: 0px auto;		
+}
+
+.LED{
+	position:relative;
+	background:#00ff00;
+	height:20px;
+	width:20px;
+	float:left;
+}
+
+.LED img{
+	position:absolute;
+	width:20px;
+}
+
+table, th, td {
+	border:1px solid black;
+}
+
+
+
+/* latin-ext */
+@font-face {
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Ubuntu'), url(http://fonts.gstatic.com/s/ubuntu/v7/Wu5Iuha-XnKDBvqRwQzAG_esZW2xOQ-xsNqO47m55DA.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Ubuntu'), url(http://fonts.gstatic.com/s/ubuntu/v7/sDGTilo5QRsfWu6Yc11AXg.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+

@@ -1,0 +1,878 @@
+package Model.APPS.ETH_LWIP.v4_0_10.Templates;
+
+import Model.APPS.ETH_LWIP.v4_0_10.ETH_LWIP
+
+out.print("""
+/*
+ * Copyright (c) 2001-2004 Swedish Institute of Computer Science.
+ * All rights reserved. 
+ * 
+ * Redistribution and use in source and binary forms, with or without modification, 
+ * are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 3. The name of the author may not be used to endorse or promote products
+ *    derived from this software without specific prior written permission. 
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED 
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
+ * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT 
+ * SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, 
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT 
+ * OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING 
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY 
+ * OF SUCH DAMAGE.
+ *
+ * This file is part of the lwIP TCP/IP stack.
+ * 
+ * Author: Adam Dunkels <adam@sics.se>
+ *
+ */
+
+#include "../../include/lwip/opt.h"
+
+#include "../../include/lwip/def.h"
+#include "../../include/lwip/sys.h"
+#include "../../include/lwip/mem.h"
+#include "../../include/lwip/pbuf.h"
+#include "../../include/lwip/stats.h"
+#include "../../include/lwip/snmp.h"
+#include "../../include/netif/etharp.h"
+#include "../../include/netif/ppp_oe.h"
+#include "../../../eth_lwip.h"
+
+#include "xmc_gpio.h"
+#include "xmc_eth_mac.h"
+#include "xmc_eth_phy.h"
+#include <string.h>
+""")
+
+List IRQUri = null
+String IRQ_node = null
+List ETHUri = null
+String ETH_node = null
+List OS_priority_list = 
+["osPriorityIdle",
+"osPriorityLow",
+"osPriorityBelowNormal",
+"osPriorityNormal",
+"osPriorityAboveNormal",
+"osPriorityHigh",
+"osPriorityRealtime"]
+for(ETH_LWIP eth_lwip_inst : appInstancesList)
+{
+
+	IRQUri = eth_lwip_inst.hwres_nvic_node.getSolverUri();
+	String eth_lwip_name = eth_lwip_inst.getInstanceLabel()
+	
+	if(IRQUri != null)
+	{
+	  IRQ_node = IRQUri[-1]
+	}
+	
+	ETHUri = eth_lwip_inst.hwres_eth_mac.getSolverUri();
+	if(ETHUri != null)
+	{
+		ETH_node = ETHUri[4]
+	}
+
+	List pin_list = [
+		eth_lwip_inst.hwres_eth_port_crs,
+		eth_lwip_inst.hwres_eth_port_cd,
+		eth_lwip_inst.hwres_eth_port_rdv,
+		eth_lwip_inst.hwres_eth_port_rxer,
+		eth_lwip_inst.hwres_eth_port_rxd0,
+		eth_lwip_inst.hwres_eth_port_rxd1,
+		eth_lwip_inst.hwres_eth_port_rxd2,
+		eth_lwip_inst.hwres_eth_port_rxd3,
+		eth_lwip_inst.hwres_eth_port_txen,
+		eth_lwip_inst.hwres_eth_port_txer,
+		eth_lwip_inst.hwres_eth_port_txd0,
+		eth_lwip_inst.hwres_eth_port_txd1,
+		eth_lwip_inst.hwres_eth_port_txd2,
+		eth_lwip_inst.hwres_eth_port_txd3,
+		eth_lwip_inst.hwres_eth_port_tx_clk,
+		eth_lwip_inst.hwres_eth_port_rx_clk,
+		eth_lwip_inst.hwres_eth_port_mdc,
+		eth_lwip_inst.hwres_eth_port_mdio
+		]
+	
+	
+	pin_list_size = 0
+	pin_list.each {
+		List pin_uri = it.getSolverUri()
+		if (pin_uri != null) {
+			def (value1, value2) = it.displayName.value.toString().tokenize(':')
+			out.println("""#define ${eth_lwip_inst.getInstanceLabel()}_${value2.toUpperCase()}  XMC_GPIO_PORT${pin_uri[4]}, ${pin_uri[6]}U""")
+			pin_list_size++			
+		}
+	}
+	
+	out.println("""#define ${eth_lwip_inst.getInstanceLabel()}_PIN_LIST_SIZE ${pin_list_size}U""")
+	
+	out.println("""\n""")
+
+	
+		List output_mode = [
+			"XMC_GPIO_MODE_INPUT_TRISTATE",
+			"XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT1",
+			"XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT2",
+			"XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT3",
+			"XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT4",
+			"XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT5",
+			"XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT6",
+			"XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT7",
+			"XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT8"
+		]
+	
+	
+		out.print("""
+
+#define ${eth_lwip_inst.getInstanceLabel()}_PHY_ADDR   (${eth_lwip_inst.ginteger_phy_address.value})
+
+#define ${eth_lwip_inst.getInstanceLabel()}_NUM_RX_BUF (${eth_lwip_inst.ginteger_rx_buffers.value}U)
+#define ${eth_lwip_inst.getInstanceLabel()}_NUM_TX_BUF (${eth_lwip_inst.ginteger_tx_buffers.value}U)
+
+/* MAC ADDRESS*/
+""")
+		print_MAC_string(eth_lwip_inst.gstring_mac_address.value)
+		out.print("""
+#define MAC_ADDR    ((uint64_t)MAC_ADDR0 | \\
+                     ((uint64_t)MAC_ADDR1 << 8) | \\
+                     ((uint64_t)MAC_ADDR2 << 16) | \\
+                     ((uint64_t)MAC_ADDR3 << 24) | \\
+                     ((uint64_t)MAC_ADDR4 << 32) | \\
+                     ((uint64_t)MAC_ADDR5 << 40))
+""")
+		out.print("""
+/* Define those to better describe your network interface. */
+#define IFNAME0 'e'
+#define IFNAME1 'n'
+""")
+    
+    if(eth_lwip_inst.gcheck_autonegotiation_en.value == true)
+    {
+      out.print("""
+/*Maximum retry iterations for phy auto-negotiation*/
+#define ETH_LWIP_PHY_MAX_RETRIES  0xfffffU
+""")
+    }
+out.print("""
+
+#if defined(__ICCARM__)
+#pragma data_alignment=4
+static XMC_ETH_MAC_DMA_DESC_t ${eth_lwip_inst.getInstanceLabel()}_rx_desc[${eth_lwip_inst.getInstanceLabel()}_NUM_RX_BUF];
+#pragma data_alignment=4
+static XMC_ETH_MAC_DMA_DESC_t ${eth_lwip_inst.getInstanceLabel()}_tx_desc[${eth_lwip_inst.getInstanceLabel()}_NUM_TX_BUF];
+#pragma data_alignment=4
+static uint8_t ${eth_lwip_inst.getInstanceLabel()}_rx_buf[${eth_lwip_inst.getInstanceLabel()}_NUM_RX_BUF][XMC_ETH_MAC_BUF_SIZE];
+#pragma data_alignment=4
+static uint8_t ${eth_lwip_inst.getInstanceLabel()}_tx_buf[${eth_lwip_inst.getInstanceLabel()}_NUM_TX_BUF][XMC_ETH_MAC_BUF_SIZE];
+#elif defined(__CC_ARM)
+static __attribute__((aligned(4))) XMC_ETH_MAC_DMA_DESC_t ${eth_lwip_inst.getInstanceLabel()}_rx_desc[${eth_lwip_inst.getInstanceLabel()}_NUM_RX_BUF] __attribute__((section ("RW_IRAM1")));
+static __attribute__((aligned(4))) XMC_ETH_MAC_DMA_DESC_t ${eth_lwip_inst.getInstanceLabel()}_tx_desc[${eth_lwip_inst.getInstanceLabel()}_NUM_TX_BUF] __attribute__((section ("RW_IRAM1")));
+static __attribute__((aligned(4))) uint8_t ${eth_lwip_inst.getInstanceLabel()}_rx_buf[${eth_lwip_inst.getInstanceLabel()}_NUM_RX_BUF][XMC_ETH_MAC_BUF_SIZE] __attribute__((section ("RW_IRAM1")));
+static __attribute__((aligned(4))) uint8_t ${eth_lwip_inst.getInstanceLabel()}_tx_buf[${eth_lwip_inst.getInstanceLabel()}_NUM_TX_BUF][XMC_ETH_MAC_BUF_SIZE] __attribute__((section ("RW_IRAM1")));
+#elif defined(__GNUC__)
+static __attribute__((aligned(4))) XMC_ETH_MAC_DMA_DESC_t ${eth_lwip_inst.getInstanceLabel()}_rx_desc[${eth_lwip_inst.getInstanceLabel()}_NUM_RX_BUF] __attribute__((section ("ETH_RAM")));
+static __attribute__((aligned(4))) XMC_ETH_MAC_DMA_DESC_t ${eth_lwip_inst.getInstanceLabel()}_tx_desc[${eth_lwip_inst.getInstanceLabel()}_NUM_TX_BUF] __attribute__((section ("ETH_RAM")));
+static __attribute__((aligned(4))) uint8_t ${eth_lwip_inst.getInstanceLabel()}_rx_buf[${eth_lwip_inst.getInstanceLabel()}_NUM_RX_BUF][XMC_ETH_MAC_BUF_SIZE] __attribute__((section ("ETH_RAM")));
+static __attribute__((aligned(4))) uint8_t ${eth_lwip_inst.getInstanceLabel()}_tx_buf[${eth_lwip_inst.getInstanceLabel()}_NUM_TX_BUF][XMC_ETH_MAC_BUF_SIZE] __attribute__((section ("ETH_RAM")));
+#else
+static __attribute__((aligned(4))) XMC_ETH_MAC_DMA_DESC_t ${eth_lwip_inst.getInstanceLabel()}_rx_desc[${eth_lwip_inst.getInstanceLabel()}_NUM_RX_BUF];
+static __attribute__((aligned(4))) XMC_ETH_MAC_DMA_DESC_t ${eth_lwip_inst.getInstanceLabel()}_tx_desc[${eth_lwip_inst.getInstanceLabel()}_NUM_TX_BUF];
+static __attribute__((aligned(4))) uint8_t ${eth_lwip_inst.getInstanceLabel()}_rx_buf[${eth_lwip_inst.getInstanceLabel()}_NUM_RX_BUF][XMC_ETH_MAC_BUF_SIZE];
+static __attribute__((aligned(4))) uint8_t ${eth_lwip_inst.getInstanceLabel()}_tx_buf[${eth_lwip_inst.getInstanceLabel()}_NUM_TX_BUF][XMC_ETH_MAC_BUF_SIZE];
+#endif
+
+
+const XMC_ETH_PHY_CONFIG_t eth_phy_config =
+{
+  .interface = ${["XMC_ETH_LINK_INTERFACE_MII",
+				  "XMC_ETH_LINK_INTERFACE_RMII"
+		   ][eth_lwip_inst.gcombo_mii_interface_mode.options.indexOf(eth_lwip_inst.gcombo_mii_interface_mode.value)]},
+  .enable_auto_negotiate = """)
+	if(eth_lwip_inst.gcheck_autonegotiation_en.value == true)
+	{
+		out.print("""true""")
+	}
+	else
+	{
+	out.print("""false,
+  .duplex = ${["XMC_ETH_LINK_DUPLEX_HALF",
+			   "XMC_ETH_LINK_DUPLEX_FULL"
+		   ][eth_lwip_inst.gcombo_duplex_mode.options.indexOf(eth_lwip_inst.gcombo_duplex_mode.value)]},
+  .speed = ${["XMC_ETH_LINK_SPEED_10M",
+			   "XMC_ETH_LINK_SPEED_100M"
+		   ][eth_lwip_inst.gcombo_speed.options.indexOf(eth_lwip_inst.gcombo_speed.value)]}""")
+	
+	}
+	
+	out.print("""
+};
+
+XMC_ETH_MAC_t eth_mac =
+{
+  .regs = ETH${ETH_node},
+  .address = MAC_ADDR,
+  .rx_desc = ${eth_lwip_inst.getInstanceLabel()}_rx_desc,
+  .tx_desc = ${eth_lwip_inst.getInstanceLabel()}_tx_desc,
+  .rx_buf = &${eth_lwip_inst.getInstanceLabel()}_rx_buf[0][0],
+  .tx_buf = &${eth_lwip_inst.getInstanceLabel()}_tx_buf[0][0],
+  .num_rx_buf = ${eth_lwip_inst.getInstanceLabel()}_NUM_RX_BUF,
+  .num_tx_buf = ${eth_lwip_inst.getInstanceLabel()}_NUM_TX_BUF
+};
+""")
+if(eth_lwip_inst.gcheck_rtos_en.value == true)
+{
+	out.print("""sys_sem_t rx_semaphore;
+""")
+}
+
+out.print("""
+struct netif xnetif = 
+{
+  /* set MAC hardware address length */
+  .hwaddr_len = (u8_t)ETHARP_HWADDR_LEN,
+
+  /* set MAC hardware address */
+  .hwaddr =  {(u8_t)MAC_ADDR0, (u8_t)MAC_ADDR1,
+              (u8_t)MAC_ADDR2, (u8_t)MAC_ADDR3,
+              (u8_t)MAC_ADDR4, (u8_t)MAC_ADDR5},
+
+  /* maximum transfer unit */
+  .mtu = ${eth_lwip_inst.ginteger_mtu.value}U,
+
+  .name = {IFNAME0, IFNAME1},""")
+	if(eth_lwip_inst.gcheck_netif_name.value == true)
+	{
+		out.print("""
+  /* Initialize interface hostname */
+  .hostname = "${eth_lwip_inst.gstring_netif_name.value}",""")
+	}
+	out.print("""
+};""")
+
+out.print("""
+
+/*Local function declarations*/
+static void low_level_init(struct netif *netif);
+static err_t low_level_output(struct netif *netif, struct pbuf *p);
+static struct pbuf * low_level_input(void);
+static void ethernetif_input(void *arg);
+err_t ethernetif_init(struct netif *netif);""")
+
+	out.print("""
+static void ethernetif_link_callback(struct netif *netif);
+static void ethernetif_link_status(void *args);
+
+static void ethernetif_link_callback(struct netif *netif)
+{""")
+if(eth_lwip_inst.gcheck_autonegotiation_en.value == true)
+{
+	out.print("""
+  XMC_ETH_LINK_SPEED_t speed;
+  XMC_ETH_LINK_DUPLEX_t duplex;
+  bool phy_autoneg_state;
+  uint32_t retries = 0U;""")
+}
+	out.print("""
+  int32_t status;
+
+  if (netif_is_link_up(netif))
+  {
+    if((status = XMC_ETH_PHY_Init(&eth_mac, ${eth_lwip_inst.getInstanceLabel()}_PHY_ADDR, &eth_phy_config)) != XMC_ETH_PHY_STATUS_OK)
+    {
+      ETH_LWIP_Error((ETH_LWIP_ERROR_t)status);
+    }
+""")
+	if(eth_lwip_inst.gcheck_autonegotiation_en.value == true)
+	{
+		out.print("""
+    /* If autonegotiation is enabled */
+    do {
+      phy_autoneg_state = XMC_ETH_PHY_IsAutonegotiationCompleted(&eth_mac, ${eth_lwip_inst.getInstanceLabel()}_PHY_ADDR);
+      retries++;
+    } while ((phy_autoneg_state == false) && (retries < ETH_LWIP_PHY_MAX_RETRIES));
+    
+    if(phy_autoneg_state == false)
+    {
+      ETH_LWIP_Error(ETH_LWIP_ERROR_PHY_TIMEOUT);
+    }
+	
+    speed = XMC_ETH_PHY_GetLinkSpeed(&eth_mac, ${eth_lwip_inst.getInstanceLabel()}_PHY_ADDR);
+    duplex = XMC_ETH_PHY_GetLinkDuplex(&eth_mac, ${eth_lwip_inst.getInstanceLabel()}_PHY_ADDR);
+	
+    XMC_ETH_MAC_SetLink(&eth_mac, speed, duplex);""")
+	}
+	else
+	{
+	out.print("""
+	
+    XMC_ETH_MAC_SetLink(&eth_mac, ${["XMC_ETH_LINK_SPEED_10M","XMC_ETH_LINK_SPEED_100M"][eth_lwip_inst.gcombo_speed.options.indexOf(eth_lwip_inst.gcombo_speed.value)]}, 
+	                                       ${["XMC_ETH_LINK_DUPLEX_HALF","XMC_ETH_LINK_DUPLEX_FULL"][eth_lwip_inst.gcombo_duplex_mode.options.indexOf(eth_lwip_inst.gcombo_duplex_mode.value)]});""")
+	}
+  if(eth_lwip_inst.gcheck_polling.value == false)
+  {
+	out.print("""
+    /* Enable ethernet interrupts */
+    XMC_ETH_MAC_EnableEvent(&eth_mac, (uint32_t)XMC_ETH_MAC_EVENT_RECEIVE);
+""")
+		out.print("""
+    NVIC_SetPriority((IRQn_Type)${IRQ_node}, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), ${eth_lwip_inst.ginterruptprio_rx_irq.priorityValue}U, ${eth_lwip_inst.ginterruptprio_rx_irq.subPriorityValue}U));""")
+	out.print("""
+    NVIC_ClearPendingIRQ((IRQn_Type)${IRQ_node});
+    NVIC_EnableIRQ((IRQn_Type)${IRQ_node});""")
+  }
+  
+  out.print("""
+    XMC_ETH_MAC_EnableTx(&eth_mac);
+    XMC_ETH_MAC_EnableRx(&eth_mac);
+""")
+	if(eth_lwip_inst.gcheck_rtos_en.value == true)
+	{
+		out.print("""
+#if LWIP_DHCP == 1
+    /*Start DHCP query*/
+    tcpip_callback((tcpip_callback_fn)dhcp_start, &xnetif);
+#elif LWIP_AUTOIP == 1
+    /* Stop AUTOIP probing */
+    tcpip_callback((tcpip_callback_fn)autoip_start, &xnetif);
+#else
+    /* When the netif link is down, set the status down. */
+    tcpip_callback((tcpip_callback_fn)netif_set_up, &xnetif);
+#endif
+""")
+	}
+	else
+	{
+		out.print("""
+#if LWIP_DHCP == 1
+    /* Start DHCP query */
+    dhcp_start(&xnetif);
+#elif LWIP_AUTOIP == 1
+    /* Start AUTOIP probing */
+    autoip_start(&xnetif);
+#else
+    /* When the netif is fully configured this function must be called. */
+    netif_set_up(&xnetif);
+#endif
+""")
+	}
+		out.print("""
+  }
+  else
+  {
+    /* Enable ethernet interrupts */
+    XMC_ETH_MAC_DisableEvent(&eth_mac, (uint32_t)XMC_ETH_MAC_EVENT_RECEIVE);
+    NVIC_DisableIRQ((IRQn_Type)${IRQ_node});
+
+    XMC_ETH_MAC_DisableTx(&eth_mac);
+    XMC_ETH_MAC_DisableRx(&eth_mac);
+""")
+	if(eth_lwip_inst.gcheck_rtos_en.value == true)
+	{
+		out.print("""
+#if LWIP_DHCP == 1
+    /*Stop DHCP query*/
+    tcpip_callback((tcpip_callback_fn)dhcp_stop, &xnetif);
+#elif LWIP_AUTOIP == 1
+    /* Stop AUTOIP probing */
+    tcpip_callback((tcpip_callback_fn)autoip_stop, &xnetif);
+#else
+    /* When the netif link is down, set the status down. */
+    tcpip_callback((tcpip_callback_fn)netif_set_down, &xnetif);
+#endif
+""")
+	}
+	else
+	{
+		out.print("""
+#if LWIP_DHCP == 1
+    /* Stop DHCP query */
+    dhcp_stop(&xnetif);
+#elif LWIP_AUTOIP == 1
+    /* Stop AUTOIP probing */
+    autoip_stop(&xnetif);
+#else
+    /* When the netif link is down, set the status down. */
+    netif_set_down(&xnetif);
+#endif
+""")
+	}
+	out.print("""
+  }
+}
+
+static void ethernetif_link_status(void *args)
+{
+""")
+	if(eth_lwip_inst.gcheck_rtos_en.value == true)
+	{
+		out.print("""
+  while(1){
+""")
+	}
+	out.print("""
+  if (XMC_ETH_PHY_GetLinkStatus(&eth_mac, ${eth_lwip_inst.getInstanceLabel()}_PHY_ADDR) == XMC_ETH_LINK_STATUS_DOWN)
+  {
+    if (netif_is_link_up(&xnetif))
+    {
+      netif_set_link_down(&xnetif);
+    }
+  }
+  else
+  {
+    if (!netif_is_link_up(&xnetif))
+    {
+      netif_set_link_up(&xnetif);
+    }
+  }
+""")
+	if(eth_lwip_inst.gcheck_rtos_en.value == false)
+	{
+	out.print("""
+  sys_timeout(1000U, ethernetif_link_status, NULL);
+""")
+	}
+	else
+	{
+	out.print("""
+  sys_msleep(1000);
+""")
+	}
+	if(eth_lwip_inst.gcheck_rtos_en.value == true)
+	{
+		out.print("""
+  }
+""")
+	}
+	out.print("""
+}
+
+""")
+out.print("""
+
+/**
+ * In this function, the hardware should be initialized.
+ * Called from ethernetif_init().
+ *
+ * @param netif the already initialized lwip network interface structure
+ *        for this ethernetif
+ */
+static void low_level_init(struct netif *netif)
+{
+  XMC_ETH_MAC_PORT_CTRL_t port_control;""")
+
+out.print("""
+  XMC_GPIO_CONFIG_t gpio_config;
+  gpio_config.output_level = XMC_GPIO_OUTPUT_LEVEL_LOW;""")
+/*GPIO initialization*/
+pin_list.each {
+	List pin_uri = it.getSolverUri()
+	if (pin_uri != null) {
+		def (value1, value2) = it.displayName.value.toString().tokenize(':')
+		if(it.getRegValue("IOCR","iocr_oe") == 0)
+		{
+			out.println("""
+  gpio_config.mode = XMC_GPIO_MODE_INPUT_TRISTATE;
+""")
+		}
+		else
+		{
+			out.println("""
+  gpio_config.output_strength = XMC_GPIO_OUTPUT_STRENGTH_STRONG_SHARP_EDGE;
+  gpio_config.mode = ${output_mode[it.getRegValue("iocr","iocr_pcr").toInteger()]};
+""")
+		}
+		out.print("""  XMC_GPIO_Init(${eth_lwip_inst.getInstanceLabel()}_${value2.toUpperCase()}, &gpio_config);
+""")
+		}
+	}
+
+def (value3, value4) = eth_lwip_inst.hwres_eth_port_mdio.displayName.value.toString().tokenize(':')
+out.print("""
+
+  XMC_GPIO_SetHardwareControl(${eth_lwip_inst.getInstanceLabel()}_${value4.toUpperCase()}, ${["XMC_GPIO_HWCTRL_DISABLED", "XMC_GPIO_HWCTRL_PERIPHERAL1", "XMC_GPIO_HWCTRL_PERIPHERAL2"][eth_lwip_inst.hwres_eth_port_mdio.getRegValue("HWSEL","hwsel_hw").toInteger()]});
+""")
+out.print("""
+
+  port_control.mode = ${["XMC_ETH_MAC_PORT_CTRL_MODE_MII","XMC_ETH_MAC_PORT_CTRL_MODE_RMII"][eth_lwip_inst.gcombo_mii_interface_mode.options.indexOf(eth_lwip_inst.gcombo_mii_interface_mode.value)]};
+  port_control.rxd0 = (XMC_ETH_MAC_PORT_CTRL_RXD0_t)${eth_lwip_inst.hwres_eth_mac.getRegValue("con","con_rxd0").toInteger()}U;
+  port_control.rxd1 = (XMC_ETH_MAC_PORT_CTRL_RXD1_t)${eth_lwip_inst.hwres_eth_mac.getRegValue("con","con_rxd1").toInteger()}U;""")
+if(eth_lwip_inst.gcombo_mii_interface_mode.value == "MII")
+{
+	out.print("""
+  port_control.rxd2 = (XMC_ETH_MAC_PORT_CTRL_RXD2_t)${eth_lwip_inst.hwres_eth_mac.getRegValue("con","con_rxd2").toInteger()}U;
+  port_control.rxd3 = (XMC_ETH_MAC_PORT_CTRL_RXD3_t)${eth_lwip_inst.hwres_eth_mac.getRegValue("con","con_rxd3").toInteger()}U;
+  port_control.crs = (XMC_ETH_MAC_PORT_CTRL_CRS_t)${eth_lwip_inst.hwres_eth_mac.getRegValue("con","con_crs").toInteger()}U;
+  port_control.clk_tx = (XMC_ETH_MAC_PORT_CTRL_RXER_t)${eth_lwip_inst.hwres_eth_mac.getRegValue("con","con_clk_tx").toInteger()}U;
+  port_control.col = (XMC_ETH_MAC_PORT_CTRL_COL_t)${eth_lwip_inst.hwres_eth_mac.getRegValue("con","con_col").toInteger()}U;""")
+}
+out.print("""
+  port_control.clk_rmii = (XMC_ETH_MAC_PORT_CTRL_CLK_RMII_t)${eth_lwip_inst.hwres_eth_mac.getRegValue("con","con_rmii").toInteger()}U;
+  port_control.crs_dv = (XMC_ETH_MAC_PORT_CTRL_CRS_DV_t)${eth_lwip_inst.hwres_eth_mac.getRegValue("con","con_crs_dv").toInteger()}U;
+  port_control.rxer = (XMC_ETH_MAC_PORT_CTRL_RXER_t)${eth_lwip_inst.hwres_eth_mac.getRegValue("con","con_rxer").toInteger()}U;
+  port_control.mdio = (XMC_ETH_MAC_PORT_CTRL_MDIO_t)${eth_lwip_inst.hwres_eth_mac.getRegValue("con","con_mdio").toInteger()}U;
+  XMC_ETH_MAC_SetPortControl(&eth_mac, port_control);
+
+  (void)XMC_ETH_MAC_Init(&eth_mac);
+
+  XMC_ETH_MAC_DisableJumboFrame(&eth_mac);
+""")
+if(eth_lwip_inst.gcheck_promiscuous_en.value)
+{
+	out.print("""
+  XMC_ETH_MAC_EnablePromiscuousMode(&eth_mac);
+""")
+}
+if(eth_lwip_inst.gcheck_broadcast_en.value)
+{
+	out.print("""
+  XMC_ETH_MAC_EnableReceptionBroadcastFrames(&eth_mac);
+""")
+}
+out.print("""
+
+}
+
+/**
+ * This function should do the actual transmission of the packet. The packet is
+ * contained in the pbuf that is passed to the function. This pbuf
+ * might be chained.
+ *
+ * @param netif the lwip network interface structure for this ethernetif
+ * @param p the MAC packet to send (e.g. IP packet including MAC addresses and type)
+ * @return ERR_OK if the packet could be sent
+ *         an err_t value if the packet couldn't be sent
+ *
+ * @note Returning ERR_MEM here if a DMA queue of your MAC is full can lead to
+ *       strange results. You might consider waiting for space in the DMA queue
+ *       to become availale since the stack doesn't retry to send a packet
+ *       dropped because of memory failure (except for the TCP timers).
+ */
+
+static err_t low_level_output(struct netif *netif, struct pbuf *p)
+{
+  struct pbuf *q;
+  uint32_t framelen = 0U;
+  uint8_t *buffer;
+  
+  if (p->tot_len > (u16_t)XMC_ETH_MAC_BUF_SIZE) {
+    return ERR_BUF;
+  }
+
+  if (XMC_ETH_MAC_IsTxDescriptorOwnedByDma(&eth_mac))
+  {
+    XMC_ETH_MAC_ResumeTx(&eth_mac);
+
+    return ERR_BUF;
+  }
+  else
+  {
+    buffer = XMC_ETH_MAC_GetTxBuffer(&eth_mac);
+
+#if ETH_PAD_SIZE
+    pbuf_header(p, -ETH_PAD_SIZE);    /* Drop the padding word */
+#endif
+
+    for(q = p; q != NULL; q = q->next)
+    {
+      /* Send the data from the pbuf to the interface, one pbuf at a
+       time. The size of the data in each pbuf is kept in the ->len
+       variable. */
+      MEMCPY(buffer, q->payload, q->len);
+      framelen += (uint32_t)q->len;
+      buffer += q->len;
+    }
+
+#if ETH_PAD_SIZE
+    pbuf_header(p, ETH_PAD_SIZE);    /* Reclaim the padding word */
+#endif
+
+    XMC_ETH_MAC_SetTxBufferSize(&eth_mac, framelen);
+
+    XMC_ETH_MAC_ReturnTxDescriptor(&eth_mac);
+    XMC_ETH_MAC_ResumeTx(&eth_mac);
+
+    return ERR_OK;
+  }
+}
+
+/**
+ * Should allocate a pbuf and transfer the bytes of the incoming
+ * packet from the interface into the pbuf.
+ *
+ * @param netif the lwip network interface structure for this ethernetif
+ * @return a pbuf filled with the received packet (including MAC header)
+ *         NULL on memory error
+ */
+static struct pbuf * low_level_input(void)
+{
+  struct pbuf *p = NULL;
+  struct pbuf *q;
+  uint32_t len;
+  uint8_t *buffer;
+
+  if (XMC_ETH_MAC_IsRxDescriptorOwnedByDma(&eth_mac) == false)
+  {
+    len = XMC_ETH_MAC_GetRxFrameSize(&eth_mac);
+  
+    if ((len > 0U) && (len <= (uint32_t)XMC_ETH_MAC_BUF_SIZE))
+    {
+#if ETH_PAD_SIZE
+    len += ETH_PAD_SIZE;    /* allow room for Ethernet padding */
+#endif
+  
+      /* We allocate a pbuf chain of pbufs from the pool. */
+      p = pbuf_alloc(PBUF_RAW, (u16_t)len, PBUF_POOL);
+    
+      if (p != NULL)
+      {
+#if ETH_PAD_SIZE
+        pbuf_header(p, -ETH_PAD_SIZE);  /* drop the padding word */
+#endif
+  
+        buffer = XMC_ETH_MAC_GetRxBuffer(&eth_mac);
+  
+        len = 0U;
+        /* We iterate over the pbuf chain until we have read the entire
+         * packet into the pbuf. */
+        for (q = p; q != NULL; q = q->next)
+        {
+          /* Read enough bytes to fill this pbuf in the chain. The
+           * available data in the pbuf is given by the q->len
+           * variable.
+           * This does not necessarily have to be a memcpy, you can also preallocate
+           * pbufs for a DMA-enabled MAC and after receiving truncate it to the
+           * actually received size. In this case, ensure the tot_len member of the
+           * pbuf is the sum of the chained pbuf len members.
+           */
+           MEMCPY(q->payload, &buffer[len], q->len);
+           len += q->len;
+        }
+#if ETH_PAD_SIZE
+        pbuf_header(p, ETH_PAD_SIZE);    /* Reclaim the padding word */
+#endif
+  
+      }
+      XMC_ETH_MAC_ReturnRxDescriptor(&eth_mac);
+    }
+    else
+    {
+      /* Discard frame */
+      XMC_ETH_MAC_ReturnRxDescriptor(&eth_mac);
+    }
+    XMC_ETH_MAC_ResumeRx(&eth_mac);
+  }
+  return p;  
+}
+
+/**
+ * This function should be called when a packet is ready to be read
+ * from the interface. It uses the function low_level_input() that
+ * should handle the actual reception of bytes from the network
+ * interface. Then the type of the received packet is determined and
+ * the appropriate input function is called.
+ *
+ * @param netif the lwip network interface structure for this ethernetif
+ */
+static void ethernetif_input(void *arg)
+{
+  struct pbuf *p = NULL;
+  struct eth_hdr *ethhdr;
+  struct netif *netif = (struct netif *)arg;
+""")
+if(eth_lwip_inst.gcheck_rtos_en.value == true)
+{
+	out.print("""  while(1)
+  {
+    sys_arch_sem_wait(&rx_semaphore, 0U);
+""")
+}
+out.print("""
+
+    p = low_level_input();
+
+    while (p != NULL)
+    {
+   	  ethhdr = p->payload;
+   	  switch (htons(ethhdr->type))
+   	  {
+   	    case ETHTYPE_IP:
+   	    case ETHTYPE_ARP:
+   	      /* full packet send to tcpip_thread to process */
+          if (netif->input( p, netif) != ERR_OK)
+          {
+            pbuf_free(p);
+          }
+
+          break;
+
+   	    default:
+   	      pbuf_free(p);
+   	      break;
+   	  }
+      
+      p = low_level_input();
+    }
+""")
+if(eth_lwip_inst.gcheck_rtos_en.value == true)
+{
+	out.print("""  }""")
+}
+ out.print("""
+
+}
+
+/**
+ * Should be called at the beginning of the program to set up the
+ * network interface. It calls the function low_level_init() to do the
+ * actual setup of the hardware.
+ *
+ * This function should be passed as a parameter to netif_add().
+ *
+ * @param netif the lwip network interface structure for this ethernetif
+ * @return ERR_OK if the loopif is initialized
+ *         ERR_MEM if private data couldn't be allocated
+ *         any other err_t on error
+ */
+err_t ethernetif_init(struct netif* netif)
+{
+  LWIP_ASSERT("netif != NULL", (netif != NULL));
+""")
+ if(eth_lwip_inst.gcheck_netif_name.value == true)
+ {
+	 out.print("""
+#if LWIP_NETIF_HOSTNAME
+  /* Initialize interface hostname */
+  netif->hostname = "${eth_lwip_inst.gstring_netif_name.value}";
+#endif /* LWIP_NETIF_HOSTNAME */
+""")
+ }
+
+out.print("""
+
+  netif->output = etharp_output;
+  netif->linkoutput = low_level_output;
+
+  /* initialize the hardware */
+  low_level_init(netif);
+""")
+ if(eth_lwip_inst.gcheck_rtos_en.value == true)
+ {
+	 out.print("""
+  sys_sem_new(&rx_semaphore, 0U);
+  sys_thread_new("eth_rx_input_thread", ethernetif_input, netif, ${eth_lwip_inst.ginteger_netif_task_stack_size.value}U, ${OS_priority_list[eth_lwip_inst.gcombo_netif_task_priority.options.indexOf(eth_lwip_inst.gcombo_netif_task_priority.value)]});
+
+  netif_set_link_callback(netif, ethernetif_link_callback);
+  /*Create a thread to keep track of PHY link status */
+  sys_thread_new("phy_link_status_thread", ethernetif_link_status, netif, ${eth_lwip_inst.ginteger_phy_task_stack_size.value}U, ${OS_priority_list[eth_lwip_inst.gcombo_phy_init_priority.options.indexOf(eth_lwip_inst.gcombo_phy_init_priority.value)]});
+""")
+ }
+ else
+ {
+	 out.print("""
+  sys_timeout(1000U, ethernetif_link_status, NULL);
+
+  netif_set_link_callback(netif, ethernetif_link_callback);
+""")
+ }
+ out.print("""
+
+  return ERR_OK;
+}
+""")
+ if(eth_lwip_inst.gcheck_polling.value == false)
+ {
+ out.print("""
+void IRQ_Hdlr_${IRQ_node}(void)
+{
+  XMC_ETH_MAC_ClearEventStatus(&eth_mac, XMC_ETH_MAC_EVENT_RECEIVE);
+""")
+ if(eth_lwip_inst.gcheck_rtos_en.value == true)
+ {
+    out.print("""    sys_sem_signal(&rx_semaphore);""")
+ }
+ else
+ {
+	 out.print("""    ethernetif_input(&xnetif);""")
+ }
+ out.print("""
+}
+""")
+ }
+out.print("""
+void ETH_LWIP_Poll(void)
+{
+  """)
+ if(eth_lwip_inst.gcheck_rtos_en.value == true)
+ {
+    out.print("""  sys_sem_signal(&rx_semaphore);""")
+ }
+ else
+ {
+   out.print("""  ethernetif_input(&xnetif);""")
+ }
+ out.print("""
+}
+
+/*Weak function to be called incase of error*/
+__WEAK void ETH_LWIP_Error (ETH_LWIP_ERROR_t error_code)
+{
+  switch (error_code)
+  {
+    case ETH_LWIP_ERROR_PHY_DEVICE_ID:
+       /* Wrong PHY address configured in the ETH_LWIP APP Network Interface.
+        * Because the connect PHY does not match the configuration or the PHYADR is wrong*/
+       break;
+
+   case ETH_LWIP_ERROR_PHY_TIMEOUT:
+      /* PHY did not respond.*/
+      break;
+
+   case ETH_LWIP_ERROR_PHY_ERROR:
+     /*PHY register update failed*/
+     break;
+
+   default:
+     break;
+  }
+
+  for (;;);
+}
+""")
+ 
+}
+
+Integer print_MAC_string(String text)
+{
+	String mac_text = text
+	String MAC_ADDR6 = mac_text.substring(mac_text.lastIndexOf(":")+1, mac_text.length())
+	mac_text = mac_text - mac_text.substring(mac_text.lastIndexOf(":"), mac_text.length())
+	String MAC_ADDR5 = mac_text.substring(mac_text.lastIndexOf(":")+1, mac_text.length())
+	mac_text = mac_text - mac_text.substring(mac_text.lastIndexOf(":"), mac_text.length())
+	String MAC_ADDR4 = mac_text.substring(mac_text.lastIndexOf(":")+1, mac_text.length())
+	mac_text = mac_text - mac_text.substring(mac_text.lastIndexOf(":"), mac_text.length())
+	String MAC_ADDR3 = mac_text.substring(mac_text.lastIndexOf(":")+1, mac_text.length())
+	mac_text = mac_text - mac_text.substring(mac_text.lastIndexOf(":"), mac_text.length())
+	String MAC_ADDR2 = mac_text.substring(mac_text.lastIndexOf(":")+1, mac_text.length())
+	mac_text = mac_text - mac_text.substring(mac_text.lastIndexOf(":"), mac_text.length())
+	String MAC_ADDR1 = mac_text.substring(mac_text.lastIndexOf(":")+1, mac_text.length())
+	out.print("""
+/* MAC address*/
+#define MAC_ADDR0 (0x${MAC_ADDR1}U)
+#define MAC_ADDR1 (0x${MAC_ADDR2}U)
+#define MAC_ADDR2 (0x${MAC_ADDR3}U)
+#define MAC_ADDR3 (0x${MAC_ADDR4}U)
+#define MAC_ADDR4 (0x${MAC_ADDR5}U)
+#define MAC_ADDR5 (0x${MAC_ADDR6}U)
+""")
+	return 0
+}

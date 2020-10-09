@@ -1,0 +1,279 @@
+package Model.APPS.SYSTIMER.v4_1_14;
+
+/*
+ Copyright (c) 2015-2016, Infineon Technologies AG
+ All rights reserved.
+
+ Redistribution and use in source and binary forms, with or without modification, are permitted provided that the
+ following conditions are met:
+
+ Redistributions of source code must retain the above copyright notice, this list of conditions and the following
+ disclaimer.
+  
+ Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following
+ disclaimer in the documentation and/or other materials provided with the distribution.
+  
+ Neither the name of the copyright holders nor the names of its contributors may be used to endorse or promote
+ products derived from this software without specific prior written permission.
+
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+ INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE  FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ WHETHER IN CONTRACT, STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+ To improve the quality of the software, users are encouraged to share modifications, enhancements or bug fixes with
+ Infineon Technologies AG: dave@infineon.com. */
+ 
+/*************** Revision History **********************************************
+ Version        Date          Description
+
+ 4.0.0        16-Feb-2015    Initial version for DAVEv4.<br>
+
+ 4.0.1        20-Feb-2015    APP Help documentation improved.<br>
+
+ 4.1.0        19-May-2015   1). Structure name changed from SYSTIMER_TimerObject to SYSTIMER_OBJECT_t and SYSTIMER_INIT_t
+                                to SYSTIMER_t. And also changed its parameter name.<br>
+                            2). Enum name changed from SYSTIMER_TimerStateType, SYSTIMER_TimerType to SYSTIMER_STATE_t 
+                                and SYSTIMER_MODE_t. And also changed its parameter name.<br>
+                            3). Supported new APIs SYSTIMER_GetTimerState() and  SYSTIMER_GetTickCount().<br> 
+                            
+ 4.1.1        29-May-2015   SYSTIMER_TICK_PERIOD_US macro is added for calculation purpose in SYSTIMER_CreateTimer and
+                            SYSTIMER_RestartTimer APIs and help documentation improved.<br> 
+                            
+ 4.1.2        18-Jun-2015   1). LLD version Checks are Removed.<br>   
+                            2). Version check added for XMCLib dependency.<br> 
+                            
+ 4.1.4        26-Jun-2015   1). SYSTIMER_OBJECT_t structure variable delete renamed to delete_swtmr.<br>
+                            2). SYSTIMER_OBJECT_t structure scope changed from global to local scope.<br>     
+                            
+ 4.1.6        09-Jul-2015   APP Help documentation improved.<br>
+ 
+ 4.1.7        31-Jul-2015   1)Fixed return value issues for APIs SYSTIMER_StartTimer, SYSTIMER_StopTimer, 
+                              SYSTIMER_RestartTimer, SYSTIMER_DeleteTimer.<br>
+                            3)Removed CPU_CTRL APP initialization from SYSTIMER_Init API.
+ 4.1.9        31-Jul-2015   1)Fixed wrong parameter check in the SYSTIMER_CreateTimer API.<br>
+                              SYSTIMER_CreateTimer return 0 (indicates error) if the requested timer has a period less 
+                              than the SysTick timer period<br>
+                            2)GUI Tool Tip updated for SysTick time period field<br>   
+ 4.1.10       08-Oct-2015   1)Added support for XMC1400 devices.<br>
+                            2)Added support for XMC4700/XMC4800 devices.<br> 
+ 4.1.12       18-Dec-2015   1)Added support for XMC4300 devices.<br>    
+ 4.1.14       05-Aug-2016   1)Fixed re-entracy problems when using SYSTIMER_StopTimer                                                                                  
+ *******************************************************************************/
+ /* Import statements */
+ import ifx.davex.app.manifest.*
+ class  SYSTIMER extends SYSTIMER_GUI {
+
+ /* Note  : SYSTIMER properties are mandatory and important
+ Begin : SYSTIMER property section */
+
+ /**
+  * APP version
+  * Format: a string with three digit separated by a dot.
+  */
+ def version            = "4.1.14"
+
+ /**
+  * APP categories declaration.
+  * It is list of strings. Subcategories are separated by slash.
+  * No limits on number of categories and subcategories depth.
+  */
+ def categoriesDescription = ["System",
+ "General Purpose/Timed Signals"]
+
+ /**
+  * Minimum DAVE version required for this APP.
+  *
+  * It is string with three digit separated by a dot.
+  */
+ def minDaveVersion           = '4.0.0'
+
+
+ /**
+  * Keywords used by search feature in APPs selection view
+  *
+  * It is a list of string.
+  */
+ def keywords      = [
+ "SimpleSystemTimer",
+ "SysTick",
+ "Timer",
+ "SW Timer",
+ "SYSTIMER Timer",
+ "System Timer",
+ "ALL"
+ ]
+ /**
+  * softwareIDs is used to declare which devices are compatible with this APP.
+  * It is a map with key a string containing a pattern that shall match the SW id of
+  * the device and as value the minimal version of the APP.
+  *
+  *
+  */
+ /* Any step of XMC4500F144 and XMC4400F144
+ Any step of XMC4400F100 and XMC4400F64
+ Any step, any variant and any packages of XMC1300 */
+ def softwareIDs       = [
+    "XMC4.5.*.*.*":"1.0.0",
+    "XMC4.4.*.*.*":"1.0.0",
+	"XMC4.3.*.*.*":"1.0.0",
+    "XMC4.2.*.*.*":"1.0.0",
+    "XMC4.1.*.*.*":"1.0.0",
+    "XMC4.7.*.*.*":"1.0.0",
+    "XMC4.8.*.*.*":"1.0.0",
+    "XMC1.4.*.*.*":"1.0.0",
+    "XMC1.3.*.*.*":"1.0.0",
+    "XMC1.2.*.*.*":"1.0.0",
+    "XMC1.1.*.*.*":"1.0.0"
+    ]
+
+ /**
+  * Singleton property:
+  * When it is true the APP can be instantiated only once.
+  */
+ def singleton     = true
+
+ /**
+  * initProvider property
+  * It shall be true to add a call to <AppName>_Init()
+  */
+ def initProvider  = true
+ 
+ /**
+  * Deprecated APP
+  * Set it to true to indicate that the APP shall be not used for new projects.
+  */
+ def deprecated    = false
+ 
+ /**
+  * Sharable property.
+  * It shall be true to allows multiple APPs to require the same instance of this APP.
+  */
+ def sharable      = true
+ 
+ /**
+  *  APP function description.
+  */
+ 
+ /* APP short description */
+ def description = "The SYSTIMER APP uses the SysTick interrupt to call user\nfunctions periodically at a specified rate or \nafter a given time period expires."
+
+ /* End   : SYSTIMER property section */
+
+ /* Begin : User variable section */
+
+ /* virtual resource group for System timer */
+ MVirtualResourceGroup hwres_syst
+
+ /* Required APP consumption for System timer */
+ MRequiredApp appres_clock /* CLOCK APP consumption for XMC4xxx device and XMC1xxx device */
+ MRequiredApp appres_cpu  /* CPU APP consumption for XMC4xxx device device */
+
+ /*  variable to hold actual system frequency value  */
+ GFloat gclock = GFloat(widgetName:"gclock")
+ /*  flag variable for XMC4xxx device  */
+ GInteger target_4x =GInteger(widgetName:"target_4x")
+ /*  flag variable for XMC1xxx device  */
+ GInteger target_1x =GInteger(widgetName:"target_1x")
+
+ /* SYSTIMER Constructor */
+ /* Public API of SYSTIMER */
+ public SYSTIMER(DaveEnv daveEnv) 
+ {
+
+   /* Target based variables for resource consumption, UI dependency etc. */
+
+   String family = daveEnv.project.selectedDevice.deviceId.family /* ex:XMC4 or XMC1 */
+   String series = (daveEnv.project.selectedDevice.deviceId.family + daveEnv.project.selectedDevice.deviceId.series) /* ex:XMC45, XMC44 */
+   String device = daveEnv.project.selectedDevice.deviceId.device /* 00, 02, 04, 06 */
+   String device_Name = daveEnv.project.selectedDevice.deviceId.deviceName /* XMC4500-F144x1024-AB */
+   String device_step = daveEnv.project.selectedDevice.deviceId.step /* AA, AB, AC */
+   String device_package = daveEnv.project.selectedDevice.deviceId.icPackage /* F144, E144 */
+   String device_sofwareid  = daveEnv.project.selectedDevice.deviceId.softwareId   /* XMC4.5.00.F144.AB */
+
+   /* virtual resource group mapping for System timer */
+   hwres_syst =  MVirtualResourceGroup("syst", ["peripheral", "cpu", "0", "systick"])
+
+   /*  flag variable to hold NVIC priority bits for XMC1xxx device  */
+   Integer nvicPrioBits = daveEnv.project.selectedDevice.nvicPrioBits
+
+   if (family == "XMC4")
+   {
+     /* CLOCK App consumption for XMC4xxx devices */
+     appres_clock =  MRequiredApp("CLOCK_XMC4","Clock APP", RSHARABLE, "4.0.2")
+     /* CPU App consumption for XMC4xxx devices */
+     appres_cpu =  MRequiredApp("CPU_CTRL_XMC4", "CPU", RSHARABLE, "4.0.2")
+     /* Fetch actual system clock frequency(fSYS) value */
+     gclock.value = MF({appres_clock.getVal(["gfloat_actsysfreq", "value"])}, Float)
+     /* Default UI parameter settings for XMC4xxx device */
+     target_4x.value=1; /* XMC4xxx flag is true  */
+     target_1x.value=0; /* XMC1xxx flag is false  */
+
+     ginterruptprio_systimer.priorityValue = 63 /* Default Interrupt priority level value for Interrupt priority group  */
+     ginterruptprio_systimer.minPriority = 0   /* minimum Interrupt priority level value for Interrupt priority group  */
+     ginterruptprio_systimer.subPriorityVisible = true  /* Enabled Interrupt sub-priority group for XMC4xxx */
+     ginterruptprio_systimer.minSubPriority = 0 /* minimum Interrupt priority level value for Interrupt sub priority group  */
+     /* maximum Interrupt priority level value for Interrupt priority group  */
+     ginterruptprio_systimer.maxPriority = MF({
+       Integer temp = appres_cpu.getVal(["gint_maxInterruptPreemptPriority", "value"]) as Integer
+       return temp
+     }, Integer)
+     /* maximum Interrupt priority level value for Interrupt subpriority group  */
+     ginterruptprio_systimer.maxSubPriority =  MF({
+     Integer temp = appres_cpu.getVal(["gint_maxInterruptSubPriority", "value"]) as Integer
+       return temp
+     }, Integer)
+   }else{
+     /* CLOCK App consumption for XMC1xxx devices */
+     appres_clock =  MRequiredApp("CLOCK_XMC1","Clock APP", RSHARABLE, "4.0.2")
+     /* CPU App consumption for XMC1xxx devices */
+     appres_cpu =  MRequiredApp("CPU_CTRL_XMC1", "CPU", RSHARABLE, "4.0.2")
+     /* Fetch actual main clock frequency(fMCLK) value */
+     gclock.value = MF({appres_clock.getVal(["gfloat_mclkactfrq", "value"])}, Float)
+     /* Default UI parameter settings for XMC1xxx device */
+     target_4x.value=0; /* XMC4xxx flag is false  */
+     target_1x.value=1; /* XMC1xxx flag is true  */
+
+     ginterruptprio_systimer.priorityValue = 3 /* Default Interrupt priority level value for Interrupt priority group  */
+     ginterruptprio_systimer.minPriority = 0   /* minimum Interrupt priority level value for Interrupt priority group  */
+     ginterruptprio_systimer.subPriorityVisible = false  /* Enabled Interrupt sub-priority group for XMC1xxx */
+     ginterruptprio_systimer.minSubPriority = 0 /* minimum Interrupt priority level value for Interrupt sub priority group  */
+     /* maximum Interrupt priority level value for Interrupt priority group  */
+     ginterruptprio_systimer.maxPriority = MF({
+     Integer temp = appres_cpu.getVal(["gint_maxInterruptPreemptPriority", "value"]) as Integer
+       return temp
+     }, Integer)
+   }
+   /* calculate maximum boundary value of SysTick interval   */
+   ginteger_systickinterval.maxValue = MF({
+     float  temp_interval = (16777216 / gclock.value); /* pow(2,24) *(1/fCPU) * 1E6,  where fCPU is in Hertz.*/
+     if(temp_interval > 16777216)
+     {
+       Math.round(16777216)
+     
+     }else
+     {
+       return (temp_interval.round())
+     }
+    },Integer)
+ }
+
+ /* generation of static and dynamic .c and .h files of SYSTIMER APP  */
+ public static void generateFiles()
+ {
+   /* Copy SYSTIMER.c static file as it is */
+   copy("systimer.c", "systimer.c")
+   /* Copy SYSTIMER.h static file as it is */
+   copy("systimer.h", "systimer.h")
+   /* generate SYSTIMER_Conf.h file dynamically according to user configuration */
+   generate("systimer_confh.tmpl", "systimer_conf.h")
+   /* generate SYSTIMER_Conf.c file dynamically according to user configuration */
+   generate("systimer_confc.tmpl", "systimer_conf.c")
+   /* generate SYSTIMER_Extern.h file for extern declaration*/
+   generate("systimer_externh.tmpl", "systimer_extern.h")
+ }
+
+ }
