@@ -32,10 +32,13 @@
                                                                               **
 *******************************************************************************/
 
-#define XMC4500_F144x1024
 
-#include <stdint.h>
+#include "xmc_device.h"
 #include <xmc_gpio.h>
+#include "xmc_vadc.h"
+#include "xmc4_gpio_map.h"
+#include "ADC_XMC4500.h"
+#include "system_XMC4500.h"
 
 #define TICKS_PER_SECOND 1000
 #define TICKS_WAIT 500
@@ -46,6 +49,7 @@
 void SysTick_Handler(void)
 {
   static uint32_t ticks = 0;
+  volatile int32_t adc_value = 0;
 
   ticks++;
   if (ticks == TICKS_WAIT)
@@ -53,6 +57,10 @@ void SysTick_Handler(void)
     XMC_GPIO_ToggleOutput(LED1);
     XMC_GPIO_ToggleOutput(LED2);
     ticks = 0;
+    ADC_StartConversion();
+    while (!ADC_GetValue());
+    adc_value = ADC_GetValue();
+    adc_value++;
   }
 }
 
@@ -71,6 +79,8 @@ int main(void)
   XMC_GPIO_Init(LED2, &config);
 
   /* System timer configuration */
+
+  ADC_Initialize();
   SysTick_Config(SystemCoreClock / TICKS_PER_SECOND);
 
   while(1)

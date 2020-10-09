@@ -1,0 +1,16 @@
+*.Po
+*.o
+adc/autom4te.cache/*
+**/.deps
+*.bin
+Makefile
+Makefile.in
+*.m4
+.cproject
+.dirstamp
+.project
+config.log
+.settings
+autom4te.cache
+config.status
+configure
