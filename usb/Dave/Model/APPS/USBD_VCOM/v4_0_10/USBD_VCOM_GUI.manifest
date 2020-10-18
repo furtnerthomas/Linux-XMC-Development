@@ -1,0 +1,15 @@
+package Model.APPS.USBD_VCOM.v4_0_10;
+
+// Import statements
+import ifx.davex.app.manifest.*
+abstract class USBD_VCOM_GUI extends AppManifest {
+	// Begin : UI variable section
+
+	 public USBD_VCOM_GUI(DaveEnv daveEnv){
+
+
+
+	 }
+	// End : UI variable section
+}
+

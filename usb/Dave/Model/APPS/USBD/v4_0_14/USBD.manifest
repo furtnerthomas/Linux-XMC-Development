@@ -1,0 +1,195 @@
+package Model.APPS.USBD.v4_0_14;
+
+/*
+Copyright (c) 2015, Infineon Technologies AG
+All rights reserved.                       
+                                           
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the
+following conditions are met:  
+                                                                            
+Redistributions of source code must retain the above copyright notice, this list of conditions and the following
+disclaimer.                       
+ 
+Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following
+disclaimer in the documentation and/or other materials provided with the distribution.                      
+ 
+Neither the name of the copyright holders nor the names of its contributors may be used to endorse or promote
+products derived from this software without specific prior written permission.                                          
+                                                                            
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE  FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR 
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+WHETHER IN CONTRACT, STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                                                 
+                                                                            
+To improve the quality of the software, users are encouraged to share modifications, enhancements or bug fixes with 
+Infineon Technologies AG: dave@infineon.com. */
+
+/*************** Revision History **********************************************
+ Version      Date          Description
+
+  4.0.0       16-Feb-2015   Initial version for DAVEv4.<br>
+  4.0.1       18-Mar-2015   Updated to fix the disconnect issue on self powered device.<br>
+  4.0.2       26-Mar-2015   Updated the review comments from AEs.<br>
+  4.0.4       19-Jun-2015   Removed the individual LLD version check from header file.<br>
+  4.0.6       08-Jul-2015   Updated the documentation.<br>
+  4.0.7       26-Aug-2015   Updated to support XMC4700/4800 devices.<br>
+                            Removed the call to CPU_CTRL_XMC4_Init() as it does not exist any more.<br>
+  4.0.8       08-Oct-2015   Reserved the IRQ node for USB.<br>
+                            Version updated for public release.<br>
+  4.0.10      15-Dec-2015   Support added for XMC4300.<br>
+  4.0.12      05-Jan-2016   Added the CLOCK_XMC4_USBCLK_ENABLED macro check in the usbd.h file to support <br>the recent change in CLOCK_XMC4(4.0.16) App.
+  4.0.14      10-Feb-2016   Updated the minimum required version for CLOCK_XMC4 APP to 4.0.18.<br>
+                            Added the GMessage to show the error when USB clock is not enabled in the CLOCK_XMC4 APP.<br>                            
+*******************************************************************************/
+// Import statements
+import ifx.davex.app.manifest.*
+
+class  USBD extends USBD_GUI {
+	// Note  : Following APP properties are mandatory and important
+	// Begin : APP property section
+	
+	/**
+	 * APP version
+	 * Format: a string with three digit separated by a dot.
+	 */
+	def version            = '4.0.14'
+	
+	/**
+	 * APP categories declaration. 
+	 * It is list of strings. Subcategories are separated by slash.
+	 * No limits on number of categories and subcategories depth.
+	 */
+	def categoriesDescription = [		
+		"Communication/USB/Device"]
+
+	/** 
+	 * Minimum DAVE version required for this APP.
+	 * 
+	 * It is string with three digit separated by a dot.
+	 */
+	def minDaveVersion           = '4.0.0'
+	
+	/** 
+	 * Keywords used by search feature in APPs selection view
+	 * 
+	 * It is a list of string.
+	 */
+	def keywords      = ["USB Core Driver",
+		"usbd",		
+		"all",
+		"USB protocol layer"]
+	
+	/** 
+	 * softwareIDs is used to declare which devices are compatible with this APP.
+	 * It is a map with key a string containing a pattern that shall match the SW id of
+	 * the device and as value the minimal version of the APP. 
+	 */  
+	def softwareIDs       = [	
+		"XMC4.8.00.*.*":"1.0.0",
+		"XMC4.7.00.*.*":"1.0.0",
+		"XMC4.5.00.(E144|F144|F100).*":"1.0.0",
+		"XMC4.[4-5].02.F100.*":"1.0.0",
+		"XMC4.4.00.(F100|F64).*":"1.0.0",
+		"XMC4.4.02.F64.*":"1.0.0",
+		"XMC4.3.*.*.*":"1.0.0",
+		"XMC4.[1-2].00.(Q48|F64).*":"1.0.0"		
+		]		
+		
+
+
+	/**
+	 * Singleton property:
+	 * When it is true the APP can be instantiated only once. 
+	 */
+	def singleton     = true
+	
+	/**
+	 * initProvider property
+	 * It shall be true to add a call to <APPName>_Init() 
+	 */
+	def initProvider  = false
+	
+	/**
+	 * Deprecated APP
+	 * Set it to true to indicate that the APP shall be not used for new projects.
+	 */
+	def deprecated    = false
+	
+	/**
+	 * Sharable property.
+	 * It shall be true to allows multiple APPs to require the same instance of this APP.
+	 */
+	def sharable      = false	
+
+	/**
+	 *  APP function description.
+	 */
+	def description = "USB device protocol layer APP.This APP handles the device and endpoint requests from the LLD.\nThe APP uses LUFA library to communicate to XMC USBD LLD."
+		
+	// End   : APP property section
+	
+	/* Begin : User variable section*/
+	
+	MVirtualResourceGroup hwres_usbd_xmc4_node	
+	MVirtualSignal vs_nvic_signal_in
+	
+	MRequiredApp appres_cpu
+	MRequiredApp appres_clock_xmc4	
+	MVirtualResourceGroup hwres_usb
+	
+	SolverVariable node_0
+	SolverVariable node_1
+		
+	// APP Constructor
+	public USBD(DaveEnv daveEnv) {
+		/*Initialize manifest variables here*/	
+		/*Consume usb peripheral*/	
+		hwres_usb =  MVirtualResourceGroup("usbd", ["peripheral", "usb", "*","usb"])
+		
+		node_0 = SolverVariable();
+		node_1 = SolverVariable();
+		
+		addLinearConstraint(node_1, node_0, 1);
+		/* Reserve the resource group for node 107 */
+		hwres_usbd_xmc4_node =  MVirtualResourceGroup("NVIC Node", ["peripheral","cpu","0","nvic","interrupt",node_0], true)
+		vs_nvic_signal_in =  MVirtualSignal(hwres_usbd_xmc4_node, "usb_irq",  "signal_in", false, false) /* required{}, exposeToUser{} */
+		addUriElementRangeConstraint(node_0, MF({[107]}, List))
+		
+		/********************************* Required APP ********************************************/
+		appres_clock_xmc4 =  MRequiredApp("CLOCK_XMC4","clock_xmc4",RSHARABLE,"4.0.18")
+		appres_cpu =  MRequiredApp("CPU_CTRL_XMC4", "CPU_CTRL_XMC4", RSHARABLE,"4.0.2")
+		
+		gmessage_usb_clock_settings_error.visible = MF({!appres_clock_xmc4.getVal(["gcheck_enable_usb_clock","value"])},Boolean)
+		
+		ginterruptprio_usb0.priorityValue = 63
+		ginterruptprio_usb0.maxPriority = MF({
+			Integer temp = appres_cpu.getVal(["gint_maxInterruptPreemptPriority", "value"]) as Integer
+			return temp
+		}, Integer)
+		
+		ginterruptprio_usb0.subPriorityValue = 0
+		ginterruptprio_usb0.maxSubPriority =  MF({
+			Integer temp = appres_cpu.getVal(["gint_maxInterruptSubPriority", "value"]) as Integer
+			return temp
+		}, Integer)
+		
+	}
+	
+	// File Generation
+	def generateFiles(){	
+		copy("usb", "usb")		
+		generate("usbd_confc.tmpl", "usbd_conf.c")
+		generate("usbd_confh.tmpl", "usbd_conf.h")
+		copy("usbd.c", "usbd.c")
+		copy("usbd.h", "usbd.h")
+		copy("usbd_extern.h", "usbd_extern.h")		
+				
+	}	
+	
+	
+}
+
+

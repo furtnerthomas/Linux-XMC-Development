@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Project MotherSystem_Version="" Name="USBD_VCOM_APP_Example_XMC45" Path="C:\WorkFolder\USB\CodeWS\USBD_VCOM_APP_Example_XMC45">
+    <COMPILER>
+        <Name>ARM_GCC_HOME</Name>
+        <Version/>
+        <Memory_Model/>
+    </COMPILER>
+    <DEVICE>
+        <Sales_Code>XMC4500-F144x1024</Sales_Code>
+        <Description/>
+    </DEVICE>
+    <Generated_Files>
+        <Source_Files>
+            <Source_File>
+                <File_Name>clock_xmc4.c</File_Name>
+                <Path>\Dave\Generated\CLOCK_XMC4\clock_xmc4.c</Path>
+                <Type>C File</Type>
+            </Source_File>
+            <Source_File>
+                <File_Name>clock_xmc4_conf.c</File_Name>
+                <Path>\Dave\Generated\CLOCK_XMC4\clock_xmc4_conf.c</Path>
+                <Type>C File</Type>
+            </Source_File>
+            <Source_File>
+                <File_Name>cpu_ctrl_xmc4.c</File_Name>
+                <Path>\Dave\Generated\CPU_CTRL_XMC4\cpu_ctrl_xmc4.c</Path>
+                <Type>C File</Type>
+            </Source_File>
+            <Source_File>
+                <File_Name>cpu_ctrl_xmc4_conf.c</File_Name>
+                <Path>\Dave\Generated\CPU_CTRL_XMC4\cpu_ctrl_xmc4_conf.c</Path>
+                <Type>C File</Type>
+            </Source_File>
+            <Source_File>
+                <File_Name>DAVE.c</File_Name>
+                <Path>\Dave\Generated\DAVE.c</Path>
+                <Type>C File</Type>
+            </Source_File>
+            <Source_File>
+                <File_Name>usb_task.c</File_Name>
+                <Path>\Dave\Generated\USBD\usb\core\usb_task.c</Path>
+                <Type>C File</Type>
+            </Source_File>
+            <Source_File>
+                <File_Name>usbd_endpoint_stream_xmc4000.c</File_Name>
+                <Path>\Dave\Generated\USBD\usb\core\xmc4000\usbd_endpoint_stream_xmc4000.c</Path>
+                <Type>C File</Type>
+            </Source_File>
+            <Source_File>
+                <File_Name>usbd_endpoint_xmc4000.c</File_Name>
+                <Path>\Dave\Generated\USBD\usb\core\xmc4000\usbd_endpoint_xmc4000.c</Path>
+                <Type>C File</Type>
+            </Source_File>
+            <Source_File>
+                <File_Name>usbd.c</File_Name>
+                <Path>\Dave\Generated\USBD\usbd.c</Path>
+                <Type>C File</Type>
+            </Source_File>
+            <Source_File>
+                <File_Name>usbd_conf.c</File_Name>
+                <Path>\Dave\Generated\USBD\usbd_conf.c</Path>
+                <Type>C File</Type>
+            </Source_File>
+            <Source_File>
+                <File_Name>cdc_class_device.c</File_Name>
+                <Path>\Dave\Generated\USBD_VCOM\class_driver\device\cdc_class_device.c</Path>
+                <Type>C File</Type>
+            </Source_File>
+            <Source_File>
+                <File_Name>usbd_vcom.c</File_Name>
+                <Path>\Dave\Generated\USBD_VCOM\usbd_vcom.c</Path>
+                <Type>C File</Type>
+            </Source_File>
+            <Source_File>
+                <File_Name>usbd_vcom_conf.c</File_Name>
+                <Path>\Dave\Generated\USBD_VCOM\usbd_vcom_conf.c</Path>
+                <Type>C File</Type>
+            </Source_File>
+            <Source_File>
+                <File_Name>descriptors.c</File_Name>
+                <Path>\Dave\Generated\USBD_VCOM\virtual_com\descriptors.c</Path>
+                <Type>C File</Type>
+            </Source_File>
+        </Source_Files>
+        <Header_Files>
+            <Header_File>
+                <File_Name>clock_xmc4.h</File_Name>
+                <Path>\Dave\Generated\CLOCK_XMC4\clock_xmc4.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>clock_xmc4_conf.h</File_Name>
+                <Path>\Dave\Generated\CLOCK_XMC4\clock_xmc4_conf.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>clock_xmc4_extern.h</File_Name>
+                <Path>\Dave\Generated\CLOCK_XMC4\clock_xmc4_extern.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>cpu_ctrl_xmc4.h</File_Name>
+                <Path>\Dave\Generated\CPU_CTRL_XMC4\cpu_ctrl_xmc4.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>cpu_ctrl_xmc4_conf.h</File_Name>
+                <Path>\Dave\Generated\CPU_CTRL_XMC4\cpu_ctrl_xmc4_conf.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>cpu_ctrl_xmc4_extern.h</File_Name>
+                <Path>\Dave\Generated\CPU_CTRL_XMC4\cpu_ctrl_xmc4_extern.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>DAVE.h</File_Name>
+                <Path>\Dave\Generated\DAVE.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>DAVE_Common.h</File_Name>
+                <Path>\Dave\Generated\DAVE_Common.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>attributes.h</File_Name>
+                <Path>\Dave\Generated\USBD\usb\common\attributes.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>common.h</File_Name>
+                <Path>\Dave\Generated\USBD\usb\common\common.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>compiler_specific.h</File_Name>
+                <Path>\Dave\Generated\USBD\usb\common\compiler_specific.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>endianness.h</File_Name>
+                <Path>\Dave\Generated\USBD\usb\common\endianness.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>device.h</File_Name>
+                <Path>\Dave\Generated\USBD\usb\core\device.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>endpoint.h</File_Name>
+                <Path>\Dave\Generated\USBD\usb\core\endpoint.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>endpoint_stream.h</File_Name>
+                <Path>\Dave\Generated\USBD\usb\core\endpoint_stream.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>events.h</File_Name>
+                <Path>\Dave\Generated\USBD\usb\core\events.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>std_descriptors.h</File_Name>
+                <Path>\Dave\Generated\USBD\usb\core\std_descriptors.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>std_request_type.h</File_Name>
+                <Path>\Dave\Generated\USBD\usb\core\std_request_type.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>usb_controller.h</File_Name>
+                <Path>\Dave\Generated\USBD\usb\core\usb_controller.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>usb_mode.h</File_Name>
+                <Path>\Dave\Generated\USBD\usb\core\usb_mode.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>usb_task.h</File_Name>
+                <Path>\Dave\Generated\USBD\usb\core\usb_task.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>usbd_device_xmc4000.h</File_Name>
+                <Path>\Dave\Generated\USBD\usb\core\xmc4000\usbd_device_xmc4000.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>usbd_endpoint_stream_xmc4000.h</File_Name>
+                <Path>\Dave\Generated\USBD\usb\core\xmc4000\usbd_endpoint_stream_xmc4000.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>usbd_endpoint_xmc4000.h</File_Name>
+                <Path>\Dave\Generated\USBD\usb\core\xmc4000\usbd_endpoint_xmc4000.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>usbd.h</File_Name>
+                <Path>\Dave\Generated\USBD\usbd.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>usbd_conf.h</File_Name>
+                <Path>\Dave\Generated\USBD\usbd_conf.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>usbd_extern.h</File_Name>
+                <Path>\Dave\Generated\USBD\usbd_extern.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>cdc_class.h</File_Name>
+                <Path>\Dave\Generated\USBD_VCOM\class_driver\cdc_class.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>cdc_class_common.h</File_Name>
+                <Path>\Dave\Generated\USBD_VCOM\class_driver\common\cdc_class_common.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>cdc_class_device.h</File_Name>
+                <Path>\Dave\Generated\USBD_VCOM\class_driver\device\cdc_class_device.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>usbd_vcom.h</File_Name>
+                <Path>\Dave\Generated\USBD_VCOM\usbd_vcom.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>usbd_vcom_conf.h</File_Name>
+                <Path>\Dave\Generated\USBD_VCOM\usbd_vcom_conf.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>usbd_vcom_extern.h</File_Name>
+                <Path>\Dave\Generated\USBD_VCOM\usbd_vcom_extern.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>descriptors.h</File_Name>
+                <Path>\Dave\Generated\USBD_VCOM\virtual_com\descriptors.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+        </Header_Files>
+        <Library_Files/>
+        <Assembly_Files/>
+    </Generated_Files>
+    <Include_Path>
+        <Path>\Libraries\XMCLib\inc</Path>
+        <Path>\Libraries\CMSIS\Include</Path>
+        <Path>\Libraries\CMSIS\Infineon\XMC4500_series\Include</Path>
+        <Path/>
+        <Path>\Dave\Generated</Path>
+        <Path>\Libraries</Path>
+    </Include_Path>
+    <Preprocessor_Symbols>
+        <Assembler_Symbol>XMC4500_F144x1024=</Assembler_Symbol>
+        <Compiler_Symbol>XMC4500_F144x1024=</Compiler_Symbol>
+    </Preprocessor_Symbols>
+</Project>

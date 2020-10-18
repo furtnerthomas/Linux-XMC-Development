@@ -1,0 +1,52 @@
+<p1:Tab  xmlns="http://www.eclipse.org/xwt/presentation" xmlns:x="http://www.eclipse.org/xwt" xmlns:p1="clr-namespace:com.ifx.davex.ui.controls.app" x:Class="e" widgetName="composite1" layout="{x:Null}">
+	<p1:TabFolder bounds="5, 5, 500, 600">
+		<p1:GTab text="General Settings" enabled="true" visible="true" widgetName="gtab_usb_config" toolTipText="USB device configuration.">
+			<p1:GTab.control>
+				<p1:Tab widgetName="USB_Configuration">
+					<p1:Tab.layout>
+						<GridLayout horizontalSpacing="10" verticalSpacing="10"/>
+					</p1:Tab.layout>
+					<p1:GGroup text="Buffer Settings" widgetName="ggroup_buffer_configuration">
+						<p1:GGroup.layout>
+							<GridLayout numColumns="2" horizontalSpacing="10" verticalSpacing="10"/>
+						</p1:GGroup.layout>
+						<p1:GGroup.layoutData>
+							<GridData widthHint="353" horizontalAlignment="FILL" grabExcessHorizontalSpace="true"/>
+						</p1:GGroup.layoutData>
+						<p1:GLabel text="Transmission mode:" visible="true" widgetName="glabel_usbxfermode" manifestObj="true" toolTipText="USB data transfer mode selection."/>
+						<p1:GCombo manifestObj="true" widgetName="gcombo_usbxfermode" toolTipText="USB data transfer mode:DMA or FIFO" value="DMA" description="DMA-The USB data transfer uses DMA.&lt;br&gt;&#13;&#10;FIFO-The USB data transfer uses dedicated endpoint FIFOs.&#13;&#10;&#13;&#10;" options="DMA&#13;&#10;FIFO">
+							<p1:GCombo.layoutData>
+								<GridData widthHint="99" grabExcessHorizontalSpace="true"/>
+							</p1:GCombo.layoutData>
+						</p1:GCombo>
+						<p1:GLabel text="Maximum number of endpoints:" visible="true" manifestObj="true" widgetName="glabel_max_num_eps" toolTipText="Maximum number of EPs including EP0"/>
+						<p1:GInteger x:Style="NONE" minValue="1" maxValue="7" mandatory="(com.ifx.davex.ui.controls.util.AppUiConstants).FALSE" format="(com.ifx.davex.ui.controls.util.AppUiConstants).DEC" manifestObj="true" widgetName="gint_max_num_eps" description="Maximum number of endpoints used; including EP0" toolTipText="Maximum number of endpoints including EP0" value="7">
+							<p1:GInteger.layoutData>
+								<GridData widthHint="102" grabExcessHorizontalSpace="true"/>
+							</p1:GInteger.layoutData>
+						</p1:GInteger>
+					</p1:GGroup>
+					<p1:GMessage text="USB clock is not enabled in the &quot;Clock Selection Settings&quot; tab of CLOCK_XMC4 APP. Enable the same to continue." visible="true" manifestObj="true" isError="true" widgetName="gmessage_usb_clock_settings_error" description="USB clock is not enabled in the &quot;Clock Selection Settings&quot; tab of CLOCK_XMC4 APP. Enable the same to continue.">
+						<p1:GMessage.layoutData>
+							<GridData grabExcessHorizontalSpace="true" horizontalAlignment="FILL"/>
+						</p1:GMessage.layoutData>
+					</p1:GMessage>					
+				</p1:Tab>
+			</p1:GTab.control>
+		</p1:GTab>
+		<p1:GTab text="Interrupt Settings" visible="true" enabled="true" widgetName="gtab_interrupt_config" toolTipText="Interrupt configuration for USB device">
+			<p1:GTab.control>
+				<p1:Tab widgetName="composite_1">
+					<p1:Tab.layout>
+						<GridLayout/>
+					</p1:Tab.layout>
+					<p1:GInterruptPrio text="Priority Settings" x:Style="NONE" minPriority="0" maxPriority="63" minSubPriority="0" maxSubPriority="0" priorityValue="63" subPriorityValue="0" priorityMandatory="false" subPriorityMandatory="false" manifestObj="true" widgetName="ginterruptprio_usb0" description="Interrupt priority and subpriority selection for USB peripheral.&#13;&#10;USB Interrupt priority and subpriority values are based on the number of NVIC bits in the CPU_CTRL_XMC4 APP UI.">
+						<p1:GInterruptPrio.layoutData>
+							<GridData widthHint="481"/>
+						</p1:GInterruptPrio.layoutData>
+					</p1:GInterruptPrio>
+				</p1:Tab>
+			</p1:GTab.control>
+		</p1:GTab>
+	</p1:TabFolder>
+</p1:Tab>
