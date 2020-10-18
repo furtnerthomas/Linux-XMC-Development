@@ -1,0 +1,28 @@
+package Model.APPS.USBD.v4_0_14;
+
+/* Import statements*/
+import ifx.davex.app.manifest.*
+
+abstract class USBD_GUI extends AppManifest {
+	/* Begin : UI variable section */
+	 public GInteger gint_max_num_eps;
+	 public GCombo gcombo_usbxfermode;
+	 public GLabel glabel_usbxfermode;
+	 public GLabel glabel_max_num_eps;
+	 public GInterruptPrio ginterruptprio_usb0;
+	 public GMessage gmessage_usb_clock_settings_error;
+
+	 public USBD_GUI(DaveEnv daveEnv){
+
+	 gint_max_num_eps = GInteger(widgetName:"gint_max_num_eps", value:7, minValue:1, maxValue:7, enabled:true, visible:true, isMandatoryValue:false)
+	 gcombo_usbxfermode = GCombo(widgetName:"gcombo_usbxfermode", options:["DMA","FIFO"], value:"DMA", enabled:true, visible:true, isMandatoryValue:false)
+	 glabel_usbxfermode = GLabel(widgetName:"glabel_usbxfermode", text:"Transmission mode:", enabled:true, visible:true)
+	 glabel_max_num_eps = GLabel(widgetName:"glabel_max_num_eps", text:"Maximum number of endpoints:", enabled:true, visible:true)
+	 ginterruptprio_usb0 = GInterruptPrio(widgetName:"ginterruptprio_usb0", priorityValue:63, minPriority:0, maxPriority:63, subPriorityValue:0, minSubPriority:0, maxSubPriority:0, subPriorityVisible:true, enabled:true, visible:true)
+	 gmessage_usb_clock_settings_error = GMessage(widgetName:"gmessage_usb_clock_settings_error", text:"USB clock is not enabled in the \"Clock Selection Settings\" tab of CLOCK_XMC4 APP. Enable the same to continue.", isError:true, visible:true)
+
+
+	 }
+	/* End : UI variable section */
+}
+

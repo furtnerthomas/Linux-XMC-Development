@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="ASCII"?>
+<ResourceModel:Peripheral xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ResourceModel="http://www.infineon.com/Davex/Resource.ecore" URI="http://resources/0.1.34/peripheral/scu/0" description="SCU " baseAddress="0x50004000">
+  <provided xsi:type="ResourceModel:ResourceGroup" name="hibernate" URI="http://resources/0.1.34/peripheral/scu/0/pwrctrl/0/hibernate">
+    <upwardMapList xsi:type="ResourceModel:HWResource" href="../../APPS/CLOCK_XMC4/v4_0_22/CLOCK_XMC4_0.app#//@hwResources.10"/>
+    <resourcesList name="pwrstat_hiben" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/pwrstat/hiben"/>
+    <resourcesList name="pwrstat_hpss" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/pwrstat/hpss"/>
+    <resourcesList name="pwrset_hib" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/pwrset/hib"/>
+    <resourcesList name="pwrclr_hib" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/pwrclr/hib"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="cpu" URI="http://resources/0.1.34/peripheral/scu/0/clkctrl/0/cpu">
+    <upwardMapList xsi:type="ResourceModel:HWResource" href="../../APPS/CLOCK_XMC4/v4_0_22/CLOCK_XMC4_0.app#//@hwResources.2"/>
+    <resourcesList name="clkcr" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/cpuclkcr"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="pll" URI="http://resources/0.1.34/peripheral/scu/0/clkctrl/0/pll">
+    <upwardMapList xsi:type="ResourceModel:HWResource" href="../../APPS/CLOCK_XMC4/v4_0_22/CLOCK_XMC4_0.app#//@hwResources.0"/>
+    <resourcesList name="pllstat" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/pllstat"/>
+    <resourcesList name="pllcon0" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/pllcon0"/>
+    <resourcesList name="pllcon1" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/pllcon1"/>
+    <resourcesList name="pllcon2" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/pllcon2"/>
+    <resourcesList name="clkmxstat" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/clkmxstat"/>
+    <resourcesList name="usbpllcon" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/usbpllcon"/>
+    <resourcesList name="usbpllstat" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/usbpllstat"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="sysvcolock" URI="http://resources/0.1.34/peripheral/scu/0/trap/0/sysvcolock">
+    <upwardMapList xsi:type="ResourceModel:HWResource" href="../../APPS/CLOCK_XMC4/v4_0_22/CLOCK_XMC4_0.app#//@hwResources.14"/>
+    <resourcesList name="trapstat_trap" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/trapstat/svcolckt"/>
+    <resourcesList name="trapraw_trap" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/trapraw/svcolckt"/>
+    <resourcesList name="trapclr_trap" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/trapclr/svcolckt"/>
+    <resourcesList name="trapset_trap" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/trapset/svcolckt"/>
+    <resourcesList name="trapdis_trap" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/trapdis/svcolckt"/>
+    <resourcesList name="trap" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/sysvcolock_trap"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="RTCCLKSEL" URI="http://resources/0.1.34/peripheral/scu/0/rtcclksel">
+    <upwardMapList xsi:type="ResourceModel:HWResource" href="../../APPS/CLOCK_XMC4/v4_0_22/CLOCK_XMC4_0.app#//@hwResources.11"/>
+    <resourcesList name="hdcr_rcs" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/hdcr/rcs"/>
+    <resourcesList name="hib_rtc_xtal1" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/hib_rtc_xtal1"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="ebu" URI="http://resources/0.1.34/peripheral/scu/0/clkctrl/0/ebu">
+    <upwardMapList xsi:type="ResourceModel:HWResource" href="../../APPS/CLOCK_XMC4/v4_0_22/CLOCK_XMC4_0.app#//@hwResources.4"/>
+    <resourcesList name="clkcr" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/ebuclkcr"/>
+    <resourcesList name="clkset_ebucen" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/clkset/ebucen"/>
+    <resourcesList name="clkclr_ebucdi" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/clkclr/ebucdi"/>
+    <resourcesList name="clkstat_ebucst" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/clkstat/ebucst"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="sysoscwd" URI="http://resources/0.1.34/peripheral/scu/0/trap/0/sysoscwd">
+    <upwardMapList xsi:type="ResourceModel:HWResource" href="../../APPS/CLOCK_XMC4/v4_0_22/CLOCK_XMC4_0.app#//@hwResources.13"/>
+    <resourcesList name="trapstat_trap" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/trapstat/soscwdgt"/>
+    <resourcesList name="trapraw_trap" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/trapraw/soscwdgt"/>
+    <resourcesList name="trapclr_trap" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/trapclr/soscwdgt"/>
+    <resourcesList name="trapset_trap" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/trapset/soscwdgt"/>
+    <resourcesList name="trapdis_trap" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/trapdis/soscwdgt"/>
+    <resourcesList name="trap" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/sysoscwd_trap"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="ulpwdg" URI="http://resources/0.1.34/peripheral/scu/0/trap/0/ulpwdg">
+    <upwardMapList xsi:type="ResourceModel:HWResource" href="../../APPS/CLOCK_XMC4/v4_0_22/CLOCK_XMC4_0.app#//@hwResources.16"/>
+    <resourcesList name="trapstat_trap" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/trapstat/ulpwdgt"/>
+    <resourcesList name="trapraw_trap" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/trapraw/ulpwdgt"/>
+    <resourcesList name="trapclr_trap" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/trapclr/ulpwdgt"/>
+    <resourcesList name="trapset_trap" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/trapset/ulpwdt"/>
+    <resourcesList name="trapdis_trap" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/trapdis/ulpwdgt"/>
+    <resourcesList name="trap" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/ulpwdg_trap"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="usbvcolock" URI="http://resources/0.1.34/peripheral/scu/0/trap/0/usbvcolock">
+    <upwardMapList xsi:type="ResourceModel:HWResource" href="../../APPS/CLOCK_XMC4/v4_0_22/CLOCK_XMC4_0.app#//@hwResources.15"/>
+    <resourcesList name="trapstat_trap" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/trapstat/uvcolckt"/>
+    <resourcesList name="trapraw_trap" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/trapraw/uvcolckt"/>
+    <resourcesList name="trapclr_trap" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/trapclr/uvcolckt"/>
+    <resourcesList name="trapset_trap" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/trapset/uvcolckt"/>
+    <resourcesList name="trapdis_trap" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/trapdis/uvcolckt"/>
+    <resourcesList name="trap" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/usbvcolock_trap"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="sdmmc" URI="http://resources/0.1.34/peripheral/scu/0/clkctrl/0/sdmmc">
+    <upwardMapList xsi:type="ResourceModel:HWResource" href="../../APPS/CLOCK_XMC4/v4_0_22/CLOCK_XMC4_0.app#//@hwResources.8"/>
+    <resourcesList name="clkset_mmccen" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/clkset/mmccen"/>
+    <resourcesList name="clkclr_mmccdi" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/clkclr/mmccdi"/>
+    <resourcesList name="clkstat_mmccst" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/clkstat/mmccst"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="wdt" URI="http://resources/0.1.34/peripheral/scu/0/clkctrl/0/wdt">
+    <upwardMapList xsi:type="ResourceModel:HWResource" href="../../APPS/CLOCK_XMC4/v4_0_22/CLOCK_XMC4_0.app#//@hwResources.6"/>
+    <resourcesList name="clkcr" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/wdtclkcr"/>
+    <resourcesList name="clkset_wdtcen" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/clkset/wdtcen"/>
+    <resourcesList name="clkclr_wdtcdi" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/clkclr/wdtcdi"/>
+    <resourcesList name="clkstat_wdtcst" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/clkstat/wdtcst"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="usb" URI="http://resources/0.1.34/peripheral/scu/0/clkctrl/0/usb">
+    <upwardMapList xsi:type="ResourceModel:HWResource" href="../../APPS/CLOCK_XMC4/v4_0_22/CLOCK_XMC4_0.app#//@hwResources.7"/>
+    <resourcesList name="clkcr" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/usbclkcr"/>
+    <resourcesList name="clkset_usbcen" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/clkset/usbcen"/>
+    <resourcesList name="clkclr_usbcdi" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/clkclr/usbcdi"/>
+    <resourcesList name="clkstat_usbcst" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/clkstat/usbcst"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="sys" URI="http://resources/0.1.34/peripheral/scu/0/clkctrl/0/sys">
+    <upwardMapList xsi:type="ResourceModel:HWResource" href="../../APPS/CLOCK_XMC4/v4_0_22/CLOCK_XMC4_0.app#//@hwResources.1"/>
+    <resourcesList name="clkcr" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/sysclkcr"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="perbridge" URI="http://resources/0.1.34/peripheral/scu/0/clkctrl/0/perbridge">
+    <upwardMapList xsi:type="ResourceModel:HWResource" href="../../APPS/CLOCK_XMC4/v4_0_22/CLOCK_XMC4_0.app#//@hwResources.3"/>
+    <resourcesList name="clkcr" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/pbclkcr"/>
+    <resourcesList name="fpb" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/fpb"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="ccu" URI="http://resources/0.1.34/peripheral/scu/0/clkctrl/0/ccu">
+    <upwardMapList xsi:type="ResourceModel:HWResource" href="../../APPS/CLOCK_XMC4/v4_0_22/CLOCK_XMC4_0.app#//@hwResources.5"/>
+    <resourcesList name="clkcr" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/ccuclkcr"/>
+    <resourcesList name="clkset_ccucen" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/clkset/ccucen"/>
+    <resourcesList name="clkclr_ccucdi" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/clkclr/ccucdi"/>
+    <resourcesList name="clkstat_ccucst" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/clkstat/ccucst"/>
+    <resourcesList name="fccu" requiredResourceUri="http://resources/0.1.34/peripheral/scu/0/fccu"/>
+  </provided>
+  <addressBlock offset="0x0" size="0x4000" usage="registers"/>
+</ResourceModel:Peripheral>
