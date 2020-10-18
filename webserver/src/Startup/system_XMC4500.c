@@ -30,6 +30,7 @@
  * HEADER FILES
  *******************************************************************************/
 #include <string.h>
+#include <stdint.h>
 
 #include <XMC4500.h>
 #include "system_XMC4500.h"

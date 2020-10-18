@@ -314,8 +314,8 @@ tcpip_apimsg(struct api_msg *apimsg)
   if (sys_mbox_valid(&mbox)) {
     msg.type = TCPIP_MSG_API;
     msg.msg.apimsg = apimsg;
-    sys_mbox_post(&mbox, &msg);
-    sys_arch_sem_wait(&apimsg->msg.conn->op_completed, 0);
+    //sys_mbox_post(&mbox, &msg);
+    //sys_arch_sem_wait(&apimsg->msg.conn->op_completed, 0);
     return apimsg->msg.err;
   }
   return ERR_VAL;

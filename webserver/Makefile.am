@@ -11,7 +11,7 @@ INCLUDE_DIRS    = -Isrc/Libraries/CMSIS/Include \
 
 ACLOCAL_AMFLAGS = -I m4
 AM_CFLAGS       = $(INCLUDE_DIRS) -std=c99 -Wall -O0 -g -gdwarf-2 \
-                                  -DXMC4500_F144x1024 -D__CORTEX_M4 \
+                                  -DXMC4500_F100x1024 -D__CORTEX_M4 \
                                   -D__FPU_PRESENT -D__CMSIS_RTOS \
                                   -mthumb \
                                   -march=armv7-m \

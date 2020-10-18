@@ -1,0 +1,3 @@
+
+https://www.cyberciti.biz/hardware/5-linux-unix-commands-for-connecting-to-the-serial-console/
+cu -l /dev/ttyS0 -s 19200

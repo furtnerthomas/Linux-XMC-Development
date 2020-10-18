@@ -397,7 +397,7 @@ memp_malloc_fn(memp_t type, const char* file, const int line)
  
   LWIP_ERROR("memp_malloc: type < MEMP_MAX", (type < MEMP_MAX), return NULL;);
 
-  SYS_ARCH_PROTECT(old_level);
+  //SYS_ARCH_PROTECT(old_level);
 #if MEMP_OVERFLOW_CHECK >= 2
   memp_overflow_check_all();
 #endif /* MEMP_OVERFLOW_CHECK >= 2 */
@@ -420,7 +420,7 @@ memp_malloc_fn(memp_t type, const char* file, const int line)
     MEMP_STATS_INC(err, type);
   }
 
-  SYS_ARCH_UNPROTECT(old_level);
+  //SYS_ARCH_UNPROTECT(old_level);
 
   return memp;
 }

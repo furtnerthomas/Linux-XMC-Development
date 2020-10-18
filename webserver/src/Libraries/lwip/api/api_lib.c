@@ -71,23 +71,23 @@ netconn_new_with_proto_and_callback(enum netconn_type t, u8_t proto, netconn_cal
   struct api_msg msg;
 
   conn = netconn_alloc(t, callback);
-  if (conn != NULL) {
+  //if (conn != NULL) {
     msg.function = do_newconn;
     msg.msg.msg.n.proto = proto;
     msg.msg.conn = conn;
-    if (TCPIP_APIMSG(&msg) != ERR_OK) {
+    /*if (TCPIP_APIMSG(&msg) != ERR_OK) {
       LWIP_ASSERT("freeing conn without freeing pcb", conn->pcb.tcp == NULL);
       LWIP_ASSERT("conn has no op_completed", sys_sem_valid(&conn->op_completed));
       LWIP_ASSERT("conn has no recvmbox", sys_mbox_valid(&conn->recvmbox));
 #if LWIP_TCP
       LWIP_ASSERT("conn->acceptmbox shouldn't exist", !sys_mbox_valid(&conn->acceptmbox));
 #endif /* LWIP_TCP */
-      sys_sem_free(&conn->op_completed);
-      sys_mbox_free(&conn->recvmbox);
-      memp_free(MEMP_NETCONN, conn);
+      //sys_sem_free(&conn->op_completed);
+      //sys_mbox_free(&conn->recvmbox);
+      /*memp_free(MEMP_NETCONN, conn);
       return NULL;
     }
-  }
+  }*/
   return conn;
 }
 
@@ -174,9 +174,9 @@ netconn_bind(struct netconn *conn, ip_addr_t *addr, u16_t port)
   msg.msg.conn = conn;
   msg.msg.msg.bc.ipaddr = addr;
   msg.msg.msg.bc.port = port;
-  err = TCPIP_APIMSG(&msg);
+  //err = TCPIP_APIMSG(&msg);
 
-  NETCONN_SET_SAFE_ERR(conn, err);
+  //NETCONN_SET_SAFE_ERR(conn, err);
   return err;
 }
 
@@ -254,9 +254,9 @@ netconn_listen_with_backlog(struct netconn *conn, u8_t backlog)
 #if TCP_LISTEN_BACKLOG
   msg.msg.msg.lb.backlog = backlog;
 #endif /* TCP_LISTEN_BACKLOG */
-  err = TCPIP_APIMSG(&msg);
+  //err = TCPIP_APIMSG(&msg);
 
-  NETCONN_SET_SAFE_ERR(conn, err);
+  //NETCONN_SET_SAFE_ERR(conn, err);
   return err;
 #else /* LWIP_TCP */
   LWIP_UNUSED_ARG(conn);
@@ -286,7 +286,7 @@ netconn_accept(struct netconn *conn, struct netconn **new_conn)
   LWIP_ERROR("netconn_accept: invalid pointer",    (new_conn != NULL),                  return ERR_ARG;);
   *new_conn = NULL;
   LWIP_ERROR("netconn_accept: invalid conn",       (conn != NULL),                      return ERR_ARG;);
-  LWIP_ERROR("netconn_accept: invalid acceptmbox", sys_mbox_valid(&conn->acceptmbox),   return ERR_ARG;);
+  //LWIP_ERROR("netconn_accept: invalid acceptmbox", sys_mbox_valid(&conn->acceptmbox),   return ERR_ARG;);
 
   err = conn->last_err;
   if (ERR_IS_FATAL(err)) {
@@ -301,16 +301,16 @@ netconn_accept(struct netconn *conn, struct netconn **new_conn)
     return ERR_TIMEOUT;
   }
 #else
-  sys_arch_mbox_fetch(&conn->acceptmbox, (void **)&newconn, 0);
+  //sys_arch_mbox_fetch(&conn->acceptmbox, (void **)&newconn, 0);
 #endif /* LWIP_SO_RCVTIMEO*/
   /* Register event with callback */
-  API_EVENT(conn, NETCONN_EVT_RCVMINUS, 0);
+  //API_EVENT(conn, NETCONN_EVT_RCVMINUS, 0);
 
-  if (newconn == NULL) {
+  //if (newconn == NULL) {
     /* connection has been aborted */
-    NETCONN_SET_SAFE_ERR(conn, ERR_ABRT);
-    return ERR_ABRT;
-  }
+  //  NETCONN_SET_SAFE_ERR(conn, ERR_ABRT);
+  //  return ERR_ABRT;
+  //}
 #if TCP_LISTEN_BACKLOG
   /* Let the stack know that we have accepted the connection. */
   msg.function = do_recv;

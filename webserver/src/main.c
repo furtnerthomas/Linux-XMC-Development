@@ -58,8 +58,8 @@
 /*Static IP ADDRESS*/
 #define IP_ADDR0   192
 #define IP_ADDR1   168
-#define IP_ADDR2   0
-#define IP_ADDR3   10
+#define IP_ADDR2   1
+#define IP_ADDR3   12
 
 /*NETMASK*/
 #define NETMASK_ADDR0   255
@@ -70,7 +70,7 @@
 /*Gateway Address*/
 #define GW_ADDR0   192
 #define GW_ADDR1   168
-#define GW_ADDR2   0
+#define GW_ADDR2   1
 #define GW_ADDR3   1
 
 struct netif xnetif;
@@ -109,7 +109,7 @@ void LWIP_Init(void)
   xnetif.flags |= NETIF_FLAG_LINK_UP;
 
   /* When the netif is fully configured this function must be called.*/
-  netif_set_up(&xnetif);
+  //netif_set_up(&xnetif);
 
 }
 
@@ -135,11 +135,28 @@ void main_task(void const *args)
 }
 osThreadDef(main_task, osPriorityNormal, 1, 0);
 
+int abc(int a)
+{
+	return a+1;
+}
+
 int main(void)
 {
+  /*volatile int b = abc(1);
   osKernelInitialize();
 
   osThreadCreate(osThread(main_task), NULL);
 
-  osKernelStart();
+  osKernelStart();*/
+  LWIP_Init();
+  http_server_netconn_init();
+
 }
+
+
+
+
+
+
+
+

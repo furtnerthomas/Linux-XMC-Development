@@ -59,11 +59,11 @@ http_server_netconn_serve(struct netconn *conn)
 
 /** The main function, never returns! */
 static void
-http_server_netconn_thread(void *arg)
+http_server_netconn_thread()
 {
   struct netconn *conn, *newconn;
   err_t err;
-  LWIP_UNUSED_ARG(arg);
+  //LWIP_UNUSED_ARG(arg);
   
   /* Create a new TCP connection handle */
   conn = netconn_new(NETCONN_TCP);
@@ -93,7 +93,8 @@ http_server_netconn_thread(void *arg)
 void
 http_server_netconn_init()
 {
-  sys_thread_new("http_server_netconn", http_server_netconn_thread, NULL, DEFAULT_THREAD_STACKSIZE, DEFAULT_THREAD_PRIO);
+  //sys_thread_new("http_server_netconn", http_server_netconn_thread, NULL, DEFAULT_THREAD_STACKSIZE, DEFAULT_THREAD_PRIO);
+  http_server_netconn_thread();
 }
 
 #endif /* LWIP_NETCONN*/
