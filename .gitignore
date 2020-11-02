@@ -9,8 +9,11 @@ Makefile.in
 .cproject
 .dirstamp
 .project
-config.log
+*.log
+*~
+*.trs
 .settings
 autom4te.cache
 config.status
 configure
+webserver/test/foo.log
